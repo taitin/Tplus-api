@@ -56,7 +56,7 @@
 
 #### 1.6 快問快答相關
 
-- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesid?token=token&force_get=force_getget-取得課堂快問快答資料) (完成)
+- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
 - [course_quizzes/{id}/actions/get_correct?token={token}(GET)-學生取得老師快問快答批閱結果](#course_quizzesidactionsget_correct?token=tokenGET-學生取得老師快問快答批閱結果)
 

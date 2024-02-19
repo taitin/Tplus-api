@@ -72,7 +72,7 @@
 
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
 - [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidpost-更新課堂快問快答) (完成)
-- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesid?token=token&force_get=force_getget-取得課堂快問快答資料) (完成)
+- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
 - [course_quizzes/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生快問快答答案](#course_quizzesidactionsget_answer?course_stu_id=course_stu_idGET-老師取得學生快問快答答案)
 - [course_quizzes/{id}/actions/correct(POST)-老師批閱學生快問快答答案](#course_quizzesidactionscorrectpost-老師批閱學生快問快答答案)
