@@ -70,13 +70,15 @@
 
 #### 1.6 快問快答相關
 
+- [課堂快問快答-MQTT/取得學生個人化狀態說明](#課堂快問快答-MQTT/取得學生個人化狀態說明) (完成)
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
 - [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidpost-更新課堂快問快答) (完成)
-- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
+- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesid?token=token&force_get=force_getget-取得課堂快問快答資料) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
 - [course_quizzes/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生快問快答答案](#course_quizzesidactionsget_answer?course_stu_id=course_stu_idGET-老師取得學生快問快答答案)
 - [course_quizzes/{id}/actions/correct(POST)-老師批閱學生快問快答答案](#course_quizzesidactionscorrectpost-老師批閱學生快問快答答案)
 - [course_quizzes/{id}/actions/get_correct?token={token}(GET)-學生取得老師快問快答批閱結果](#course_quizzesidactionsget_correct?token=tokenGET-學生取得老師快問快答批閱結果)
+- [course_quizzes/{id}/actions/get_stu_status(GET)-取得學生個人課堂快問快答狀態](#course_quizzes/{id}/actions/get_stu_statusget-取得學生個人課堂快問快答狀態) (完成)
 
 #### 派送相關
 
@@ -1790,6 +1792,25 @@
 }
 ```
 
+### 課堂快問快答-MQTT/取得學生個人化狀態說明
+
+#### 課堂快問快答發送 MQTT
+
+| 時機                                                          | status         | api                                          | method | 課堂快問快答 is_active |
+| :------------------------------------------------------------ | :------------- | :------------------------------------------- | :----- | :--------------------- |
+| 老師執行 API `course_quizzes/create` 成功後                   | quiz           | `course_quizzes/{id}/actions/get_stu_status` | get    | 1                      |
+| 老師執行 API `course_quizzes/{id}` 將 is_active 設成 false 後 | quiz_closed    |                                              |        | 0                      |
+| 老師執行 API `course_quizzes/{id}/actions/correct` 成功後     | quiz_corrected | `course_quizzes/{id}/actions/get_correct`    | get    | 1                      |
+
+#### 課堂快問快答學生取得個人化狀態
+
+| 時機說明                 | status         | api                                       | method | 課堂快問快答 is_active |
+| :----------------------- | :------------- | :---------------------------------------- | :----- | :--------------------- |
+| 快問快答未開始/已結束    | quiz_closed    |                                           |        | 0                      |
+| 學生還沒回答             | quiz_answering | `course_quizzes/{id}/actions/answer `     | post   | 1                      |
+| 學生已回答               | quiz_answered  |                                           |        | 1                      |
+| 快問快答已被老師批改完成 | quiz_corrected | `course_quizzes/{id}/actions/get_correct` | get    | 1                      |
+
 ### course_quizzes/create(POST)-建立課堂快問快答
 
 #### Request
@@ -1875,6 +1896,18 @@
 {
   "result": false,
   "msg": ["You do not have permission to access this resource."]
+}
+```
+
+#### MQTT (若更新 is_active 為 false)
+
+```json
+{
+  "course_data": "略",
+  "status": "quiz_closed",
+  "api": "",
+  "method": "",
+  "course_stu_ids": []
 }
 ```
 
@@ -2268,6 +2301,18 @@
 }
 ```
 
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "quiz_corrected",
+  "api": "course_quizzes/{id}/actions/get_correct",
+  "method": "get",
+  "course_stu_ids": ["{course_stu_id}"]
+}
+```
+
 ### course_quizzes/{id}/actions/get_correct?token={token}(GET)-學生取得老師快問快答批閱結果
 
 #### Request
@@ -2309,7 +2354,7 @@
 
 -失敗
 
-### 課堂快問快答不存在
+#### 課堂快問快答不存在
 
 - Status: 404 Not Found
 - Body
@@ -2321,12 +2366,88 @@
 }
 ```
 
-### 批閱結果不存在
+#### 批閱結果不存在
 
 ```json
 {
   "result": false,
   "msg": ["Correct file not exists."]
+}
+```
+
+### course_quizzes/{id}/actions/get_stu_status(GET)-取得學生個人課堂快問快答狀態
+
+#### Request
+
+- Method: **GET**
+- URL: `course_quizzes/{id}/actions/get_stu_status`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 課堂快問快答 ID         | 1                                   | O        |
+| Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
+| token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
+
+- return-params:
+
+| 名稱   | 類型  | 說明                                        | 範例        |
+| :----- | :---- | :------------------------------------------ | :---------- |
+| data   | int   | 如 api 是 get 類型，會先傳該 api 回覆的資料 |             |
+| status | int   | 除了狀態包含 MQTT 發送的狀態之外            | task_closed |
+| api    | int   | api 路徑                                    |             |
+| method | array | api 方法                                    |             |
+
+- [回傳內容說明參考](#課堂快問快答學生取得個人化狀態)
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "course_quiz": {
+      "id": 14,
+      "course_id": 1,
+      "quiz_file_id": 115,
+      "is_active": "1",
+      "created_at": "2024-02-20 15:51:22",
+      "updated_at": "2024-02-20 15:52:05",
+      "deleted_at": null,
+      "quiz_file": {
+        "id": 115,
+        "uploader_id": 2,
+        "uploader_type": "teacher",
+        "file_type": "image",
+        "course_id": 1,
+        "drive_id": "/storage/1rfiL663YdpQnDzMoXzK1MsptsacBN2QCgfcJsPY.png",
+        "created_at": "2024-02-20 15:52:05",
+        "updated_at": "2024-02-20 15:52:05",
+        "deleted_at": null
+      }
+    },
+    "course_stu_quiz_id": 20
+  },
+  "status": "quiz_answering",
+  "api": "course_quizzes/14/actions/answer",
+  "method": "post"
+}
+```
+
+-失敗
+
+#### 沒有權限
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
 }
 ```
 
@@ -4101,7 +4222,7 @@
 
 | 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
 | :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
-| id           | int  | 課堂搶答 ID             | 1                                   | O        |
+| id           | int  | 課堂任務 ID             | 1                                   | O        |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
@@ -4127,7 +4248,7 @@
   "result": true,
   "msg": ["Success"],
   "data": [],
-  "status": "qa_time_up",
+  "status": "quiz_time_up",
   "api": "",
   "method": "",
   "parameter": []
