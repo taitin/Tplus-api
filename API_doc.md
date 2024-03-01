@@ -136,7 +136,6 @@
 - [pages/{id}(DELETE)-刪除課堂評量頁面](#pagesiddelete-刪除課堂評量頁面) (完成)
 - [course_assessments/{id}/actions/run(POST)-開始課堂評量](#course_assessments/{id}/actions/runPOST-開始課堂評量) (完成)
 - [course_assessments/{id}(GET)-取得課堂評量](#course_assessmentsidget-取得課堂評量) (完成)
-
 - [course_assessments/{id}/actions/stop(POST)-停止課堂評量](#course_assessments/{id}/actions/stopPOST-停止課堂評量) (完成)
 - [course_assessments/{id}/actions/restart(POST)-重新作答課堂評量](#course_assessments/{id}/actions/restartPOST-重新作答課堂評量) (完成)
 - [course_assessments/{id}/actions/collect(POST)-收卷課堂評量](#course_assessments/{id}/actions/collectPOST-收卷課堂評量) (完成)
@@ -144,6 +143,7 @@
 - [course_assessments/{id}/actions/publish_answer(POST)-老師公布課堂評量答案](#course_assessments/{id}/actions/publish_answerpost-老師公布課堂評量答案) (完成)
 - [course_assessments/{id}/actions/correct_hand_essay(POST)-老師批閱課堂評量手寫題&文字題](#course_assessments/{id}/actions/correct_hand_essaypost-老師批閱課堂評量手寫題&文字題) (完成)
 - [course_assessments/{id}/actions/answer(POST)-學生回答課堂評量](#course_assessmentsidactionsanswerpost-學生回答課堂評量) (完成)
+- [course_assessments/{id}/actions/get_answering_status(GET)-取得課堂評量即時答題狀態](#course_assessments/{id}/actions/get_answering_statusget-取得課堂評量即時答題狀態) (完成)
 - [course_assessments/{id}/actions/get_statistics(GET)-取得課堂評量答題統計](#course_assessments/{id}/actions/get_statisticsget-取得課堂評量答題統計) (完成)
 - [course_assessments/{id}/actions/get_result(GET)-取得學生個人課堂評量結果](#course_assessments/{id}/actions/get_resultget-取得學生個人課堂評量結果) #待確認 PDF 來源
 - [course_assessments/{id}/actions/get_stu_status(GET)-取得學生個人課堂評量狀態](#course_assessments/{id}/actions/get_stu_statusget-取得學生個人課堂評量狀態) (完成)
@@ -3274,6 +3274,15 @@
 {
   "result": false,
   "msg": ["You do not have permission to access this resource."]
+}
+```
+
+#### 尚未被分到組別 或 組別尚未建立
+
+```json
+{
+  "result": false,
+  "msg": ["You are not belong to any team now."]
 }
 ```
 
@@ -6466,6 +6475,45 @@
 }
 ```
 
+### course_assessments/{id}/actions/get_answering_status(GET)-取得課堂評量即時答題狀態
+
+#### Request
+
+- Method: **GET**
+- URL: `course_assessments/{id}/actions/get_answering_status`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- | --- |
+| id           | int  | 課堂評量 ID             | 1                                   | O        |     |
+| Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
+| token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
+
+#### Response
+
+- param:
+
+| 名稱             | 類型 | 說明                 | 範例 |
+| :--------------- | :--- | :------------------- | :--- |
+| total_stu_count  | int  | 有參加評量的學生數   | 18   |
+| finish_stu_count | int  | 評量已經交卷的學生數 | 8    |
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "total_stu_count": 18,
+    "finish_stu_count": 8
+  }
+}
+```
+
 ### course_assessments/{id}/actions/get_statistics(GET)-取得課堂評量答題統計
 
 #### Request
@@ -6480,6 +6528,8 @@
 | id           | int  | 課堂評量 ID             | 1                                   | O        |     |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
+
+**status 為 running/closed/stopped 時不可使用**
 
 #### Response
 
@@ -6852,6 +6902,15 @@
 }
 ```
 
+#### 評量 status 是為下方其中之一['running', 'closed', 'stopped']
+
+```json
+{
+  "result": false,
+  "msg": ["The assessment cannot get statistics in current status."]
+}
+```
+
 ### course_assessments/{id}/actions/get_result(GET)-取得學生個人課堂評量結果
 
 #### Request
@@ -6872,10 +6931,7 @@
 -成功
 
 - Body:
-
-```json
-
-```
+  PDF File
 
 -失敗
 
