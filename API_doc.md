@@ -72,15 +72,15 @@
 
 #### 1.6 快問快答相關
 
-- [課堂快問快答-MQTT/取得學生個人化狀態說明](#課堂快問快答-MQTT/取得學生個人化狀態說明) (完成)
+- [課堂快問快答-MQTT/取得學生個人化狀態說明](#課堂快問快答-mqtt取得學生個人化狀態說明) (完成)
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
-- [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidpost-更新課堂快問快答) (完成)
-- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesid?token=token&force_get=force_getget-取得課堂快問快答資料) (完成)
+- [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
+- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
-- [course_quizzes/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生快問快答答案](#course_quizzesidactionsget_answer?course_stu_id=course_stu_idGET-老師取得學生快問快答答案)
+- [course_quizzes/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生快問快答答案](#course_quizzesidactionsget_answercourse_stu_idcourse_stu_idget-老師取得學生快問快答答案)
 - [course_quizzes/{id}/actions/correct(POST)-老師批閱學生快問快答答案](#course_quizzesidactionscorrectpost-老師批閱學生快問快答答案)
-- [course_quizzes/{id}/actions/get_correct?token={token}(GET)-學生取得老師快問快答批閱結果](#course_quizzesidactionsget_correct?token=tokenGET-學生取得老師快問快答批閱結果)
-- [course_quizzes/{id}/actions/get_stu_status(GET)-取得學生個人課堂快問快答狀態](#course_quizzes/{id}/actions/get_stu_statusget-取得學生個人課堂快問快答狀態) (完成)
+- [course_quizzes/{id}/actions/get_correct?token={token}(GET)-學生取得老師快問快答批閱結果](#course_quizzesidactionsget_correcttokentokenget-學生取得老師快問快答批閱結果)
+- [course_quizzes/{id}/actions/get_stu_status(GET)-取得學生個人課堂快問快答狀態](#course_quizzesidactionsget_stu_statusget-取得學生個人課堂快問快答狀態) (完成)
 
 #### 派送相關
 
