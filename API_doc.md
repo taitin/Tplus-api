@@ -128,30 +128,29 @@
 
 ### 評量相關
 
-- [課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-MQTT/取得學生個人化狀態說明) (完成)
+- [課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-mqtt取得學生個人化狀態說明) (完成)
 - [course_assessments/create(POST)-建立課堂評量](#course_assessmentscreatepost-建立課堂評量) (完成)
 - [pages/create(POST)-建立課堂評量頁面](#pagescreatepost-建立課堂評量頁面) (完成)
 - [pages/{id}(PUT)-更新課堂評量頁面](#pagesidput-更新課堂評量頁面) (完成)
-- [pages/{id}(PUT)-更新課堂評量頁面](#pagesidput-課堂評量頁面) (完成)
 - [pages/{id}(DELETE)-刪除課堂評量頁面](#pagesiddelete-刪除課堂評量頁面) (完成)
-- [course_assessments/{id}/actions/run(POST)-開始課堂評量](#course_assessments/{id}/actions/runPOST-開始課堂評量) (完成)
+- [course_assessments/{id}/actions/run(POST)-開始課堂評量](#course_assessmentsidactionsrunpost-開始課堂評量) (完成)
 - [course_assessments/{id}(GET)-取得課堂評量](#course_assessmentsidget-取得課堂評量) (完成)
-- [course_assessments/{id}/actions/stop(POST)-停止課堂評量](#course_assessments/{id}/actions/stopPOST-停止課堂評量) (完成)
-- [course_assessments/{id}/actions/restart(POST)-重新作答課堂評量](#course_assessments/{id}/actions/restartPOST-重新作答課堂評量) (完成)
-- [course_assessments/{id}/actions/collect(POST)-收卷課堂評量](#course_assessments/{id}/actions/collectPOST-收卷課堂評量) (完成)
-- [course_assessments/{id}/actions/correct(POST)-檢討課堂評量](#course_assessments/{id}/actions/correctPOST-檢討課堂評量) (完成)
-- [course_assessments/{id}/actions/publish_answer(POST)-老師公布課堂評量答案](#course_assessments/{id}/actions/publish_answerpost-老師公布課堂評量答案) (完成)
-- [course_assessments/{id}/actions/correct_hand_essay(POST)-老師批閱課堂評量手寫題&文字題](#course_assessments/{id}/actions/correct_hand_essaypost-老師批閱課堂評量手寫題&文字題) (完成)
+- [course_assessments/{id}/actions/stop(POST)-停止課堂評量](#course_assessmentsidactionsstoppost-停止課堂評量) (完成)
+- [course_assessments/{id}/actions/restart(POST)-重新作答課堂評量](#course_assessmentsidactionsrestartpost-重新作答課堂評量) (完成)
+- [course_assessments/{id}/actions/collect(POST)-收卷課堂評量](#course_assessmentsidactionscollectpost-收卷課堂評量) (完成)
+- [course_assessments/{id}/actions/correct(POST)-檢討課堂評量](#course_assessmentsidactionscorrectpost-檢討課堂評量) (完成)
+- [course_assessments/{id}/actions/publish_answer(POST)-老師公布課堂評量答案](#course_assessmentsidactionspublish_answerpost-老師公布課堂評量答案) (完成)
+- [course_assessments/{id}/actions/correct_hand_essay(POST)-老師批閱課堂評量手寫題&文字題](#course_assessmentsidactionscorrect_hand_essaypost-老師批閱課堂評量手寫題文字題) (完成)
 - [course_assessments/{id}/actions/answer(POST)-學生回答課堂評量](#course_assessmentsidactionsanswerpost-學生回答課堂評量) (完成)
-- [course_assessments/{id}/actions/get_answering_status(GET)-取得課堂評量即時答題狀態](#course_assessments/{id}/actions/get_answering_statusget-取得課堂評量即時答題狀態) (完成)
-- [course_assessments/{id}/actions/get_statistics(GET)-取得課堂評量答題統計](#course_assessments/{id}/actions/get_statisticsget-取得課堂評量答題統計) (完成)
-- [course_assessments/{id}/actions/get_result(GET)-取得學生個人課堂評量結果](#course_assessments/{id}/actions/get_resultget-取得學生個人課堂評量結果) #待確認 PDF 來源
-- [course_assessments/{id}/actions/get_stu_status(GET)-取得學生個人課堂評量狀態](#course_assessments/{id}/actions/get_stu_statusget-取得學生個人課堂評量狀態) (完成)
+- [course_assessments/{id}/actions/get_answering_status(GET)-取得課堂評量即時答題狀態](#course_assessmentsidactionsget_answering_statusget-取得課堂評量即時答題狀態) (完成)
+- [course_assessments/{id}/actions/get_statistics(GET)-取得課堂評量答題統計](#course_assessmentsidactionsget_statisticsget-取得課堂評量答題統計) (完成)
+- [course_assessments/{id}/actions/get_result(GET)-取得學生個人課堂評量結果](#course_assessmentsidactionsget_resultget-取得學生個人課堂評量結果) #待確認 PDF 來源
+- [course_assessments/{id}/actions/get_stu_status(GET)-取得學生個人課堂評量狀態](#course_assessmentsidactionsget_stu_statusget-取得學生個人課堂評量狀態) (完成)
 
-- [course_assessments/{id}/actions/export(POST)-匯出課堂評量](#course_assessments/{id}/actions/exportPOST-匯出課堂評量) (完成)
-- [course_assessments/{id}/actions/import(POST)-匯入課堂評量](#course_assessments/{id}/actions/importPOST-匯入課堂評量) (完成)
-- [course_assessments/{id}/actions/remove(POST)-移除題庫課堂評量](#course_assessments/{id}/actions/removePOST-移除題庫課堂評量) (完成)
-- [course_assessments/show_tpps(GET)-取得題庫課堂評量](#course_assessments/show_tppsGET-取得題庫課堂評量) (完成)
+- [course_assessments/{id}/actions/export(POST)-匯出課堂評量](#course_assessmentsidactionsexportpost-匯出課堂評量) (完成)
+- [course_assessments/{id}/actions/import(POST)-匯入課堂評量](#course_assessmentsidactionsimportpost-匯入課堂評量) (完成)
+- [course_assessments/{id}/actions/remove(POST)-移除題庫課堂評量](#course_assessmentsidactionsremovepost-移除題庫課堂評量) (完成)
+- [course_assessments/show_tpps(GET)-取得題庫課堂評量](#course_assessmentsshow_tppspost-取得題庫課堂評量) (完成)
 
 ### test(GET)-測試
 
