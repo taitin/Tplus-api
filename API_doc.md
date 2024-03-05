@@ -1578,6 +1578,23 @@
 }
 ```
 
+#### MQTT
+
+- nickname:加入學生暱稱
+- course_stu_total:線上學生人數
+
+```json
+{
+  "course_data": "略",
+  "status": "course_stu_login",
+  "api": "",
+  "method": "",
+  "course_stu_ids": [],
+  "nickname": "\u5c0f\u660e",
+  "course_stu_total": 19
+}
+```
+
 ### course_stus/update(POST)-更新課堂學生
 
 #### Request
@@ -5851,6 +5868,9 @@
 
 - status 說明參考[課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-MQTT/取得學生個人化狀態說明) 課堂評量 status 欄位
 
+ 回傳欄位說明
+ pages.options 內容為 string 如  ['A','B','C','D'] 
+
 -成功
 
 - Body:
@@ -6213,6 +6233,23 @@
 {
   "result": false,
   "msg": ["Question id not found:19, 23"]
+}
+```
+
+#### MQTT
+
+- nickname:交卷學生暱稱
+- finished_stu_total:目前已交卷數量
+
+```json
+{
+  "course_data": "略",
+  "status": "course_stu_finished_assessment",
+  "api": "",
+  "method": "",
+  "course_stu_ids": [],
+  "nickname": "Alex",
+  "finished_stu_total": 4
 }
 ```
 
