@@ -5869,7 +5869,7 @@
 - status 說明參考[課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-MQTT/取得學生個人化狀態說明) 課堂評量 status 欄位
 
  回傳欄位說明
--pages.options 內容為 string 如  ['A','B','C','D'] 
+- pages.options 內容為 string 如  ['A','B','C','D'] 
 
 -成功
 
