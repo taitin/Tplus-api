@@ -2414,7 +2414,7 @@
   "status": "quiz_corrected",
   "api": "course_quizzes/{id}/actions/get_correct",
   "method": "get",
-  "course_stu_ids": ["{course_stu_id}"]
+  "course_stu_ids": [{course_stu_id}]
 }
 ```
 
@@ -5900,7 +5900,7 @@
         "created_at": "2024-02-15 10:05:06",
         "updated_at": "2024-02-15 10:05:06",
         "deleted_at": null,
-        "options": [],
+        "options": ["A","B","C","D"],
         "question_ids": [50, 51, 52, 53],
         "quest_file": {
           "id": 94,
@@ -6138,7 +6138,7 @@
   "status": "assessment_answering",
   "api": "course_assessments/{id}/actions/answer",
   "method": "post",
-  "course_stu_ids": {}
+  "course_stu_ids": []
 }
 ```
 
