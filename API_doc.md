@@ -25,7 +25,7 @@
 - [test(GET)-API 測試](#testget-測試) (完成)
 - [test(POST)-測試](#testpost-測試) (完成)
 
-#### 1.1 帳號相關
+### 帳號相關
 
 - [login(POST)-登入](#loginpost-登入) (完成)
 - [login_open_id(POST)-OpenID 登入](#loginopenidpost-OpenID登入)
@@ -35,11 +35,11 @@
 - [users/{id}(GET)-取得個人資料](#usersidget-取得個人資料) (完成)
 - [users/{id}(PUT)-更新個人資料](#usersidput-更新個人資料) (完成)
 
-#### 1.2 班級/課程相關
+### 班級/課程相關
 
-- [teachers/{id}/courses(GET)-取得老師所有班級課程](#teachersidcoursesget-取得老師所有班級課程) (完成)
+- [teachers/{id}/class_subjects(GET)-取得老師所有班級課程](#teachersidclass_subjectsget-取得老師所有班級課程) (完成)
 
-#### 1.3 課堂相關
+### 課堂相關
 
 - [courses/create(POST)-建立課堂](#coursescreatepost-建立課堂) (完成)
 - [courses/{id}(GET)-取得課堂資料](#coursesidget-取得課堂資料) (完成)
@@ -51,50 +51,51 @@
 - [courses/{id}/top10(GET)-取得課堂榮譽榜](#coursesidtop10get-取得課堂榮譽榜) (完成)
 - [courses/{id}/clean_scores(POST)-清除課堂分數](#coursesidclean_scorespost-清除課堂分數) (完成)
 
-#### 1.4 老師相關
+### 老師相關
 
 - [teacher_comments(GET)-取得所有評語](#teacher_commentsget-取得所有評語) (完成)
 - [teacher_comments/create(POST)-建立評語](#teacher_commentscreatepost-建立評語) (完成)
 - [course_stus/{id}/actions/comment(PUT)-更新學生評語](#course_stusidactionscommentput-更新學生評語) (完成)
 
-#### 1.5 課堂學生相關
+### 課堂學生相關
 
 - [course_stus/create(POST)-建立課堂學生](#course_stuscreatepost-建立課堂學生) (完成)
 - [course_stus/update(POST)-更新課堂學生](#course_stusupdatepost-更新課堂學生) (完成)
+- [course_stus/get_avatars(POST)-取得課堂學生大頭貼](#course_stusget_avatarspost-取得課堂學生大頭貼) (完成)
 - [course_score_logs/create(POST)-幫課堂學生分組加減分](#course_score_logscreatepost-幫課堂學生分組加減分) (未完成分組)
 
-#### 1.5 課堂串流相關
+### 課堂串流相關
 
 - [課堂串流-MQTT](#課堂串流-MQTT) (完成)
 - [course_streams/create(POST)-建立課堂串流](#course_streamscreatepost-建立課堂串流) (完成)
 - [course_streams/{id}(PUT)-更新課堂串流](#course_streamsidput-更新課堂串流) (完成)
 - [course_streams/{id}?token={token}&force_get={force_get}(GET)-取得課堂串流資料](#course_streamsid?token=token&force_get=force_getget-取得課堂串流資料) (完成)
 
-#### 1.6 快問快答相關
+### 快問快答相關
 
 - [課堂快問快答-MQTT/取得學生個人化狀態說明](#課堂快問快答-mqtt取得學生個人化狀態說明) (完成)
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
-- [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
-- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
+- [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidPOST-更新課堂快問快答) (完成)
+- [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
 - [course_quizzes/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生快問快答答案](#course_quizzesidactionsget_answercourse_stu_idcourse_stu_idget-老師取得學生快問快答答案)
 - [course_quizzes/{id}/actions/correct(POST)-老師批閱學生快問快答答案](#course_quizzesidactionscorrectpost-老師批閱學生快問快答答案)
 - [course_quizzes/{id}/actions/get_correct?token={token}(GET)-學生取得老師快問快答批閱結果](#course_quizzesidactionsget_correcttokentokenget-學生取得老師快問快答批閱結果)
 - [course_quizzes/{id}/actions/get_stu_status(GET)-取得學生個人課堂快問快答狀態](#course_quizzesidactionsget_stu_statusget-取得學生個人課堂快問快答狀態) (完成)
 
-#### 派送相關
+### 派送相關
 
 - [course_deliveries/create(POST)-建立課堂派送](#course_deliveriescreatepost-建立課堂派送) (完成)
-- [course_deliveries/{id}?token={token}&force_get={force_get}(GET)-取得課堂派送](#course_deliveriesid?token=token&force_get=force_getget-取得課堂派送) (完成)
+- [course_deliveries/{id}?token={token}&force_get={force_get}(GET)-取得課堂派送](#course_deliveriesidtokentokenforce_getforce_getget-取得課堂派送) (完成)
 
 ### 分組相關
 
 - [course_teams/create(POST)-建立課堂分組](#course_teamscreatepost-建立課堂分組) (完成)
-- [course_teams/{id}(PUT)-更新課堂分組](#course_teamsidput-更新更新課堂分組) (完成)
+- [course_teams/{id}(PUT)-更新課堂分組](#course_teamsidput-更新課堂分組) (完成)
 - [course_teams/{id}(DELETE)-刪除課堂分組](#course_teamsiddelete-刪除課堂分組) (完成)
 - [courses/{id}/course_teams/random_create(POST)-建立隨機課堂分組](#coursesidcourse_teamsrandom_createpost-建立隨機課堂分組) (完成)
 - [courses/{id}/course_teams(GET)-取得所有課堂分組](#coursesidcourse_teamsget-取得所有課堂分組) (完成)
-- [course_teams/my(GET)-學生取得自己課堂分組](#course_teams/myget-學生取得自己課堂分組) (完成)
+- [course_teams/my(GET)-學生取得自己課堂分組](#course_teamsmyget-學生取得自己課堂分組) (完成)
 
 ### 抽籤相關
 
@@ -104,27 +105,27 @@
 
 ### 任務相關
 
-- [課堂任務-MQTT/取得學生個人化狀態說明](#課堂任務-MQTT/取得學生個人化狀態說明) (完成)
+- [課堂任務-MQTT/取得學生個人化狀態說明](#課堂任務-mqtt取得學生個人化狀態說明) (完成)
 - [course_tasks/create(POST)-建立課堂任務](#course_taskscreatepost-建立課堂任務) (完成)
 - [course_tasks/{id}(GET)-取得課堂任務](#course_tasksidget-取得課堂任務) (完成)
 - [course_tasks/{id}/actions/answer(POST)-學生回答課堂任務](#course_tasksidactionsanswerpost-學生回答課堂任務) (完成)
-- [course_tasks/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生任務答案](#course_tasks/{id}/actions/get_answer?course_stu_id={course_stu_id}get-老師取得學生任務答案)
-- [course_tasks/{id}/actions/correct(POST)-老師批閱學生任務答案](#course_tasks/{id}/actions/correctpost-老師批閱學生任務答案)
-- [course_tasks/{id}/actions/get_correct?token={token}(GET)-學生取得老師任務批閱結果](#course_tasks/{id}/actions/get_correct?token={token}GET-學生取得老師任務批閱結果)
-- [course_tasks/{id}/actions/close(POST)-老師結束任務](#course_tasks/{id}/actions/closePOST-老師結束任務)
-- [course_tasks/{id}/actions/get_stu_status(GET)-取得學生個人課堂任務狀態](#course_tasks/{id}/actions/get_stu_statusget-取得學生個人課堂任務狀態) (完成)
+- [course_tasks/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生任務答案](#course_tasksidactionsget_answercourse_stu_idcourse_stu_idget-老師取得學生任務答案)
+- [course_tasks/{id}/actions/correct(POST)-老師批閱學生任務答案](#course_tasksidactionscorrectpost-老師批閱學生任務答案)
+- [course_tasks/{id}/actions/get_correct?token={token}(GET)-學生取得老師任務批閱結果](#course_tasksidactionsget_correcttokentokenget-學生取得老師任務批閱結果)
+- [course_tasks/{id}/actions/close(POST)-老師結束任務](#course_tasksidactionsclosepost-老師結束任務)
+- [course_tasks/{id}/actions/get_stu_status(GET)-取得學生個人課堂任務狀態](#course_tasksidactionsget_stu_statusget-取得學生個人課堂任務狀態) (完成)
 
 ### 搶答相關
 
-- [課堂搶答-MQTT/取得學生個人化狀態說明](#課堂搶答-MQTT/取得學生個人化狀態說明) (完成)
+- [課堂搶答-MQTT/取得學生個人化狀態說明](#課堂搶答-mqtt取得學生個人化狀態說明) (完成)
 - [course_qas/create(POST)-建立課堂搶答](#course_qascreatepost-建立課堂搶答) (完成)
 - [course_qas/{id}(GET)-取得課堂搶答](#course_qasidget-取得課堂搶答) (完成)
-- [course_qas/{id}/actions/run(POST)-開始課堂搶答](#course_qas/{id}/actions/runPOST-開始課堂搶答) (完成)
-- [course_qas/{id}/actions/stop(POST)-停止課堂搶答](#course_qas/{id}/actions/stopPOST-停止課堂搶答) (完成)
+- [course_qas/{id}/actions/run(POST)-開始課堂搶答](#course_qasidactionsrunpost-開始課堂搶答) (完成)
+- [course_qas/{id}/actions/stop(POST)-停止課堂搶答](#course_qasidactionsstoppost-停止課堂搶答) (完成)
 - [course_qas/{id}/actions/answer(POST)-學生回答課堂搶答](#course_qasidactionsanswerpost-學生回答課堂搶答) (完成)
-- [course_qas/{id}/actions/publish_answer(POST)-老師公布競賽搶答答案](#course_qas/{id}/actions/publish_answerpost-老師公布競賽搶答答案) (完成)
-- [course_qas/{id}/actions/get_result(GET)-取得目前競賽搶答狀況](#course_qas/{id}/actions/get_resultget-取得目前競賽搶答狀況) (完成)
-- [course_qas/{id}/actions/get_stu_status(GET)-取得學生個人課堂搶答狀態](#course_qas/{id}/actions/get_stu_statusget-取得學生個人課堂搶答狀態) (完成)
+- [course_qas/{id}/actions/publish_answer(POST)-老師公布競賽搶答答案](#course_qasidactionspublish_answerpost-老師公布競賽搶答答案) (完成)
+- [course_qas/{id}/actions/get_result(GET)-取得目前競賽搶答狀況](#course_qasidactionsget_resultget-取得目前競賽搶答狀況) (完成)
+- [course_qas/{id}/actions/get_stu_status(GET)-取得學生個人課堂搶答狀態](#course_qasidactionsget_stu_statusget-取得學生個人課堂搶答狀態) (完成)
 
 ### 評量相關
 
@@ -1638,6 +1639,79 @@
 }
 ```
 
+### course_stus/get_avatars(POST)-取得課堂學生大頭貼
+
+#### Request
+
+- Method: **POST**
+- URL: `course_stus/get_avatars`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱     | 類型  | 說明        | 範例      | 是否必須 |
+| :------- | :---- | :---------- | :-------- | :------- |
+| students | array | 對象學生 ID | [1, 2, 3] | X        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "avatar_info": [
+      {
+        "id": 13,
+        "nickname": "min",
+        "avatar_file": {
+          "id": 132,
+          "uploader_id": 0,
+          "uploader_type": "student",
+          "file_type": "image",
+          "course_id": 1,
+          "drive_id": "/storage/NtjJqm055RMSkhZsA5I722tknId4beHEA1XNnGfz.png",
+          "created_at": "2024-02-24 12:00:14",
+          "updated_at": "2024-02-24 12:00:14",
+          "deleted_at": null
+        }
+      },
+      {
+        "id": 20,
+        "nickname": "Alex",
+        "avatar_file": {
+          "id": 131,
+          "uploader_id": 5,
+          "uploader_type": "student",
+          "file_type": "image",
+          "course_id": 1,
+          "drive_id": "/storage/PZMFixNRAytUfUqoc0pmyAgH1PDcAbQUG0kv8XTF.png",
+          "created_at": "2024-02-24 11:58:33",
+          "updated_at": "2024-02-24 11:58:33",
+          "deleted_at": null
+        }
+      }
+    ]
+  }
+}
+```
+
+-失敗
+
+#### 暱稱重複
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["nickname:The nickname is already used."]
+}
+```
+
 ### course_score_logs/create(POST)-幫課堂學生分組加減分
 
 #### Request
@@ -2414,7 +2488,7 @@
   "status": "quiz_corrected",
   "api": "course_quizzes/{id}/actions/get_correct",
   "method": "get",
-  "course_stu_ids": [{course_stu_id}]
+  "course_stu_ids": ["{course_stu_id}"]
 }
 ```
 
@@ -2813,7 +2887,7 @@
 }
 ```
 
-### 組長 id 不在分組中
+#### 組長 id 不在分組中
 
 ```json
 {
@@ -2870,6 +2944,542 @@
 {
   "result": false,
   "msg": ["CourseTeam with id 17 not found."]
+}
+```
+
+### courses/{id}/course_teams/random_create(POST)-建立隨機課堂分組
+
+#### Request
+
+- Method: **POST**
+- URL: `courses/{id}/course_teams/random_create`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型 | 說明                 | 範例 | 是否必須 |
+| :----------- | :--- | :------------------- | :--- | :------- |
+| course_id    | int  | 課堂 id              | 1    | O        |
+| team_number  | int  | 分成幾組個數         | 5    | O        |
+| Bearer Token |      | 要為老師身分才可建立 |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": [
+    {
+      "id": 68,
+      "name": "A",
+      "score": 0,
+      "course_id": 1,
+      "whiteboard_url": "url",
+      "created_at": "2024-03-09 13:16:23",
+      "updated_at": "2024-03-09 13:16:23",
+      "deleted_at": null,
+      "course_stu_teams": [
+        {
+          "id": 163,
+          "course_stu_id": 16,
+          "course_team_id": 68,
+          "is_leader": 1,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 16,
+            "course_id": 1,
+            "user_id": 3,
+            "nickname": "王晶晶3",
+            "is_visitor": 0,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-02-23 12:35:27",
+            "updated_at": "2024-02-23 12:35:27",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 164,
+          "course_stu_id": 24,
+          "course_team_id": 68,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 24,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小名5",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-03-03 15:30:53",
+            "updated_at": "2024-03-03 15:30:53",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 165,
+          "course_stu_id": 17,
+          "course_team_id": 68,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 17,
+            "course_id": 1,
+            "user_id": 3,
+            "nickname": "王晶晶",
+            "is_visitor": 0,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-02-23 12:36:13",
+            "updated_at": "2024-02-23 12:36:13",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 166,
+          "course_stu_id": 23,
+          "course_team_id": 68,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 23,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小名4",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-03-03 15:30:21",
+            "updated_at": "2024-03-03 15:30:21",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 167,
+          "course_stu_id": 7,
+          "course_team_id": 68,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 7,
+            "course_id": 1,
+            "user_id": 3,
+            "nickname": "晶晶",
+            "is_visitor": 0,
+            "score": 0,
+            "avatar_file_id": 1,
+            "is_online": "1",
+            "created_at": "2024-01-03 17:23:21",
+            "updated_at": "2024-01-03 17:23:21",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 168,
+          "course_stu_id": 25,
+          "course_team_id": 68,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 25,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小名12",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-03-03 15:32:02",
+            "updated_at": "2024-03-03 15:32:02",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "name": "B",
+      "score": 0,
+      "course_id": 1,
+      "whiteboard_url": "url",
+      "created_at": "2024-03-09 13:16:23",
+      "updated_at": "2024-03-09 13:16:23",
+      "deleted_at": null,
+      "course_stu_teams": [
+        {
+          "id": 169,
+          "course_stu_id": 18,
+          "course_team_id": 69,
+          "is_leader": 1,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 18,
+            "course_id": 1,
+            "user_id": 3,
+            "nickname": "王晶晶3",
+            "is_visitor": 0,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-02-23 12:36:28",
+            "updated_at": "2024-02-23 12:36:28",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 170,
+          "course_stu_id": 4,
+          "course_team_id": 69,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 4,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小火",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 1,
+            "is_online": "1",
+            "created_at": "2023-12-30 11:39:56",
+            "updated_at": "2024-02-23 11:47:16",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 171,
+          "course_stu_id": 19,
+          "course_team_id": 69,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 19,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小名",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-02-23 12:39:25",
+            "updated_at": "2024-02-23 12:39:25",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 172,
+          "course_stu_id": 22,
+          "course_team_id": 69,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 22,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小名3",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-03-03 15:28:50",
+            "updated_at": "2024-03-03 15:28:50",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 173,
+          "course_stu_id": 20,
+          "course_team_id": 69,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 20,
+            "course_id": 1,
+            "user_id": 5,
+            "nickname": "Alex",
+            "is_visitor": 0,
+            "score": 0,
+            "avatar_file_id": 131,
+            "is_online": "1",
+            "created_at": "2024-02-24 11:52:53",
+            "updated_at": "2024-02-24 11:58:33",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 174,
+          "course_stu_id": 5,
+          "course_team_id": 69,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 5,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小土",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 1,
+            "is_online": "1",
+            "created_at": "2023-12-30 13:06:05",
+            "updated_at": "2024-02-23 11:47:16",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "name": "C",
+      "score": 0,
+      "course_id": 1,
+      "whiteboard_url": "url",
+      "created_at": "2024-03-09 13:16:23",
+      "updated_at": "2024-03-09 13:16:23",
+      "deleted_at": null,
+      "course_stu_teams": [
+        {
+          "id": 175,
+          "course_stu_id": 21,
+          "course_team_id": 70,
+          "is_leader": 1,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 21,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "小名2",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 0,
+            "is_online": "1",
+            "created_at": "2024-03-03 15:23:13",
+            "updated_at": "2024-03-03 15:23:13",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 176,
+          "course_stu_id": 11,
+          "course_team_id": 70,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 11,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "心心",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 3,
+            "is_online": "1",
+            "created_at": "2024-01-14 13:40:45",
+            "updated_at": "2024-01-14 13:40:45",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 177,
+          "course_stu_id": 13,
+          "course_team_id": 70,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 13,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "min",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 132,
+            "is_online": "1",
+            "created_at": "2024-01-14 14:31:34",
+            "updated_at": "2024-02-24 12:00:14",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 178,
+          "course_stu_id": 12,
+          "course_team_id": 70,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 12,
+            "course_id": 1,
+            "user_id": 3,
+            "nickname": "小明",
+            "is_visitor": 0,
+            "score": 0,
+            "avatar_file_id": 32,
+            "is_online": "1",
+            "created_at": "2024-01-14 13:46:10",
+            "updated_at": "2024-01-14 13:46:10",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 179,
+          "course_stu_id": 10,
+          "course_team_id": 70,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 10,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "心心",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 4,
+            "is_online": "1",
+            "created_at": "2024-01-13 17:25:22",
+            "updated_at": "2024-01-13 17:25:22",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 180,
+          "course_stu_id": 15,
+          "course_team_id": 70,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 15,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "心心",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 5,
+            "is_online": "1",
+            "created_at": "2024-01-16 22:36:33",
+            "updated_at": "2024-01-16 22:36:33",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 181,
+          "course_stu_id": 9,
+          "course_team_id": 70,
+          "is_leader": 0,
+          "created_at": "2024-03-09 13:16:23",
+          "updated_at": "2024-03-09 13:16:23",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 9,
+            "course_id": 1,
+            "user_id": 0,
+            "nickname": "甜甜",
+            "is_visitor": 1,
+            "score": 0,
+            "avatar_file_id": 2,
+            "is_online": "1",
+            "created_at": "2024-01-04 12:00:57",
+            "updated_at": "2024-01-04 12:00:57",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+-失敗
+
+#### 沒有權限(不是老師)
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
 }
 ```
 
@@ -3463,8 +4073,8 @@
 - Path-params:
 
 | 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
-| :----------- | :--- | :---------------------- | :---------------------------------- | :------- | --- |
-| id           | int  | 抽籤 ID                 | 1                                   | O        |     |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 抽籤 ID                 | 1                                   | O        |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
@@ -3536,9 +4146,9 @@
 - Path-params:
 
 | 名稱         | 類型 | 說明           | 範例 | 是否必須 |
-| :----------- | :--- | :------------- | :--- | :------- | --- |
-| id           | int  | 課堂 ID        | 1    | O        |     |
-| Bearer Token |      | 只有老師可以用 |      | O        |     |
+| :----------- | :--- | :------------- | :--- | :------- |
+| id           | int  | 課堂 ID        | 1    | O        |
+| Bearer Token |      | 只有老師可以用 |      | O        |
 
 #### Response
 
@@ -3742,8 +4352,8 @@
 - Path-params:
 
 | 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
-| :----------- | :--- | :---------------------- | :---------------------------------- | :------- | --- |
-| id           | int  | 課堂任務 ID             | 1                                   | O        |     |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 課堂任務 ID             | 1                                   | O        |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
@@ -4405,8 +5015,8 @@
 - Path-params:
 
 | 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
-| :----------- | :--- | :---------------------- | :---------------------------------- | :------- | --- |
-| id           | int  | 課堂搶答 ID             | 1                                   | O        |     |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 課堂搶答 ID             | 1                                   | O        |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
@@ -5851,8 +6461,8 @@
 - Path-params:
 
 | 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
-| :----------- | :--- | :---------------------- | :---------------------------------- | :------- | --- |
-| id           | int  | 課堂評量 ID             | 1                                   | O        |     |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 課堂評量 ID             | 1                                   | O        |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
@@ -5867,9 +6477,6 @@
 | pages-question_ids | array  | 課堂評量頁面中所包含的題目 id, 評量未開始時是空的 | [50, 51, 52, 53] |
 
 - status 說明參考[課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-MQTT/取得學生個人化狀態說明) 課堂評量 status 欄位
-
- 回傳欄位說明
-- pages.options 內容為 string 如  ['A','B','C','D'] 
 
 -成功
 
@@ -5900,7 +6507,7 @@
         "created_at": "2024-02-15 10:05:06",
         "updated_at": "2024-02-15 10:05:06",
         "deleted_at": null,
-        "options": ["A","B","C","D"],
+        "options": [],
         "question_ids": [50, 51, 52, 53],
         "quest_file": {
           "id": 94,
@@ -6138,7 +6745,7 @@
   "status": "assessment_answering",
   "api": "course_assessments/{id}/actions/answer",
   "method": "post",
-  "course_stu_ids": []
+  "course_stu_ids": {}
 }
 ```
 
@@ -6376,10 +6983,21 @@
 - Headers: Content-Type:multipart/form-data
 - Path-params:
 
-| 名稱         | 類型 | 說明         | 範例 | 是否必須 |
-| :----------- | :--- | :----------- | :--- | :------- |
-| id           | int  | 課堂評量 ID  | 1    | O        |
-| Bearer Token |      | 要為老師身分 |      | O        |
+| 名稱             | 類型 | 說明             | 範例                    | 是否必須                        |
+| :--------------- | :--- | :--------------- | :---------------------- | :------------------------------ |
+| id               | int  | 課堂評量 ID      | 1                       | O                               |
+| Bearer Token     |      | 要為老師身分     |                         | O                               |
+| question_answers | json | 題目 ID 對應答案 | {"61":"ABC", "62":"BC"} | X                               |
+| page_id          | int  | 頁數 ID          | 13                      | X(如果 correct_file 在的話必須) |
+| correct_file     | file | 圖片             |                         | X                               |
+
+- 範例 form fields
+
+```
+question_answers => {"62":"ABD", "65":"B"}
+page_id => 13
+correct_file => "answer.png"
+```
 
 - 狀態說明
   課堂評量執行此 API 成功後狀態會更新為 correcting
@@ -6521,8 +7139,8 @@
 - Path-params:
 
 | 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
-| :----------- | :--- | :---------------------- | :---------------------------------- | :------- | --- |
-| id           | int  | 課堂評量 ID             | 1                                   | O        |     |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 課堂評量 ID             | 1                                   | O        |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
@@ -6560,8 +7178,8 @@
 - Path-params:
 
 | 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
-| :----------- | :--- | :---------------------- | :---------------------------------- | :------- | --- |
-| id           | int  | 課堂評量 ID             | 1                                   | O        |     |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 課堂評量 ID             | 1                                   | O        |
 | Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
