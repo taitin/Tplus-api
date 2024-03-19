@@ -1453,6 +1453,7 @@
 
 | 名稱         | 類型   | 說明         | 範例     | 是否必須 |
 | :----------- | :----- | :----------- | :------- | :------- |
+| id           | int    | 課堂學生 ID  | 1        | O        |
 | comment      | string | 評語         | 表現優良 | O        |
 | Bearer Token |        | 只有老師可用 |          | O        |
 
@@ -4063,6 +4064,17 @@
 }
 ```
 
+#### 課堂沒有學生/組別
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["No participants."]
+}
+```
+
 ### course_draw_lots/{id}(GET)-取得課堂抽籤結果
 
 #### Request
@@ -4089,13 +4101,66 @@
   "result": true,
   "msg": ["Success"],
   "data": {
-    "id": 29,
+    "id": 41,
     "course_id": 1,
     "draw_type": "stu",
-    "winner_id": 10,
-    "participants": "[{\"id\":4,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5c0f\\u706b\",\"is_visitor\":1,\"score\":\"5\",\"avatar_file_id\":1,\"is_online\":\"1\",\"created_at\":\"2023-12-30 11:39:56\",\"updated_at\":\"2023-12-30 11:39:56\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":5,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5c0f\\u571f\",\"is_visitor\":1,\"score\":\"10\",\"avatar_file_id\":1,\"is_online\":\"1\",\"created_at\":\"2023-12-30 13:06:05\",\"updated_at\":\"2024-01-19 11:17:15\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":7,\"course_id\":1,\"user_id\":3,\"nickname\":\"\\u6676\\u6676\",\"is_visitor\":0,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-03 17:23:21\",\"updated_at\":\"2024-01-03 17:23:21\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":9,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u751c\\u751c\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-04 12:00:57\",\"updated_at\":\"2024-01-04 12:00:57\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":10,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-13 17:25:22\",\"updated_at\":\"2024-01-13 17:25:22\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":11,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 13:40:45\",\"updated_at\":\"2024-01-14 13:40:45\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":12,\"course_id\":1,\"user_id\":3,\"nickname\":\"\\u5c0f\\u660e\",\"is_visitor\":0,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 13:46:10\",\"updated_at\":\"2024-01-14 13:46:10\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":13,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 14:31:34\",\"updated_at\":\"2024-01-14 14:31:34\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":15,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-16 22:36:33\",\"updated_at\":\"2024-01-16 22:36:33\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"}]",
-    "created_at": "2024-01-23 17:55:20",
-    "updated_at": "2024-01-23 17:55:20",
+    "winner_id": 25,
+    "participants": [
+      {
+        "id": 4,
+        "course_id": 1,
+        "user_id": 0,
+        "nickname": "小火",
+        "is_visitor": 1,
+        "score": 0,
+        "avatar_file_id": 1,
+        "is_online": "1",
+        "created_at": "2023-12-30 11:39:56",
+        "updated_at": "2024-02-23 11:47:16",
+        "deleted_at": null,
+        "stream_url": null,
+        "comment": "",
+        "avatar_file": {
+          "id": 1,
+          "uploader_id": 0,
+          "uploader_type": "student",
+          "file_type": "image",
+          "course_id": 1,
+          "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+          "created_at": "2023-12-30 11:32:58",
+          "updated_at": "2023-12-30 11:32:58",
+          "deleted_at": null
+        }
+      },
+      {
+        "id": 5,
+        "course_id": 1,
+        "user_id": 0,
+        "nickname": "小土",
+        "is_visitor": 1,
+        "score": 0,
+        "avatar_file_id": 1,
+        "is_online": "1",
+        "created_at": "2023-12-30 13:06:05",
+        "updated_at": "2024-02-23 11:47:16",
+        "deleted_at": null,
+        "stream_url": null,
+        "comment": "",
+        "avatar_file": {
+          "id": 1,
+          "uploader_id": 0,
+          "uploader_type": "student",
+          "file_type": "image",
+          "course_id": 1,
+          "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+          "created_at": "2023-12-30 11:32:58",
+          "updated_at": "2023-12-30 11:32:58",
+          "deleted_at": null
+        }
+      }
+    ],
+    "created_at": "2024-03-18 21:14:03",
+    "updated_at": "2024-03-18 21:14:03",
     "deleted_at": null,
     "course": {
       "id": 1,
@@ -4106,9 +4171,9 @@
       "is_open": 1,
       "status": "draw",
       "created_at": "2023-12-28 11:15:04",
-      "updated_at": "2024-01-23 17:57:23",
+      "updated_at": "2024-03-18 21:30:04",
       "deleted_at": null,
-      "status_id": 30,
+      "status_id": 61,
       "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M8 0L8 1L9 1L9 2L8 2L8 5L11 5L11 4L12 4L12 3L13 3L13 0L12 0L12 3L11 3L11 2L10 2L10 0ZM9 2L9 4L11 4L11 3L10 3L10 2ZM8 6L8 7L9 7L9 8L8 8L8 9L9 9L9 10L6 10L6 9L7 9L7 8L6 8L6 9L4 9L4 8L0 8L0 9L1 9L1 10L0 10L0 11L3 11L3 12L2 12L2 13L8 13L8 14L9 14L9 16L10 16L10 17L8 17L8 21L9 21L9 19L10 19L10 17L12 17L12 16L13 16L13 19L12 19L12 18L11 18L11 21L14 21L14 20L15 20L15 19L14 19L14 18L15 18L15 17L14 17L14 16L13 16L13 15L11 15L11 13L12 13L12 12L13 12L13 9L14 9L14 8L13 8L13 9L12 9L12 12L10 12L10 14L9 14L9 12L8 12L8 11L9 11L9 10L10 10L10 9L11 9L11 6L10 6L10 7L9 7L9 6ZM12 6L12 7L13 7L13 6ZM9 8L9 9L10 9L10 8ZM16 8L16 10L14 10L14 11L16 11L16 10L18 10L18 9L19 9L19 8ZM20 8L20 9L21 9L21 8ZM2 9L2 10L3 10L3 11L4 11L4 9ZM19 10L19 11L21 11L21 10ZM6 11L6 12L7 12L7 11ZM17 11L17 12L18 12L18 11ZM0 12L0 13L1 13L1 12ZM14 12L14 13L13 13L13 14L14 14L14 15L15 15L15 16L17 16L17 17L16 17L16 18L18 18L18 19L19 19L19 18L20 18L20 17L19 17L19 15L17 15L17 13L16 13L16 12ZM20 12L20 13L19 13L19 14L20 14L20 13L21 13L21 12ZM14 13L14 14L15 14L15 13ZM20 15L20 16L21 16L21 15ZM13 19L13 20L14 20L14 19ZM20 19L20 20L21 20L21 19ZM17 20L17 21L18 21L18 20ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n"
     }
   }
@@ -4162,93 +4227,129 @@
   "msg": ["Success"],
   "data": [
     {
-      "id": 22,
-      "course_id": 1,
-      "draw_type": "team",
-      "winner_id": 48,
-      "participants": "[{\"id\":47,\"name\":\"A\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":48,\"name\":\"B\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":49,\"name\":\"C\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null}]",
-      "created_at": "2024-01-23 17:48:53",
-      "updated_at": "2024-01-23 17:48:53",
-      "deleted_at": null
-    },
-    {
-      "id": 23,
-      "course_id": 1,
-      "draw_type": "team",
-      "winner_id": 48,
-      "participants": "[{\"id\":47,\"name\":\"A\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":48,\"name\":\"B\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":49,\"name\":\"C\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null}]",
-      "created_at": "2024-01-23 17:49:10",
-      "updated_at": "2024-01-23 17:49:10",
-      "deleted_at": null
-    },
-    {
-      "id": 24,
-      "course_id": 1,
-      "draw_type": "team",
-      "winner_id": 48,
-      "participants": "[{\"id\":47,\"name\":\"A\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":48,\"name\":\"B\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":49,\"name\":\"C\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null}]",
-      "created_at": "2024-01-23 17:49:11",
-      "updated_at": "2024-01-23 17:49:11",
-      "deleted_at": null
-    },
-    {
-      "id": 25,
-      "course_id": 1,
-      "draw_type": "team",
-      "winner_id": 47,
-      "participants": "[{\"id\":47,\"name\":\"A\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":48,\"name\":\"B\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":49,\"name\":\"C\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null}]",
-      "created_at": "2024-01-23 17:49:11",
-      "updated_at": "2024-01-23 17:49:11",
-      "deleted_at": null
-    },
-    {
-      "id": 26,
-      "course_id": 1,
-      "draw_type": "team",
-      "winner_id": 49,
-      "participants": "[{\"id\":47,\"name\":\"A\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":48,\"name\":\"B\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":49,\"name\":\"C\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null}]",
-      "created_at": "2024-01-23 17:49:12",
-      "updated_at": "2024-01-23 17:49:12",
-      "deleted_at": null
-    },
-    {
-      "id": 27,
-      "course_id": 1,
-      "draw_type": "team",
-      "winner_id": 47,
-      "participants": "[{\"id\":47,\"name\":\"A\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":48,\"name\":\"B\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":49,\"name\":\"C\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null}]",
-      "created_at": "2024-01-23 17:49:13",
-      "updated_at": "2024-01-23 17:49:13",
-      "deleted_at": null
-    },
-    {
-      "id": 28,
+      "id": 41,
       "course_id": 1,
       "draw_type": "stu",
-      "winner_id": 15,
-      "participants": "[{\"id\":4,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5c0f\\u706b\",\"is_visitor\":1,\"score\":\"5\",\"avatar_file_id\":1,\"is_online\":\"1\",\"created_at\":\"2023-12-30 11:39:56\",\"updated_at\":\"2023-12-30 11:39:56\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":5,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5c0f\\u571f\",\"is_visitor\":1,\"score\":\"10\",\"avatar_file_id\":1,\"is_online\":\"1\",\"created_at\":\"2023-12-30 13:06:05\",\"updated_at\":\"2024-01-19 11:17:15\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":7,\"course_id\":1,\"user_id\":3,\"nickname\":\"\\u6676\\u6676\",\"is_visitor\":0,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-03 17:23:21\",\"updated_at\":\"2024-01-03 17:23:21\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":9,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u751c\\u751c\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-04 12:00:57\",\"updated_at\":\"2024-01-04 12:00:57\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":10,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-13 17:25:22\",\"updated_at\":\"2024-01-13 17:25:22\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":11,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 13:40:45\",\"updated_at\":\"2024-01-14 13:40:45\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":12,\"course_id\":1,\"user_id\":3,\"nickname\":\"\\u5c0f\\u660e\",\"is_visitor\":0,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 13:46:10\",\"updated_at\":\"2024-01-14 13:46:10\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":13,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 14:31:34\",\"updated_at\":\"2024-01-14 14:31:34\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":15,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-16 22:36:33\",\"updated_at\":\"2024-01-16 22:36:33\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"}]",
-      "created_at": "2024-01-23 17:49:21",
-      "updated_at": "2024-01-23 17:49:21",
+      "winner_id": 4,
+      "participants": [
+        {
+          "id": 4,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小火",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 1,
+          "is_online": "1",
+          "created_at": "2023-12-30 11:39:56",
+          "updated_at": "2024-02-23 11:47:16",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 1,
+            "uploader_id": 0,
+            "uploader_type": "student",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+            "created_at": "2023-12-30 11:32:58",
+            "updated_at": "2023-12-30 11:32:58",
+            "deleted_at": null
+          }
+        },
+        {
+          "id": 5,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小土",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 1,
+          "is_online": "1",
+          "created_at": "2023-12-30 13:06:05",
+          "updated_at": "2024-02-23 11:47:16",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 1,
+            "uploader_id": 0,
+            "uploader_type": "student",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+            "created_at": "2023-12-30 11:32:58",
+            "updated_at": "2023-12-30 11:32:58",
+            "deleted_at": null
+          }
+        }
+      ],
+      "created_at": "2024-03-18 21:14:03",
+      "updated_at": "2024-03-18 21:14:03",
       "deleted_at": null
     },
     {
-      "id": 29,
+      "id": 42,
       "course_id": 1,
       "draw_type": "stu",
-      "winner_id": 10,
-      "participants": "[{\"id\":4,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5c0f\\u706b\",\"is_visitor\":1,\"score\":\"5\",\"avatar_file_id\":1,\"is_online\":\"1\",\"created_at\":\"2023-12-30 11:39:56\",\"updated_at\":\"2023-12-30 11:39:56\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":5,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5c0f\\u571f\",\"is_visitor\":1,\"score\":\"10\",\"avatar_file_id\":1,\"is_online\":\"1\",\"created_at\":\"2023-12-30 13:06:05\",\"updated_at\":\"2024-01-19 11:17:15\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":7,\"course_id\":1,\"user_id\":3,\"nickname\":\"\\u6676\\u6676\",\"is_visitor\":0,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-03 17:23:21\",\"updated_at\":\"2024-01-03 17:23:21\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":9,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u751c\\u751c\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-04 12:00:57\",\"updated_at\":\"2024-01-04 12:00:57\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":10,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-13 17:25:22\",\"updated_at\":\"2024-01-13 17:25:22\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":11,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 13:40:45\",\"updated_at\":\"2024-01-14 13:40:45\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":12,\"course_id\":1,\"user_id\":3,\"nickname\":\"\\u5c0f\\u660e\",\"is_visitor\":0,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 13:46:10\",\"updated_at\":\"2024-01-14 13:46:10\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":13,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-14 14:31:34\",\"updated_at\":\"2024-01-14 14:31:34\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"},{\"id\":15,\"course_id\":1,\"user_id\":0,\"nickname\":\"\\u5fc3\\u5fc3\",\"is_visitor\":1,\"score\":0,\"avatar_file_id\":0,\"is_online\":\"1\",\"created_at\":\"2024-01-16 22:36:33\",\"updated_at\":\"2024-01-16 22:36:33\",\"deleted_at\":null,\"stream_url\":null,\"comment\":\"\"}]",
-      "created_at": "2024-01-23 17:55:20",
-      "updated_at": "2024-01-23 17:55:20",
-      "deleted_at": null
-    },
-    {
-      "id": 30,
-      "course_id": 1,
-      "draw_type": "team",
-      "winner_id": 48,
-      "participants": "[{\"id\":47,\"name\":\"A\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":48,\"name\":\"B\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null},{\"id\":49,\"name\":\"C\",\"score\":0,\"course_id\":1,\"whiteboard_url\":\"url\",\"created_at\":\"2024-01-23 17:41:23\",\"updated_at\":\"2024-01-23 17:41:23\",\"deleted_at\":null}]",
-      "created_at": "2024-01-23 17:57:23",
-      "updated_at": "2024-01-23 17:57:23",
+      "winner_id": 5,
+      "participants": [
+        {
+          "id": 4,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小火",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 1,
+          "is_online": "1",
+          "created_at": "2023-12-30 11:39:56",
+          "updated_at": "2024-02-23 11:47:16",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 1,
+            "uploader_id": 0,
+            "uploader_type": "student",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+            "created_at": "2023-12-30 11:32:58",
+            "updated_at": "2023-12-30 11:32:58",
+            "deleted_at": null
+          }
+        },
+        {
+          "id": 5,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小土",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 1,
+          "is_online": "1",
+          "created_at": "2023-12-30 13:06:05",
+          "updated_at": "2024-02-23 11:47:16",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 1,
+            "uploader_id": 0,
+            "uploader_type": "student",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+            "created_at": "2023-12-30 11:32:58",
+            "updated_at": "2023-12-30 11:32:58",
+            "deleted_at": null
+          }
+        }
+      ],
+      "created_at": "2024-03-18 21:15:10",
+      "updated_at": "2024-03-18 21:15:10",
       "deleted_at": null
     }
   ]
