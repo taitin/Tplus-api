@@ -13,16 +13,6 @@
 
 ### 課堂搶答-MQTT/取得學生個人化狀態說明
 
-#### 課堂搶答發送 MQTT
-
-| 時機                                                         | status       | api                                      | method | 課堂搶答 status |
-| :----------------------------------------------------------- | :----------- | :--------------------------------------- | :----- | :-------------- |
-| 老師執行 API `course_qas/create` 成功後                      | qa           | `course_qas/{id}/actions/get_stu_status` | get    | closed          |
-| 老師執行 API `course_qas/{id}/actions/run` 成功後            | qa_answering | `course_qas/{id}/actions/answer`         | post   | running         |
-| 老師執行 API `course_qas/{id}/actions/stop` 成功後           | qa_stopped   |                                          |        | stopped         |
-| 老師執行 API `course_qas/{id}/actions/time_up` 成功後        | qa_time_up   |                                          |        | time_up         |
-| 老師執行 API `course_qas/{id}/actions/publish_answer` 成功後 | qa_complete  | `course_qas/{id}/actions/get_result`     | get    | complete        |
-
 #### 課堂搶答學生取得個人化狀態
 
 | 時機說明                                | status              | api                                  | method | 課堂搶答 status |
