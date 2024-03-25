@@ -10,6 +10,22 @@
 | 快問快答已被老師批改完成 | quiz_corrected | `course_quizzes/{id}/actions/get_correct` | get    | 1      
 
 
+### 課堂評量-MQTT/取得學生個人化狀態說明
+
+#### 課堂評量學生取得個人化狀態
+
+| 時機說明                 | status                | api                                          | method | 課堂評量 status |
+| :----------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
+| 評量未開始               | assessment_closed     |                                              |        | closed          |
+| 評量答題中, 學生還沒回答 | assessment_answering  | `course_assessments/{id}/actions/answer `    | post   | running         |
+| 評量答題中, 學生已回答   | assessment_answered   |                                              |        | running         |
+| 評量被中止               | assessment_stopped    |                                              |        | stopped         |
+| 評量已收卷               | assessment_collected  |                                              |        | collected       |
+| 評量檢討中               | assessment_correcting |                                              |        | correcting      |
+| 評量檢討完               | assessment_corrected  | `course_assessments/{id}/actions/get_result` |        | corrected       |
+
+
+
 
 ### 課堂搶答-MQTT/取得學生個人化狀態說明
 

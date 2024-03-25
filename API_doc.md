@@ -8,7 +8,7 @@
 
 - 使用 TPC/IP 作為傳輸層協議
 - 使用 HTTP 作為應用層協議
-- 上傳參數用 multipart/form-data
+- 上傳參數用 multipart/form-d分組qata
 - 回應參數格式皆為 json
 - 此接口清單遵循 restful 設計理念
 
