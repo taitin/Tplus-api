@@ -8,7 +8,7 @@
 
 - 使用 TPC/IP 作為傳輸層協議
 - 使用 HTTP 作為應用層協議
-- 上傳參數用 multipart/form-d分組qata
+- 上傳參數用 multipart/form-data
 - 回應參數格式皆為 json
 - 此接口清單遵循 restful 設計理念
 
@@ -19,6 +19,71 @@
 - 測試機網址
 
 ### [HTTP 接口清單](#http接口)
+
+### 常用回傳參數說明
+
+#### Course
+
+| 名稱       | 類型   | 說明                  | 範例                  |
+| :--------- | :----- | :-------------------- | :-------------------- |
+| id         | int    | 課堂 ID               | 6                     |
+| user_id    | int    | 老師 User ID          | 2                     |
+| class_name | string | 班級名稱              | "一年三班"            |
+| subject    | string | 科目名稱              | "英文"                |
+| code       | string | 課堂碼                | "BpQYoYzMZm"          |
+| is_open    | int    | 開課狀態              | 0                     |
+| status     | string | 課堂狀態 (string)     | "qa"                  |
+| status_id  | int    | 課堂狀態相關 ID (int) | 1                     |
+| qrcode_svg | string | 課堂 QRCode svg       | 參考下方 json         |
+| created_at | string | 建立時間              | "2023-12-29 20:48:18" |
+| updated_at | string | 更新時間              | "2023-12-29 20:48:18" |
+| deleted_at | string | 刪除時間              | "2023-12-29 20:48:18" |
+| user       | json   | 課堂老師資料          | 參考下方 user         |
+
+qrcode_svg
+
+```json
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M10 0L10 1L11 1L11 0ZM12 0L12 2L13 2L13 0ZM8 2L8 3L9 3L9 2ZM10 2L10 3L11 3L11 2ZM12 3L12 4L11 4L11 5L10 5L10 4L9 4L9 6L8 6L8 8L4 8L4 9L3 9L3 8L0 8L0 11L2 11L2 12L0 12L0 13L2 13L2 12L3 12L3 13L8 13L8 17L9 17L9 18L8 18L8 21L10 21L10 20L11 20L11 21L12 21L12 20L14 20L14 21L21 21L21 20L20 20L20 19L21 19L21 18L20 18L20 17L19 17L19 18L20 18L20 19L19 19L19 20L14 20L14 19L17 19L17 18L16 18L16 16L12 16L12 17L11 17L11 16L10 16L10 14L11 14L11 13L12 13L12 12L13 12L13 13L14 13L14 11L12 11L12 9L13 9L13 10L14 10L14 9L15 9L15 11L19 11L19 12L18 12L18 13L17 13L17 12L15 12L15 13L16 13L16 14L15 14L15 15L18 15L18 14L19 14L19 16L21 16L21 13L20 13L20 14L19 14L19 12L21 12L21 10L20 10L20 9L19 9L19 8L18 8L18 9L17 9L17 10L16 10L16 9L15 9L15 8L12 8L12 9L11 9L11 6L12 6L12 7L13 7L13 6L12 6L12 5L13 5L13 3ZM9 6L9 10L8 10L8 9L6 9L6 10L5 10L5 9L4 9L4 10L2 10L2 9L1 9L1 10L2 10L2 11L4 11L4 12L8 12L8 11L9 11L9 10L10 10L10 12L11 12L11 9L10 9L10 6ZM4 10L4 11L5 11L5 10ZM6 10L6 11L8 11L8 10ZM9 13L9 14L10 14L10 13ZM12 14L12 15L14 15L14 14ZM17 16L17 17L18 17L18 16ZM10 17L10 18L11 18L11 17ZM12 17L12 19L14 19L14 18L15 18L15 17ZM9 19L9 20L10 20L10 19ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n"
+```
+
+#### User
+
+| 名稱           | 類型   | 說明                                     | 範例      |
+| :------------- | :----- | :--------------------------------------- | :-------- |
+| id             | int    | 使用者 ID                                | 6         |
+| name           | string | 使用者名字                               | "李大華"  |
+| open_id        | string | 使用者 open id                           | "abc123"  |
+| avatar_file_id | int    | 大頭照檔案 ID                            | 1         |
+| user_type      | string | 使用者類型: 老師(teacher), 學生(student) | "student" |
+| username       | string | 使用者登入帳號                           | "stu123"  |
+
+#### Course Stu
+
+| 名稱           | 類型   | 說明                               | 範例                 |
+| :------------- | :----- | :--------------------------------- | :------------------- |
+| id             | int    | 課堂學生 ID                        | 6                    |
+| course_id      | int    | 課堂 ID                            | 6                    |
+| user_id        | int    | 使用者 ID 如果訪客學生的話是 0     | 6                    |
+| nickname       | string | 暱稱                               | "李大華"             |
+| is_visitor     | int    | 是否為訪客學生 是的話是 1 否則為 0 | 1                    |
+| score          | int    | 榮譽榜目前的分數                   | 15                   |
+| avatar_file_id | int    | 大頭貼檔案 ID                      | 1                    |
+| is_online      | int    | 是否在線上                         | 1                    |
+| comment        | string | 榮譽榜老師給的評語                 | "非常好"             |
+| avatar_file    | json   | 大頭貼檔案內容                     | 參考下方 avatar_file |
+
+#### avatar_file
+
+| 名稱          | 類型   | 說明                                   | 範例                                           |
+| :------------ | :----- | :------------------------------------- | :--------------------------------------------- |
+| id            | int    | 檔案 ID                                | 6                                              |
+| uploader_id   | int    | 上傳者使用者 ID,訪客學生上傳的話會是 0 | 6                                              |
+| uploader_type | string | 上傳者類型(student/teacher)            | "student"                                      |
+| file_type     | string | 檔案類型                               | "image"                                        |
+| course_id     | int    | 上傳者在哪個課堂上傳                   | 1                                              |
+| drive_id      | string | 大頭貼檔案位置                         | "GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png" |
+
+####
 
 ### 0. 測試
 
@@ -90,6 +155,7 @@
 
 ### 分組相關
 
+- [課堂分組-MQTT](#課堂分組-MQTT) (完成)
 - [course_teams/create(POST)-建立課堂分組](#course_teamscreatepost-建立課堂分組) (完成)
 - [course_teams/{id}(PUT)-更新課堂分組](#course_teamsidput-更新課堂分組) (完成)
 - [course_teams/{id}(DELETE)-刪除課堂分組](#course_teamsiddelete-刪除課堂分組) (完成)
@@ -668,7 +734,7 @@
       "is_visitor": 1,
       "score": 0,
       "avatar_file_id": 1,
-      "is_online": "1",
+      "is_online": 1,
       "created_at": "2023-12-30 11:39:56",
       "updated_at": "2023-12-30 11:39:56",
       "deleted_at": null
@@ -681,7 +747,7 @@
       "is_visitor": 1,
       "score": 0,
       "avatar_file_id": 1,
-      "is_online": "1",
+      "is_online": 1,
       "created_at": "2023-12-30 13:06:05",
       "updated_at": "2023-12-30 13:06:05",
       "deleted_at": null
@@ -720,80 +786,78 @@
   "result": true,
   "msg": ["Success"],
   "data": [
-    [
-      {
+    {
+      "id": 1,
+      "course_id": 1,
+      "user_id": 0,
+      "nickname": "小金",
+      "is_visitor": 1,
+      "score": 0,
+      "avatar_file_id": 1,
+      "is_online": 0,
+      "created_at": "2023-12-29 09:24:06",
+      "updated_at": "2023-12-29 09:24:06",
+      "deleted_at": null,
+      "avatar_file": {
         "id": 1,
+        "uploader_id": 0,
+        "uploader_type": "student",
+        "file_type": "image",
         "course_id": 1,
-        "user_id": 0,
-        "nickname": "小金",
-        "is_visitor": 1,
-        "score": 0,
-        "avatar_file_id": 1,
-        "is_online": "0",
-        "created_at": "2023-12-29 09:24:06",
-        "updated_at": "2023-12-29 09:24:06",
-        "deleted_at": null,
-        "avatar_file": {
-          "id": 1,
-          "uploader_id": 0,
-          "uploader_type": "student",
-          "file_type": "image",
-          "course_id": 1,
-          "drive_id": "GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
-          "created_at": "2023-12-30 11:32:58",
-          "updated_at": "2023-12-30 11:32:58",
-          "deleted_at": null
-        }
-      },
-      {
-        "id": 4,
-        "course_id": 1,
-        "user_id": 0,
-        "nickname": "小火",
-        "is_visitor": 1,
-        "score": 0,
-        "avatar_file_id": 1,
-        "is_online": "1",
-        "created_at": "2023-12-30 11:39:56",
-        "updated_at": "2023-12-30 11:39:56",
-        "deleted_at": null,
-        "avatar_file": {
-          "id": 1,
-          "uploader_id": 0,
-          "uploader_type": "student",
-          "file_type": "image",
-          "course_id": 1,
-          "drive_id": "GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
-          "created_at": "2023-12-30 11:32:58",
-          "updated_at": "2023-12-30 11:32:58",
-          "deleted_at": null
-        }
-      },
-      {
-        "id": 5,
-        "course_id": 1,
-        "user_id": 0,
-        "nickname": "小土",
-        "is_visitor": 1,
-        "score": 0,
-        "avatar_file_id": 1,
-        "is_online": "1",
-        "created_at": "2023-12-30 13:06:05",
-        "updated_at": "2023-12-30 13:06:05",
-        "deleted_at": null,
-        "avatar_file": {
-          "id": 1,
-          "uploader_id": 0,
-          "uploader_type": "student",
-          "file_type": "image",
-          "course_id": 1,
-          "drive_id": "GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
-          "created_at": "2023-12-30 11:32:58",
-          "updated_at": "2023-12-30 11:32:58",
-          "deleted_at": null
-        }
+        "drive_id": "GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+        "created_at": "2023-12-30 11:32:58",
+        "updated_at": "2023-12-30 11:32:58",
+        "deleted_at": null
       }
-    ]
+    },
+    {
+      "id": 4,
+      "course_id": 1,
+      "user_id": 0,
+      "nickname": "小火",
+      "is_visitor": 1,
+      "score": 0,
+      "avatar_file_id": 1,
+      "is_online": 1,
+      "created_at": "2023-12-30 11:39:56",
+      "updated_at": "2023-12-30 11:39:56",
+      "deleted_at": null,
+      "avatar_file": {
+        "id": 1,
+        "uploader_id": 0,
+        "uploader_type": "student",
+        "file_type": "image",
+        "course_id": 1,
+        "drive_id": "GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+        "created_at": "2023-12-30 11:32:58",
+        "updated_at": "2023-12-30 11:32:58",
+        "deleted_at": null
+      }
+    },
+    {
+      "id": 5,
+      "course_id": 1,
+      "user_id": 0,
+      "nickname": "小土",
+      "is_visitor": 1,
+      "score": 0,
+      "avatar_file_id": 1,
+      "is_online": 1,
+      "created_at": "2023-12-30 13:06:05",
+      "updated_at": "2023-12-30 13:06:05",
+      "deleted_at": null,
+      "avatar_file": {
+        "id": 1,
+        "uploader_id": 0,
+        "uploader_type": "student",
+        "file_type": "image",
+        "course_id": 1,
+        "drive_id": "GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+        "created_at": "2023-12-30 11:32:58",
+        "updated_at": "2023-12-30 11:32:58",
+        "deleted_at": null
+      }
+    }
   ]
 }
 ```
@@ -882,9 +946,9 @@
         "user_id": 0,
         "nickname": "小金",
         "is_visitor": 1,
-        "score": "15",
+        "score": 15,
         "avatar_file_id": 1,
-        "is_online": "0",
+        "is_online": 0,
         "created_at": "2023-12-29 09:24:06",
         "updated_at": "2024-01-19 11:15:51",
         "deleted_at": null,
@@ -908,9 +972,9 @@
         "user_id": 0,
         "nickname": "小土",
         "is_visitor": 1,
-        "score": "10",
+        "score": 10,
         "avatar_file_id": 1,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2023-12-30 13:06:05",
         "updated_at": "2024-01-19 11:17:15",
         "deleted_at": null,
@@ -934,9 +998,9 @@
         "user_id": 0,
         "nickname": "小火",
         "is_visitor": 1,
-        "score": "5",
+        "score": 5,
         "avatar_file_id": 1,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2023-12-30 11:39:56",
         "updated_at": "2023-12-30 11:39:56",
         "deleted_at": null,
@@ -962,7 +1026,7 @@
         "is_visitor": 0,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-03 17:23:21",
         "updated_at": "2024-01-03 17:23:21",
         "deleted_at": null,
@@ -978,7 +1042,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-04 12:00:57",
         "updated_at": "2024-01-04 12:00:57",
         "deleted_at": null,
@@ -994,7 +1058,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-13 17:25:22",
         "updated_at": "2024-01-13 17:25:22",
         "deleted_at": null,
@@ -1010,7 +1074,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 13:40:45",
         "updated_at": "2024-01-14 13:40:45",
         "deleted_at": null,
@@ -1026,7 +1090,7 @@
         "is_visitor": 0,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 13:46:10",
         "updated_at": "2024-01-14 13:46:10",
         "deleted_at": null,
@@ -1042,7 +1106,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 14:31:34",
         "updated_at": "2024-01-14 14:31:34",
         "deleted_at": null,
@@ -1058,7 +1122,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-16 22:36:33",
         "updated_at": "2024-01-16 22:36:33",
         "deleted_at": null,
@@ -1083,9 +1147,9 @@
         "user_id": 0,
         "nickname": "小金",
         "is_visitor": 1,
-        "score": "15",
+        "score": 15,
         "avatar_file_id": 1,
-        "is_online": "0",
+        "is_online": 0,
         "created_at": "2023-12-29 09:24:06",
         "updated_at": "2024-01-19 11:15:51",
         "deleted_at": null,
@@ -1109,9 +1173,9 @@
         "user_id": 0,
         "nickname": "小土",
         "is_visitor": 1,
-        "score": "10",
+        "score": 10,
         "avatar_file_id": 1,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2023-12-30 13:06:05",
         "updated_at": "2024-01-19 11:17:15",
         "deleted_at": null,
@@ -1135,9 +1199,9 @@
         "user_id": 0,
         "nickname": "小火",
         "is_visitor": 1,
-        "score": "5",
+        "score": 5,
         "avatar_file_id": 1,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2023-12-30 11:39:56",
         "updated_at": "2023-12-30 11:39:56",
         "deleted_at": null,
@@ -1163,7 +1227,7 @@
         "is_visitor": 0,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-03 17:23:21",
         "updated_at": "2024-01-03 17:23:21",
         "deleted_at": null,
@@ -1179,7 +1243,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-04 12:00:57",
         "updated_at": "2024-01-04 12:00:57",
         "deleted_at": null,
@@ -1195,7 +1259,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-13 17:25:22",
         "updated_at": "2024-01-13 17:25:22",
         "deleted_at": null,
@@ -1211,7 +1275,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 13:40:45",
         "updated_at": "2024-01-14 13:40:45",
         "deleted_at": null,
@@ -1227,7 +1291,7 @@
         "is_visitor": 0,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 13:46:10",
         "updated_at": "2024-01-14 13:46:10",
         "deleted_at": null,
@@ -1243,7 +1307,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 14:31:34",
         "updated_at": "2024-01-14 14:31:34",
         "deleted_at": null,
@@ -1259,7 +1323,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 0,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-16 22:36:33",
         "updated_at": "2024-01-16 22:36:33",
         "deleted_at": null,
@@ -1276,7 +1340,7 @@
       "is_visitor": 0,
       "score": 0,
       "avatar_file_id": 0,
-      "is_online": "1",
+      "is_online": 1,
       "created_at": "2024-01-14 13:46:10",
       "updated_at": "2024-01-14 13:46:10",
       "deleted_at": null,
@@ -1775,10 +1839,10 @@
 
 #### 課堂串流 MQTT
 
-| 時機                                           | status        | api                        | method | 課堂快問快答 is_active |
-| :--------------------------------------------- | :------------ | :------------------------- | :----- | :--------------------- |
-| 老師執行 API `course_streams/create` 成功後    | stream        | `course_streams/{id}`(GET) | get    | 1                      |
-| 老師執行 API `course_streams/{id}`(PUT) 成功後 | stream_update | `course_streams/{id}`(GET) | get    | 1 /0                   |
+| 時機                                           | status        | api                        | method | 課堂串流 is_active |
+| :--------------------------------------------- | :------------ | :------------------------- | :----- | :----------------- |
+| 老師執行 API `course_streams/create` 成功後    | stream        | `course_streams/{id}`(GET) | get    | 1                  |
+| 老師執行 API `course_streams/{id}`(PUT) 成功後 | stream_update | `course_streams/{id}`(GET) | get    | 1 /0               |
 
 ### course_streams/create(POST)-建立課堂串流
 
@@ -2283,7 +2347,7 @@
         "is_visitor": 0,
         "score": 0,
         "avatar_file_id": 32,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 13:46:10",
         "updated_at": "2024-01-14 13:46:10",
         "deleted_at": null,
@@ -2332,7 +2396,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 2,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 14:31:34",
         "updated_at": "2024-01-14 14:31:34",
         "deleted_at": null,
@@ -2371,7 +2435,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 5,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-16 22:36:33",
         "updated_at": "2024-01-16 22:36:33",
         "deleted_at": null,
@@ -2643,6 +2707,7 @@
 | 名稱          | 類型   | 說明                                   | 範例                         | 是否必須                            |
 | :------------ | :----- | :------------------------------------- | :--------------------------- | :---------------------------------- |
 | course_id     | int    | 課堂 id                                | 1                            | O                                   |
+| action_type   | string | delivery(派送)/push(推播)              | delivery                     | O                                   |
 | delivery_type | string | url/file                               | url                          | O                                   |
 | url           | string | 網址                                   | https://www.google.com/      | X(如果 delivery_type 是 url 才必須) |
 | file          | file   | 檔案(jpeg,bmp,png,gif,svg,pdf)         |                              | X(如果 file 是 url 才必須)          |
@@ -2725,6 +2790,7 @@
     "course_id": 1,
     "url": "https://stackoverflow.com/questions/39467354/laravel-validation-allow-image-or-pdf",
     "delivery_type": "url",
+    "action_type": "delivery",
     "created_at": "2024-01-20 17:18:11",
     "updated_at": "2024-01-20 17:18:11",
     "deleted_at": null,
@@ -2794,6 +2860,16 @@
 }
 ```
 
+### 課堂分組-MQTT
+
+#### 課堂分組發送 MQTT
+
+| 時機                                            | status       | api                    | method |
+| :---------------------------------------------- | :----------- | :--------------------- | :----- |
+| 老師執行 API `course_teams/create` 成功後       | team         | `course_teams/my`(GET) | get    |
+| 老師執行 API `course_teams/{id}`(PUT) 成功後    | team_update  | `course_teams/my`(GET) | get    |
+| 老師執行 API `course_teams/{id}`(DELETE) 成功後 | team_deleted | `course_teams/my`(GET) | get    |
+
 ### course_teams/create(POST)-建立課堂分組
 
 #### Request
@@ -2838,6 +2914,18 @@
 {
   "result": false,
   "msg": ["You do not have permission to access this resource."]
+}
+```
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "team",
+  "api": "course_teams/my",
+  "method": "get",
+  "course_stu_ids": []
 }
 ```
 
@@ -2897,6 +2985,18 @@
 }
 ```
 
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "team_update",
+  "api": "course_teams/my",
+  "method": "get",
+  "course_stu_ids": []
+}
+```
+
 ### course_teams/{id}(DELETE)-刪除課堂分組
 
 #### Request
@@ -2945,6 +3045,18 @@
 {
   "result": false,
   "msg": ["CourseTeam with id 17 not found."]
+}
+```
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "team_deleted",
+  "api": "course_teams/my",
+  "method": "get",
+  "course_stu_ids": []
 }
 ```
 
@@ -3000,7 +3112,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-02-23 12:35:27",
             "updated_at": "2024-02-23 12:35:27",
             "deleted_at": null,
@@ -3024,7 +3136,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-03-03 15:30:53",
             "updated_at": "2024-03-03 15:30:53",
             "deleted_at": null,
@@ -3048,7 +3160,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-02-23 12:36:13",
             "updated_at": "2024-02-23 12:36:13",
             "deleted_at": null,
@@ -3072,7 +3184,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-03-03 15:30:21",
             "updated_at": "2024-03-03 15:30:21",
             "deleted_at": null,
@@ -3096,7 +3208,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 1,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-03 17:23:21",
             "updated_at": "2024-01-03 17:23:21",
             "deleted_at": null,
@@ -3120,7 +3232,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-03-03 15:32:02",
             "updated_at": "2024-03-03 15:32:02",
             "deleted_at": null,
@@ -3156,7 +3268,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-02-23 12:36:28",
             "updated_at": "2024-02-23 12:36:28",
             "deleted_at": null,
@@ -3180,7 +3292,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 1,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2023-12-30 11:39:56",
             "updated_at": "2024-02-23 11:47:16",
             "deleted_at": null,
@@ -3204,7 +3316,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-02-23 12:39:25",
             "updated_at": "2024-02-23 12:39:25",
             "deleted_at": null,
@@ -3228,7 +3340,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-03-03 15:28:50",
             "updated_at": "2024-03-03 15:28:50",
             "deleted_at": null,
@@ -3252,7 +3364,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 131,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-02-24 11:52:53",
             "updated_at": "2024-02-24 11:58:33",
             "deleted_at": null,
@@ -3276,7 +3388,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 1,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2023-12-30 13:06:05",
             "updated_at": "2024-02-23 11:47:16",
             "deleted_at": null,
@@ -3312,7 +3424,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-03-03 15:23:13",
             "updated_at": "2024-03-03 15:23:13",
             "deleted_at": null,
@@ -3336,7 +3448,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 3,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-14 13:40:45",
             "updated_at": "2024-01-14 13:40:45",
             "deleted_at": null,
@@ -3360,7 +3472,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 132,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-14 14:31:34",
             "updated_at": "2024-02-24 12:00:14",
             "deleted_at": null,
@@ -3384,7 +3496,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 32,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-14 13:46:10",
             "updated_at": "2024-01-14 13:46:10",
             "deleted_at": null,
@@ -3408,7 +3520,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 4,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-13 17:25:22",
             "updated_at": "2024-01-13 17:25:22",
             "deleted_at": null,
@@ -3432,7 +3544,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 5,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-16 22:36:33",
             "updated_at": "2024-01-16 22:36:33",
             "deleted_at": null,
@@ -3456,7 +3568,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 2,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-04 12:00:57",
             "updated_at": "2024-01-04 12:00:57",
             "deleted_at": null,
@@ -3481,6 +3593,18 @@
 {
   "result": false,
   "msg": ["You do not have permission to access this resource."]
+}
+```
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "team",
+  "api": "course_teams/my",
+  "method": "get",
+  "course_stu_ids": []
 }
 ```
 
@@ -3533,9 +3657,9 @@
             "user_id": 0,
             "nickname": "小金",
             "is_visitor": 1,
-            "score": "15",
+            "score": 15,
             "avatar_file_id": 1,
-            "is_online": "0",
+            "is_online": 0,
             "created_at": "2023-12-29 09:24:06",
             "updated_at": "2024-01-20 11:45:09",
             "deleted_at": null,
@@ -3559,7 +3683,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-03 17:23:21",
             "updated_at": "2024-01-03 17:23:21",
             "deleted_at": null,
@@ -3583,7 +3707,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-14 14:31:34",
             "updated_at": "2024-01-14 14:31:34",
             "deleted_at": null,
@@ -3619,7 +3743,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-13 17:25:22",
             "updated_at": "2024-01-13 17:25:22",
             "deleted_at": null,
@@ -3643,7 +3767,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-14 13:46:10",
             "updated_at": "2024-01-14 13:46:10",
             "deleted_at": null,
@@ -3665,9 +3789,9 @@
             "user_id": 0,
             "nickname": "小土",
             "is_visitor": 1,
-            "score": "10",
+            "score": 10,
             "avatar_file_id": 1,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2023-12-30 13:06:05",
             "updated_at": "2024-01-19 11:17:15",
             "deleted_at": null,
@@ -3744,9 +3868,9 @@
             "user_id": 0,
             "nickname": "小金",
             "is_visitor": 1,
-            "score": "15",
+            "score": 15,
             "avatar_file_id": 1,
-            "is_online": "0",
+            "is_online": 0,
             "created_at": "2023-12-29 09:24:06",
             "updated_at": "2024-01-20 11:45:09",
             "deleted_at": null,
@@ -3770,7 +3894,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-03 17:23:21",
             "updated_at": "2024-01-03 17:23:21",
             "deleted_at": null,
@@ -3794,7 +3918,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-14 14:31:34",
             "updated_at": "2024-01-14 14:31:34",
             "deleted_at": null,
@@ -3830,7 +3954,7 @@
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-13 17:25:22",
             "updated_at": "2024-01-13 17:25:22",
             "deleted_at": null,
@@ -3854,7 +3978,7 @@
             "is_visitor": 0,
             "score": 0,
             "avatar_file_id": 0,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2024-01-14 13:46:10",
             "updated_at": "2024-01-14 13:46:10",
             "deleted_at": null,
@@ -3876,9 +4000,9 @@
             "user_id": 0,
             "nickname": "小土",
             "is_visitor": 1,
-            "score": "10",
+            "score": 10,
             "avatar_file_id": 1,
-            "is_online": "1",
+            "is_online": 1,
             "created_at": "2023-12-30 13:06:05",
             "updated_at": "2024-01-19 11:17:15",
             "deleted_at": null,
@@ -3951,7 +4075,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 132,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-14 14:31:34",
         "updated_at": "2024-02-24 12:00:14",
         "deleted_at": null,
@@ -3977,7 +4101,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 5,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2024-01-16 22:36:33",
         "updated_at": "2024-01-16 22:36:33",
         "deleted_at": null,
@@ -4075,6 +4199,18 @@
 }
 ```
 
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "task",
+  "api": "course_draw_lots/{id}",
+  "method": "get",
+  "course_stu_ids": []
+}
+```
+
 ### course_draw_lots/{id}(GET)-取得課堂抽籤結果
 
 #### Request
@@ -4114,7 +4250,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 1,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2023-12-30 11:39:56",
         "updated_at": "2024-02-23 11:47:16",
         "deleted_at": null,
@@ -4140,7 +4276,7 @@
         "is_visitor": 1,
         "score": 0,
         "avatar_file_id": 1,
-        "is_online": "1",
+        "is_online": 1,
         "created_at": "2023-12-30 13:06:05",
         "updated_at": "2024-02-23 11:47:16",
         "deleted_at": null,
@@ -4240,7 +4376,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 11:39:56",
           "updated_at": "2024-02-23 11:47:16",
           "deleted_at": null,
@@ -4266,7 +4402,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 13:06:05",
           "updated_at": "2024-02-23 11:47:16",
           "deleted_at": null,
@@ -4303,7 +4439,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 11:39:56",
           "updated_at": "2024-02-23 11:47:16",
           "deleted_at": null,
@@ -4329,7 +4465,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 13:06:05",
           "updated_at": "2024-02-23 11:47:16",
           "deleted_at": null,
@@ -5499,9 +5635,9 @@
           "user_id": 0,
           "nickname": "小火",
           "is_visitor": 1,
-          "score": "5",
+          "score": 5,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 11:39:56",
           "updated_at": "2023-12-30 11:39:56",
           "deleted_at": null,
@@ -5535,9 +5671,9 @@
           "user_id": 0,
           "nickname": "小土",
           "is_visitor": 1,
-          "score": "10",
+          "score": 10,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 13:06:05",
           "updated_at": "2024-01-19 11:17:15",
           "deleted_at": null,
@@ -5573,7 +5709,7 @@
           "is_visitor": 0,
           "score": 0,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-03 17:23:21",
           "updated_at": "2024-01-03 17:23:21",
           "deleted_at": null,
@@ -5609,7 +5745,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 2,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-04 12:00:57",
           "updated_at": "2024-01-04 12:00:57",
           "deleted_at": null,
@@ -5645,7 +5781,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 4,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-13 17:25:22",
           "updated_at": "2024-01-13 17:25:22",
           "deleted_at": null,
@@ -5681,7 +5817,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 3,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-14 13:40:45",
           "updated_at": "2024-01-14 13:40:45",
           "deleted_at": null,
@@ -5717,7 +5853,7 @@
           "is_visitor": 0,
           "score": 0,
           "avatar_file_id": 32,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-14 13:46:10",
           "updated_at": "2024-01-14 13:46:10",
           "deleted_at": null,
@@ -5753,7 +5889,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 2,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-14 14:31:34",
           "updated_at": "2024-01-14 14:31:34",
           "deleted_at": null,
@@ -5789,7 +5925,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 5,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-16 22:36:33",
           "updated_at": "2024-01-16 22:36:33",
           "deleted_at": null,
@@ -5895,9 +6031,9 @@
           "user_id": 0,
           "nickname": "小火",
           "is_visitor": 1,
-          "score": "5",
+          "score": 5,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 11:39:56",
           "updated_at": "2023-12-30 11:39:56",
           "deleted_at": null,
@@ -5931,9 +6067,9 @@
           "user_id": 0,
           "nickname": "小土",
           "is_visitor": 1,
-          "score": "10",
+          "score": 10,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2023-12-30 13:06:05",
           "updated_at": "2024-01-19 11:17:15",
           "deleted_at": null,
@@ -5969,7 +6105,7 @@
           "is_visitor": 0,
           "score": 0,
           "avatar_file_id": 1,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-03 17:23:21",
           "updated_at": "2024-01-03 17:23:21",
           "deleted_at": null,
@@ -6005,7 +6141,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 2,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-04 12:00:57",
           "updated_at": "2024-01-04 12:00:57",
           "deleted_at": null,
@@ -6041,7 +6177,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 4,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-13 17:25:22",
           "updated_at": "2024-01-13 17:25:22",
           "deleted_at": null,
@@ -6077,7 +6213,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 3,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-14 13:40:45",
           "updated_at": "2024-01-14 13:40:45",
           "deleted_at": null,
@@ -6113,7 +6249,7 @@
           "is_visitor": 0,
           "score": 0,
           "avatar_file_id": 32,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-14 13:46:10",
           "updated_at": "2024-01-14 13:46:10",
           "deleted_at": null,
@@ -6149,7 +6285,7 @@
           "is_visitor": 1,
           "score": 0,
           "avatar_file_id": 2,
-          "is_online": "1",
+          "is_online": 1,
           "created_at": "2024-01-14 14:31:34",
           "updated_at": "2024-01-14 14:31:34",
           "deleted_at": null,
@@ -6185,7 +6321,7 @@
     "is_visitor": 1,
     "score": 0,
     "avatar_file_id": 2,
-    "is_online": "1",
+    "is_online": 1,
     "created_at": "2024-01-14 14:31:34",
     "updated_at": "2024-01-14 14:31:34",
     "deleted_at": null,
@@ -7348,9 +7484,9 @@ correct_file => "answer.png"
                 "user_id": 0,
                 "nickname": "小火",
                 "is_visitor": 1,
-                "score": "5",
+                "score": 5,
                 "avatar_file_id": 1,
-                "is_online": "1",
+                "is_online": 1,
                 "created_at": "2023-12-30 11:39:56",
                 "updated_at": "2023-12-30 11:39:56",
                 "deleted_at": null,
@@ -7462,9 +7598,9 @@ correct_file => "answer.png"
                   "user_id": 0,
                   "nickname": "小火",
                   "is_visitor": 1,
-                  "score": "5",
+                  "score": 5,
                   "avatar_file_id": 1,
-                  "is_online": "1",
+                  "is_online": 1,
                   "created_at": "2023-12-30 11:39:56",
                   "updated_at": "2023-12-30 11:39:56",
                   "deleted_at": null,
@@ -7488,9 +7624,9 @@ correct_file => "answer.png"
                   "user_id": 0,
                   "nickname": "小土",
                   "is_visitor": 1,
-                  "score": "10",
+                  "score": 10,
                   "avatar_file_id": 1,
-                  "is_online": "1",
+                  "is_online": 1,
                   "created_at": "2023-12-30 13:06:05",
                   "updated_at": "2024-01-19 11:17:15",
                   "deleted_at": null,
@@ -7584,9 +7720,9 @@ correct_file => "answer.png"
                 "user_id": 0,
                 "nickname": "小火",
                 "is_visitor": 1,
-                "score": "5",
+                "score": 5,
                 "avatar_file_id": 1,
-                "is_online": "1",
+                "is_online": 1,
                 "created_at": "2023-12-30 11:39:56",
                 "updated_at": "2023-12-30 11:39:56",
                 "deleted_at": null,
