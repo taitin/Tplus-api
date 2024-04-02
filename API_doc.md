@@ -6425,9 +6425,10 @@ qrcode_svg
 | 時機說明                 | status                | api                                          | method | 課堂評量 status |
 | :----------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
 | 評量未開始               | assessment_closed     |                                              |        | closed          |
+| 評量開始   | assessment_initial  | `	course_assessments/{id} `    | get   | initial         |
+| 評量被中止               | assessment_stopped    |                                              |        | stopped         |
 | 評量答題中, 學生還沒回答 | assessment_answering  | `course_assessments/{id}/actions/answer `    | post   | running         |
 | 評量答題中, 學生已回答   | assessment_answered   |                                              |        | running         |
-| 評量被中止               | assessment_stopped    |                                              |        | stopped         |
 | 評量已收卷               | assessment_collected  |                                              |        | collected       |
 | 評量檢討中               | assessment_correcting |                                              |        | correcting      |
 | 評量檢討完               | assessment_corrected  | `course_assessments/{id}/actions/get_result` |        | corrected       |
