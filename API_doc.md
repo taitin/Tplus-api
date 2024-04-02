@@ -6413,10 +6413,10 @@ qrcode_svg
 
 | 時機                                                                 | status                | api                                          | method | 課堂評量 status |
 | :------------------------------------------------------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
-| 老師執行 API `course_assessments/{id}/actions/run` 成功後            | assessment_answering  | `course_assessments/{id}/actions/answer`     | post   | running         |
+| 老師執行 API `course_assessments/{id}/actions/run` 成功後            | assessment_initial    | `course_assessments/{id}`                    | get    | initial         |
 | 老師執行 API `course_assessments/{id}/actions/stop` 成功後           | assessment_stopped    |                                              |        | stopped         |
 | 老師執行 API `course_assessments/{id}/actions/collect` 成功後        | assessment_collected  |                                              |        | collected       |
-| 老師執行 API `course_assessments/{id}/actions/restart` 成功後        | assessment_answering  | `course_assessments/{id}/actions/answer`     | post   | running         |
+| 老師執行 API `course_assessments/{id}/actions/restart` 成功後        | assessment_initial    | `course_assessments/{id}`                    | post   | initial         |
 | 老師執行 API `course_assessments/{id}/actions/correct` 成功後        | assessment_correcting |                                              |        | correcting      |
 | 老師執行 API `course_assessments/{id}/actions/publish_answer` 成功後 | assessment_corrected  | `course_assessments/{id}/actions/get_result` | get    | corrected       |
 
@@ -6677,6 +6677,20 @@ qrcode_svg
 ```
 
 #### MQTT
+
+新開始的考試/重新考試
+
+```json
+{
+  "course_data": "略",
+  "status": "assessment_initial",
+  "api": "course_assessments/{id}",
+  "method": "get",
+  "course_stu_ids": []
+}
+```
+
+從 stop 狀態繼續開始
 
 ```json
 {
@@ -6979,9 +6993,9 @@ qrcode_svg
 ```json
 {
   "course_data": "略",
-  "status": "assessment_answering",
-  "api": "course_assessments/{id}/actions/answer",
-  "method": "post",
+  "status": "assessment_initial",
+  "api": "course_assessments/{id}",
+  "method": "get",
   "course_stu_ids": {}
 }
 ```
