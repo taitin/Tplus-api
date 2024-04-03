@@ -130,15 +130,17 @@ qrcode_svg
 - [course_score_logs/create(POST)-幫課堂學生分組加減分](#course_score_logscreatepost-幫課堂學生分組加減分) (未完成分組)
 
 ### 課堂串流相關
-
+- [MQTT]
 - [課堂串流-MQTT](#課堂串流-MQTT) (完成)
+- [API]
 - [course_streams/create(POST)-建立課堂串流](#course_streamscreatepost-建立課堂串流) (完成)
 - [course_streams/{id}(PUT)-更新課堂串流](#course_streamsidput-更新課堂串流) (完成)
 - [course_streams/{id}?token={token}&force_get={force_get}(GET)-取得課堂串流資料](#course_streamsid?token=token&force_get=force_getget-取得課堂串流資料) (完成)
 
 ### 快問快答相關
-
+- [MQTT]
 - [課堂快問快答-MQTT/取得學生個人化狀態說明](#課堂快問快答-mqtt取得學生個人化狀態說明) (完成)
+- [API]
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
 - [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidPOST-更新課堂快問快答) (完成)
 - [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
@@ -154,8 +156,9 @@ qrcode_svg
 - [course_deliveries/{id}?token={token}&force_get={force_get}(GET)-取得課堂派送](#course_deliveriesidtokentokenforce_getforce_getget-取得課堂派送) (完成)
 
 ### 分組相關
-
+- [MQTT]
 - [課堂分組-MQTT](#課堂分組-MQTT) (完成)
+- [API]
 - [course_teams/create(POST)-建立課堂分組](#course_teamscreatepost-建立課堂分組) (完成)
 - [course_teams/{id}(PUT)-更新課堂分組](#course_teamsidput-更新課堂分組) (完成)
 - [course_teams/{id}(DELETE)-刪除課堂分組](#course_teamsiddelete-刪除課堂分組) (完成)
@@ -170,8 +173,9 @@ qrcode_svg
 - [courses/{id}/course_draw_lots(GET)-取得課堂所有抽籤結果](#coursesidcourse_draw_lotsget-取得課堂所有抽籤結果) (完成)
 
 ### 任務相關
-
+- [MQTT]
 - [課堂任務-MQTT/取得學生個人化狀態說明](#課堂任務-mqtt取得學生個人化狀態說明) (完成)
+- [API]
 - [course_tasks/create(POST)-建立課堂任務](#course_taskscreatepost-建立課堂任務) (完成)
 - [course_tasks/{id}(GET)-取得課堂任務](#course_tasksidget-取得課堂任務) (完成)
 - [course_tasks/{id}/actions/answer(POST)-學生回答課堂任務](#course_tasksidactionsanswerpost-學生回答課堂任務) (完成)
@@ -182,8 +186,9 @@ qrcode_svg
 - [course_tasks/{id}/actions/get_stu_status(GET)-取得學生個人課堂任務狀態](#course_tasksidactionsget_stu_statusget-取得學生個人課堂任務狀態) (完成)
 
 ### 搶答相關
-
+- [MQTT]
 - [課堂搶答-MQTT/取得學生個人化狀態說明](#課堂搶答-mqtt取得學生個人化狀態說明) (完成)
+- [API]
 - [course_qas/create(POST)-建立課堂搶答](#course_qascreatepost-建立課堂搶答) (完成)
 - [course_qas/{id}(GET)-取得課堂搶答](#course_qasidget-取得課堂搶答) (完成)
 - [course_qas/{id}/actions/run(POST)-開始課堂搶答](#course_qasidactionsrunpost-開始課堂搶答) (完成)
@@ -194,8 +199,9 @@ qrcode_svg
 - [course_qas/{id}/actions/get_stu_status(GET)-取得學生個人課堂搶答狀態](#course_qasidactionsget_stu_statusget-取得學生個人課堂搶答狀態) (完成)
 
 ### 評量相關
-
+- [MQTT]
 - [課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-mqtt取得學生個人化狀態說明) (完成)
+- [API]
 - [course_assessments/create(POST)-建立課堂評量](#course_assessmentscreatepost-建立課堂評量) (完成)
 - [pages/create(POST)-建立課堂評量頁面](#pagescreatepost-建立課堂評量頁面) (完成)
 - [pages/{id}(PUT)-更新課堂評量頁面](#pagesidput-更新課堂評量頁面) (完成)
@@ -1837,12 +1843,20 @@ qrcode_svg
 
 ### 課堂串流-MQTT
 
-#### 課堂串流 MQTT
+#### 教師:課堂串流 MQTT
 
 | 時機                                           | status        | api                        | method | 課堂串流 is_active |
 | :--------------------------------------------- | :------------ | :------------------------- | :----- | :----------------- |
 | 老師執行 API `course_streams/create` 成功後    | stream        | `course_streams/{id}`(GET) | get    | 1                  |
 | 老師執行 API `course_streams/{id}`(PUT) 成功後 | stream_update | `course_streams/{id}`(GET) | get    | 1 /0               |
+
+#### 學生:課堂快問快答學生取得個人化狀態
+
+| 時機說明                 | status         | api                                       | method | 課堂快問快答 is_active |
+| :----------------------- | :------------- | :---------------------------------------- | :----- | :--------------------- |
+| 建立串流                    | stream    | `course_streams/{id}`(GET)     | get    |                                 |        | 0                      |
+| 串流狀態更新            | stream_update |  `course_streams/{id}`(GET)    | post   |  1 /0                     |
+
 
 ### course_streams/create(POST)-建立課堂串流
 
@@ -2038,7 +2052,7 @@ qrcode_svg
 
 ### 課堂快問快答-MQTT/取得學生個人化狀態說明
 
-#### 課堂快問快答發送 MQTT
+#### 教師:課堂快問快答發送 MQTT
 
 | 時機                                                          | status         | api                                          | method | 課堂快問快答 is_active |
 | :------------------------------------------------------------ | :------------- | :------------------------------------------- | :----- | :--------------------- |
@@ -2046,7 +2060,7 @@ qrcode_svg
 | 老師執行 API `course_quizzes/{id}` 將 is_active 設成 false 後 | quiz_closed    |                                              |        | 0                      |
 | 老師執行 API `course_quizzes/{id}/actions/correct` 成功後     | quiz_corrected | `course_quizzes/{id}/actions/get_correct`    | get    | 1                      |
 
-#### 課堂快問快答學生取得個人化狀態
+#### 學生:課堂快問快答學生取得個人化狀態
 
 | 時機說明                 | status         | api                                       | method | 課堂快問快答 is_active |
 | :----------------------- | :------------- | :---------------------------------------- | :----- | :--------------------- |
@@ -2862,13 +2876,16 @@ qrcode_svg
 
 ### 課堂分組-MQTT
 
-#### 課堂分組發送 MQTT
+#### 教師:課堂分組發送 MQTT
 
 | 時機                                            | status       | api                    | method |
 | :---------------------------------------------- | :----------- | :--------------------- | :----- |
 | 老師執行 API `course_teams/create` 成功後       | team         | `course_teams/my`(GET) | get    |
 | 老師執行 API `course_teams/{id}`(PUT) 成功後    | team_update  | `course_teams/my`(GET) | get    |
 | 老師執行 API `course_teams/{id}`(DELETE) 成功後 | team_deleted | `course_teams/my`(GET) | get    |
+
+#### 學生:課堂分組發送 MQTT
+無須反映
 
 ### course_teams/create(POST)-建立課堂分組
 
@@ -4505,7 +4522,7 @@ qrcode_svg
 
 ### 課堂任務-MQTT/取得學生個人化狀態說明
 
-#### 課堂任務發送 MQTT
+#### 教師:課堂任務發送 MQTT
 
 | 時機                                                    | status         | api                                        | method | 課堂任務 is_active |
 | :------------------------------------------------------ | :------------- | :----------------------------------------- | :----- | :----------------- |
@@ -4513,7 +4530,7 @@ qrcode_svg
 | 老師執行 API `course_tasks/{id}/actions/close` 成功後   | task_closed    |                                            |        | 0                  |
 | 老師執行 API `course_tasks/{id}/actions/correct` 成功後 | task_corrected | `course_tasks/{id}/actions/get_correct`    | get    | 1                  |
 
-#### 課堂任務學生取得個人化狀態
+#### 學生:課堂任務學生取得個人化狀態
 
 | 時機說明             | status         | api                                     | method | 課堂任務 is_active |
 | :------------------- | :------------- | :-------------------------------------- | :----- | :----------------- |
@@ -5158,7 +5175,7 @@ qrcode_svg
 
 ### 課堂搶答-MQTT/取得學生個人化狀態說明
 
-#### 課堂搶答發送 MQTT
+#### 教師:課堂搶答發送 MQTT
 
 | 時機                                                         | status       | api                                      | method | 課堂搶答 status |
 | :----------------------------------------------------------- | :----------- | :--------------------------------------- | :----- | :-------------- |
@@ -5168,7 +5185,7 @@ qrcode_svg
 | 老師執行 API `course_qas/{id}/actions/time_up` 成功後        | qa_time_up   |                                          |        | time_up         |
 | 老師執行 API `course_qas/{id}/actions/publish_answer` 成功後 | qa_complete  | `course_qas/{id}/actions/get_result`     | get    | complete        |
 
-#### 課堂搶答學生取得個人化狀態
+#### 學生:課堂搶答學生取得個人化狀態
 
 | 時機說明                                | status              | api                                  | method | 課堂搶答 status |
 | :-------------------------------------- | :------------------ | :----------------------------------- | :----- | :-------------- |
@@ -6409,7 +6426,7 @@ qrcode_svg
 
 ### 課堂評量-MQTT/取得學生個人化狀態說明
 
-#### 課堂評量發送 MQTT
+#### 教師:課堂評量發送 MQTT
 
 | 時機                                                                 | status                | api                                          | method | 課堂評量 status |
 | :------------------------------------------------------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
@@ -6420,7 +6437,7 @@ qrcode_svg
 | 老師執行 API `course_assessments/{id}/actions/correct` 成功後        | assessment_correcting |                                              |        | correcting      |
 | 老師執行 API `course_assessments/{id}/actions/publish_answer` 成功後 | assessment_corrected  | `course_assessments/{id}/actions/get_result` | get    | corrected       |
 
-#### 課堂評量學生取得個人化狀態
+#### 學生:課堂評量學生取得個人化狀態
 
 | 時機說明                 | status                | api                                          | method | 課堂評量 status |
 | :----------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
