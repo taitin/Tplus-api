@@ -6739,11 +6739,50 @@ qrcode_svg
 
 - param:
 
+course_assessment
 | 名稱               | 類型   | 說明                                              | 範例             |
 | :----------------- | :----- | :------------------------------------------------ | :--------------- |
+| id             | int | 評量id                                      | 1          |
 | status             | string | 課堂評量狀態                                      | running          |
-| pages              | string | 課堂評量頁面內容                                  | running          |
-| pages-question_ids | array  | 課堂評量頁面中所包含的題目 id, 評量未開始時是空的 | [50, 51, 52, 53] |
+| quest_type              | string | 值可為 single(單選題),multiple(複選題),tf(是非題),essay(文字題),handwritten(手寫題)               | single          |
+| pages              | object | 課堂評量頁面內容(下表詳述)                                  | [{}]         |
+
+pages (因為評量可以是很多頁面，因此pages將是一個多維陣列)
+
+| 名稱               | 類型   | 說明                                              | 範例             |
+| :----------------- | :----- | :------------------------------------------------ | :--------------- |
+| id             | int | 頁面內容id                                      | 1          |
+| course_assessment_id            | int | 對應評量id                                      | 19          |
+| option_number            | int | 選項數量                                      | 4          |
+| option_type            | string | 選項類型  值可為 number(數字),character(字母)                               | single          |
+| score            | int | 此頁分數                                      | 8          |
+| options            | array | 選項 項目為string陣列                            | ["O", "X"]          |
+| question_ids         | array | 課堂評量頁面中所包含的題目 id, 評量未開始時是空的                                    | [50,51,52,54]          |
+| questions            | objects | 對應的作答狀況(多維陣列) 詳如下表                                    | [{}]         |
+
+questions
+| 名稱               | 類型   | 說明                                              | 範例             |
+| :----------------- | :----- | :------------------------------------------------ | :--------------- |
+| id             | int | 問題id                                      | 1          |
+| page_id            | int | 對應頁面內容id                                      | 19          |
+| answer            | string | 作答內容                                      | A          |
+| order            | int | 排序                                      | 1          |
+
+可能的選項列表
+
+| 題型               | 類型   | 選項                                              | 作答方式             |
+| :----------------- | :----- | :------------------------------------------------ | :---------------------- | 
+| tf             |  | ["O","X"]                                      | "O"          |
+| single            | number | ["1","2","3"]                                    | "1"          |
+| single            | character | ["A","B","C"]                                      | "A"          |
+| multiple            | number | ["1","2","3"]                                    | "123"          |
+| multiple            | character | ["A","B","C"]                                      | "ABC"          |
+| essay            |  |                                      | "這是一個文字範例"          |
+| handwritten            |  |                                     | "這是一個文字範例"          |
+
+
+
+
 
 - status 說明參考[課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-MQTT/取得學生個人化狀態說明) 課堂評量 status 欄位
 
@@ -6754,140 +6793,65 @@ qrcode_svg
 ```json
 {
   "result": true,
-  "msg": ["Success"],
+  "msg": [
+    "Success"
+  ],
   "data": {
-    "id": 2,
-    "course_id": 1,
-    "created_at": "2024-02-14 10:34:53",
-    "updated_at": "2024-02-15 10:58:32",
-    "deleted_at": null,
-    "status": "running",
-    "quest_type": "essay",
-    "pages": [
-      {
-        "id": 7,
-        "course_assessment_id": 2,
-        "quest_number": 4,
-        "page": 1,
-        "quest_file_id": 94,
-        "option_number": 0,
-        "option_type": "",
-        "score": 12,
-        "created_at": "2024-02-15 10:05:06",
-        "updated_at": "2024-02-15 10:05:06",
-        "deleted_at": null,
-        "options": [],
-        "question_ids": [50, 51, 52, 53],
-        "quest_file": {
-          "id": 94,
-          "uploader_id": 2,
-          "uploader_type": "teacher",
-          "file_type": "image",
-          "course_id": 1,
-          "drive_id": "R1cD83NJYa1l8dwD2NmKXaRiIFldmCi7B4xEFmxE.jpg",
-          "created_at": "2024-02-15 10:05:06",
-          "updated_at": "2024-02-15 10:05:06",
-          "deleted_at": null
-        },
-        "questions": [
-          {
-            "id": 50,
-            "page_id": 7,
-            "answer": null,
-            "created_at": "2024-02-15 10:58:32",
-            "updated_at": "2024-02-15 10:58:32",
-            "deleted_at": null,
-            "order": 1
-          },
-          {
-            "id": 51,
-            "page_id": 7,
-            "answer": null,
-            "created_at": "2024-02-15 10:58:32",
-            "updated_at": "2024-02-15 10:58:32",
-            "deleted_at": null,
-            "order": 2
-          },
-          {
-            "id": 52,
-            "page_id": 7,
-            "answer": null,
-            "created_at": "2024-02-15 10:58:32",
-            "updated_at": "2024-02-15 10:58:32",
-            "deleted_at": null,
-            "order": 3
-          },
-          {
-            "id": 53,
-            "page_id": 7,
-            "answer": null,
-            "created_at": "2024-02-15 10:58:32",
-            "updated_at": "2024-02-15 10:58:32",
-            "deleted_at": null,
-            "order": 4
-          }
-        ]
-      },
-      {
-        "id": 9,
-        "course_assessment_id": 2,
-        "quest_number": 2,
-        "page": 2,
-        "quest_file_id": 95,
-        "option_number": 0,
-        "option_type": "",
-        "score": 12,
-        "created_at": "2024-02-15 10:07:47",
-        "updated_at": "2024-02-15 10:52:07",
-        "deleted_at": null,
-        "options": [],
-        "question_ids": [54, 55],
-        "quest_file": {
-          "id": 95,
-          "uploader_id": 2,
-          "uploader_type": "teacher",
-          "file_type": "image",
-          "course_id": 1,
-          "drive_id": "wyg7q9ReTgM4cJShi7vrSHePvpxK6xpo8iTGQ5Z9.jpg",
-          "created_at": "2024-02-15 10:07:47",
-          "updated_at": "2024-02-15 10:07:47",
-          "deleted_at": null
-        },
-        "questions": [
-          {
-            "id": 54,
-            "page_id": 9,
-            "answer": null,
-            "created_at": "2024-02-15 10:58:32",
-            "updated_at": "2024-02-15 10:58:32",
-            "deleted_at": null,
-            "order": 1
-          },
-          {
-            "id": 55,
-            "page_id": 9,
-            "answer": null,
-            "created_at": "2024-02-15 10:58:32",
-            "updated_at": "2024-02-15 10:58:32",
-            "deleted_at": null,
-            "order": 2
-          }
-        ]
-      }
-    ],
-    "course": {
-      "id": 1,
-      "user_id": 2,
-      "class_name": "一年一班",
-      "subject": "數學",
-      "code": "yMdlXBrpo9",
-      "is_open": 1,
-      "status": "assessment_answering",
-      "created_at": "2023-12-28 11:15:04",
-      "updated_at": "2024-02-15 10:58:32",
+    "course_assessment": {
+      "id": 19,
+      "course_id": 37,
+      "created_at": "2024-03-04 09:29:49",
+      "updated_at": "2024-03-04 09:49:03",
       "deleted_at": null,
-      "status_id": 2,
-      "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M8 0L8 1L9 1L9 2L8 2L8 5L11 5L11 4L12 4L12 3L13 3L13 0L12 0L12 3L11 3L11 2L10 2L10 0ZM9 2L9 4L11 4L11 3L10 3L10 2ZM8 6L8 7L9 7L9 8L8 8L8 9L9 9L9 10L6 10L6 9L7 9L7 8L6 8L6 9L4 9L4 8L0 8L0 9L1 9L1 10L0 10L0 11L3 11L3 12L2 12L2 13L8 13L8 14L9 14L9 16L10 16L10 17L8 17L8 21L9 21L9 19L10 19L10 17L12 17L12 16L13 16L13 19L12 19L12 18L11 18L11 21L14 21L14 20L15 20L15 19L14 19L14 18L15 18L15 17L14 17L14 16L13 16L13 15L11 15L11 13L12 13L12 12L13 12L13 9L14 9L14 8L13 8L13 9L12 9L12 12L10 12L10 14L9 14L9 12L8 12L8 11L9 11L9 10L10 10L10 9L11 9L11 6L10 6L10 7L9 7L9 6ZM12 6L12 7L13 7L13 6ZM9 8L9 9L10 9L10 8ZM16 8L16 10L14 10L14 11L16 11L16 10L18 10L18 9L19 9L19 8ZM20 8L20 9L21 9L21 8ZM2 9L2 10L3 10L3 11L4 11L4 9ZM19 10L19 11L21 11L21 10ZM6 11L6 12L7 12L7 11ZM17 11L17 12L18 12L18 11ZM0 12L0 13L1 13L1 12ZM14 12L14 13L13 13L13 14L14 14L14 15L15 15L15 16L17 16L17 17L16 17L16 18L18 18L18 19L19 19L19 18L20 18L20 17L19 17L19 15L17 15L17 13L16 13L16 12ZM20 12L20 13L19 13L19 14L20 14L20 13L21 13L21 12ZM14 13L14 14L15 14L15 13ZM20 15L20 16L21 16L21 15ZM13 19L13 20L14 20L14 19ZM20 19L20 20L21 20L21 19ZM17 20L17 21L18 21L18 20ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n"
+      "status": "correcting",
+      "quest_type": "single",
+      "pages": [
+        {
+          "id": 37,
+          "course_assessment_id": 19,
+          "quest_number": 1,
+          "page": 2,
+          "quest_file_id": 192,
+          "option_number": 4,
+          "option_type": "character",
+          "score": 8,
+          "created_at": "2024-03-04 09:32:41",
+          "updated_at": "2024-03-04 09:32:41",
+          "deleted_at": null,
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct_file_id": 0,
+          "question_ids": [
+            511
+          ],
+          "quest_file": {
+            "id": 192,
+            "uploader_id": 3,
+            "uploader_type": "teacher",
+            "file_type": "image",
+            "course_id": 37,
+            "drive_id": "https://t-plus.timworkshop.com/storage/BwANuZ7mvfmggaDLGv3dydu7FzX9nVX7GtZMjTsq.jpg",
+            "created_at": "2024-03-04 09:32:41",
+            "updated_at": "2024-03-04 09:32:41",
+            "deleted_at": null
+          },
+          "questions": [
+            {
+              "id": 511,
+              "page_id": 37,
+              "answer": null,
+              "created_at": "2024-03-04 09:33:11",
+              "updated_at": "2024-03-04 09:33:11",
+              "deleted_at": null,
+              "order": 1
+            }
+          ]
+        }
+      ]
     }
   }
 }
@@ -7039,6 +7003,19 @@ qrcode_svg
 
 - 只能回答一次, 回答過不可再回答
 
+
+可回答的選項列表
+| 題型               | 類型   | 選項                                              | 作答方式             |
+| :----------------- | :----- | :------------------------------------------------ | :---------------------| 
+| tf             |  | ["O","X"]                                      | "O"          |
+| single            | number | ["1","2","3"]                                    | "1"          |
+| single            | character | ["A","B","C"]                                      | "A"          |
+| multiple            | number | ["1","2","3"]                                    | "123"          |
+| multiple            | character | ["A","B","C"]                                      | "ABC"          |
+| essay            |  |                                      | "這是一個文字範例"          |
+| handwritten            |  |                                     | "這是一個文字範例"          |
+
+文字的範例
 ```json
 {
   "50": "ans1",
@@ -7047,6 +7024,36 @@ qrcode_svg
   "53": "ans4"
 }
 ```
+
+單選(是非)的範例
+```json
+{
+  "50": "O",
+  "51": "X",
+  "52": "O",
+  "53": "X"
+}
+```
+
+```json
+{
+  "50": "1",
+  "51": "2",
+  "52": "3",
+  "53": "3"
+}
+
+```
+多選的範例
+```json
+{
+  "50": "AB",
+  "51": "A",
+  "52": "CD",
+  "53": "AD"
+}
+```
+
 
 #### Response
 
