@@ -1997,6 +1997,16 @@ qrcode_svg
 
 #### Response
 
+| 名稱       | 類型   | 說明                  | 範例                  |
+| :--------- | :----- | :-------------------- | :-------------------- |
+| id         | int    | 課堂 ID               | 6                     |
+| is_active    | string    | 是否啟用         |"1":啟用 "0":關閉                    |
+| is_drawable | string | 是否可畫畫              | "1":啟用 "0":關閉            |
+| is_speakable | string | 是否有聲音              | "1":啟用 "0":關閉            |
+| stream_type | string | 串流類型             | "broadcast"           |
+
+
+
 -成功
 
 #### 有新資料 或 force_get=1 或 是老師
