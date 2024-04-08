@@ -1857,12 +1857,12 @@ qrcode_svg
 | 老師執行 API `course_streams/create` 成功後    | stream        | `course_streams/{id}`(GET) | get    | 1                  |
 | 老師執行 API `course_streams/{id}`(PUT) 成功後 | stream_update | `course_streams/{id}`(GET) | get    | 1 /0               |
 
-#### 學生:課堂快問快答學生取得個人化狀態
+#### 學生:課堂課堂串流學生取得個人化狀態
 
-| 時機說明     | status        | api                        | method | 課堂快問快答 is_active |
-| :----------- | :------------ | :------------------------- | :----- | :--------------------- | --- | --- |
-| 建立串流     | stream        | `course_streams/{id}`(GET) | get    |                        |     | 0   |
-| 串流狀態更新 | stream_update | `course_streams/{id}`(GET) | post   | 1 /0                   |
+| 時機說明     | status        | api                        | method | 課堂串流 is_active |
+| :----------- | :------------ | :------------------------- | :----- | :--------------------- |
+| 建立串流     | stream        | `course_streams/{id}`(GET) | get    |                        |   
+| 串流狀態更新 | stream_update | `course_streams/{id}`(GET) | GET   | 1 /0                   |
 
 ### course_streams/create(POST)-建立課堂串流
 
