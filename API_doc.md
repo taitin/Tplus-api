@@ -130,6 +130,7 @@ qrcode_svg
 - [course_score_logs/create(POST)-幫課堂學生分組加減分](#course_score_logscreatepost-幫課堂學生分組加減分) (未完成分組)
 
 ### 課堂串流相關
+
 - [MQTT]
 - [課堂串流-MQTT](#課堂串流-MQTT) (完成)
 - [API]
@@ -138,6 +139,7 @@ qrcode_svg
 - [course_streams/{id}?token={token}&force_get={force_get}(GET)-取得課堂串流資料](#course_streamsid?token=token&force_get=force_getget-取得課堂串流資料) (完成)
 
 ### 快問快答相關
+
 - [MQTT]
 - [課堂快問快答-MQTT/取得學生個人化狀態說明](#課堂快問快答-mqtt取得學生個人化狀態說明) (完成)
 - [API]
@@ -156,6 +158,7 @@ qrcode_svg
 - [course_deliveries/{id}?token={token}&force_get={force_get}(GET)-取得課堂派送](#course_deliveriesidtokentokenforce_getforce_getget-取得課堂派送) (完成)
 
 ### 分組相關
+
 - [MQTT]
 - [課堂分組-MQTT](#課堂分組-MQTT) (完成)
 - [API]
@@ -173,6 +176,7 @@ qrcode_svg
 - [courses/{id}/course_draw_lots(GET)-取得課堂所有抽籤結果](#coursesidcourse_draw_lotsget-取得課堂所有抽籤結果) (完成)
 
 ### 任務相關
+
 - [MQTT]
 - [課堂任務-MQTT/取得學生個人化狀態說明](#課堂任務-mqtt取得學生個人化狀態說明) (完成)
 - [API]
@@ -181,11 +185,13 @@ qrcode_svg
 - [course_tasks/{id}/actions/answer(POST)-學生回答課堂任務](#course_tasksidactionsanswerpost-學生回答課堂任務) (完成)
 - [course_tasks/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生任務答案](#course_tasksidactionsget_answercourse_stu_idcourse_stu_idget-老師取得學生任務答案)
 - [course_tasks/{id}/actions/correct(POST)-老師批閱學生任務答案](#course_tasksidactionscorrectpost-老師批閱學生任務答案)
+- [course_tasks/{id}/actions/get_answering_status(GET)-取得任務即時答題狀態](#course_tasksidactionsget_answering_statusget-取得任務即時答題狀態)
 - [course_tasks/{id}/actions/get_correct?token={token}(GET)-學生取得老師任務批閱結果](#course_tasksidactionsget_correcttokentokenget-學生取得老師任務批閱結果)
 - [course_tasks/{id}/actions/close(POST)-老師結束任務](#course_tasksidactionsclosepost-老師結束任務)
 - [course_tasks/{id}/actions/get_stu_status(GET)-取得學生個人課堂任務狀態](#course_tasksidactionsget_stu_statusget-取得學生個人課堂任務狀態) (完成)
 
 ### 搶答相關
+
 - [MQTT]
 - [課堂搶答-MQTT/取得學生個人化狀態說明](#課堂搶答-mqtt取得學生個人化狀態說明) (完成)
 - [API]
@@ -199,6 +205,7 @@ qrcode_svg
 - [course_qas/{id}/actions/get_stu_status(GET)-取得學生個人課堂搶答狀態](#course_qasidactionsget_stu_statusget-取得學生個人課堂搶答狀態) (完成)
 
 ### 評量相關
+
 - [MQTT]
 - [課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-mqtt取得學生個人化狀態說明) (完成)
 - [API]
@@ -1852,11 +1859,10 @@ qrcode_svg
 
 #### 學生:課堂快問快答學生取得個人化狀態
 
-| 時機說明                 | status         | api                                       | method | 課堂快問快答 is_active |
-| :----------------------- | :------------- | :---------------------------------------- | :----- | :--------------------- |
-| 建立串流                    | stream    | `course_streams/{id}`(GET)     | get    |                                 |        | 0                      |
-| 串流狀態更新            | stream_update |  `course_streams/{id}`(GET)    | post   |  1 /0                     |
-
+| 時機說明     | status        | api                        | method | 課堂快問快答 is_active |
+| :----------- | :------------ | :------------------------- | :----- | :--------------------- | --- | --- |
+| 建立串流     | stream        | `course_streams/{id}`(GET) | get    |                        |     | 0   |
+| 串流狀態更新 | stream_update | `course_streams/{id}`(GET) | post   | 1 /0                   |
 
 ### course_streams/create(POST)-建立課堂串流
 
@@ -2885,6 +2891,7 @@ qrcode_svg
 | 老師執行 API `course_teams/{id}`(DELETE) 成功後 | team_deleted | `course_teams/my`(GET) | get    |
 
 #### 學生:課堂分組發送 MQTT
+
 無須反映
 
 ### course_teams/create(POST)-建立課堂分組
@@ -4731,6 +4738,23 @@ qrcode_svg
 }
 ```
 
+#### MQTT
+
+- nickname:回答學生暱稱
+- finished_stu_total:目前已回答學生數量
+
+```json
+{
+  "course_data": "略",
+  "status": "course_stu_finished_task",
+  "api": "",
+  "method": "",
+  "course_stu_ids": [],
+  "nickname": "Alex",
+  "finished_stu_total": 4
+}
+```
+
 ### course_tasks/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生任務答案
 
 #### Request
@@ -4997,6 +5021,88 @@ qrcode_svg
   "api": "course_tasks/{id}/actions/get_correct",
   "method": "get",
   "parameter": "{course_stu_id}"
+}
+```
+
+### course_tasks/{id}/actions/get_answering_status(GET)-取得任務即時答題狀態
+
+#### Request
+
+- Method: **GET**
+- URL: `course_tasks/{id}/actions/get_answering_status`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明                    | 範例                                | 是否必須 |
+| :----------- | :--- | :---------------------- | :---------------------------------- | :------- |
+| id           | int  | 課堂評量 ID             | 1                                   | O        |
+| Bearer Token |      | 有登入的學生/老師必須要 |                                     | X        |
+| token        |      | 訪客學生必須要          | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
+
+#### Response
+
+- param:
+
+| 名稱             | 類型  | 說明                         | 範例     |
+| :--------------- | :---- | :--------------------------- | :------- |
+| total_stu_count  | int   | 有參加任務的學生數           | 18       |
+| finish_stu_count | int   | 已經回答任務的學生數         | 8        |
+| stu_answers      | array | 所有學生回答的檔案與學生資料 | 參考下方 |
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "total_stu_count": 18,
+    "finish_stu_count": 8,
+    "stu_answers": [
+      {
+        "id": 72,
+        "course_task_id": 13,
+        "course_stu_id": 15,
+        "answer_file_id": null,
+        "length": null,
+        "correct_file_id": null,
+        "file_type": "audiovisual",
+        "created_at": "2024-04-05 12:34:21",
+        "updated_at": "2024-04-05 12:34:21",
+        "deleted_at": null,
+        "course_stu": {
+          "id": 15,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "心心",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 5,
+          "is_online": 1,
+          "created_at": "2024-01-16 22:36:33",
+          "updated_at": "2024-01-16 22:36:33",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 5,
+            "uploader_id": 2,
+            "uploader_type": "teacher",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/BJ3pCI1q4AbgWNtpNfQLyU0nKg2rg6Nkd9z3sUM7.png",
+            "created_at": "2024-01-05 16:23:54",
+            "updated_at": "2024-01-05 16:23:54",
+            "deleted_at": null
+          }
+        },
+        "answer_file": null,
+        "correct_file": null
+      }
+    ]
+  }
 }
 ```
 
@@ -6009,7 +6115,7 @@ qrcode_svg
 #### Response
 
 競賽搶答會回傳各狀態學生數、各學生狀態
-加分搶答會回傳最後一次搶答成功的學生
+加分搶答會回傳最後一次搶答成功的學生 (還沒有人搶答成功的話會是 null)
 
 - params:
 
@@ -6442,7 +6548,7 @@ qrcode_svg
 | 時機說明                 | status                | api                                          | method | 課堂評量 status |
 | :----------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
 | 評量未開始               | assessment_closed     |                                              |        | closed          |
-| 評量開始   | assessment_initial  | `	course_assessments/{id} `    | get   | initial         |
+| 評量開始                 | assessment_initial    | `	course_assessments/{id} `                   | get    | initial         |
 | 評量被中止               | assessment_stopped    |                                              |        | stopped         |
 | 評量答題中, 學生還沒回答 | assessment_answering  | `course_assessments/{id}/actions/answer `    | post   | running         |
 | 評量答題中, 學生已回答   | assessment_answered   |                                              |        | running         |
@@ -6740,49 +6846,45 @@ qrcode_svg
 - param:
 
 course_assessment
-| 名稱               | 類型   | 說明                                              | 範例             |
+| 名稱 | 類型 | 說明 | 範例 |
 | :----------------- | :----- | :------------------------------------------------ | :--------------- |
-| id             | int | 評量id                                      | 1          |
-| status             | string | 課堂評量狀態                                      | running          |
-| quest_type              | string | 值可為 single(單選題),multiple(複選題),tf(是非題),essay(文字題),handwritten(手寫題)               | single          |
-| pages              | object | 課堂評量頁面內容(下表詳述)                                  | [{}]         |
+| id | int | 評量 id | 1 |
+| status | string | 課堂評量狀態 | running |
+| quest_type | string | 值可為 single(單選題),multiple(複選題),tf(是非題),essay(文字題),handwritten(手寫題) | single |
+| pages | object | 課堂評量頁面內容(下表詳述) | [{}] |
 
-pages (因為評量可以是很多頁面，因此pages將是一個多維陣列)
+pages (因為評量可以是很多頁面，因此 pages 將是一個多維陣列)
 
-| 名稱               | 類型   | 說明                                              | 範例             |
-| :----------------- | :----- | :------------------------------------------------ | :--------------- |
-| id             | int | 頁面內容id                                      | 1          |
-| course_assessment_id            | int | 對應評量id                                      | 19          |
-| option_number            | int | 選項數量                                      | 4          |
-| option_type            | string | 選項類型  值可為 number(數字),character(字母)                               | single          |
-| score            | int | 此頁分數                                      | 8          |
-| options            | array | 選項 項目為string陣列                            | ["O", "X"]          |
-| question_ids         | array | 課堂評量頁面中所包含的題目 id, 評量未開始時是空的                                    | [50,51,52,54]          |
-| questions            | objects | 對應的作答狀況(多維陣列) 詳如下表                                    | [{}]         |
+| 名稱                 | 類型    | 說明                                              | 範例          |
+| :------------------- | :------ | :------------------------------------------------ | :------------ |
+| id                   | int     | 頁面內容 id                                       | 1             |
+| course_assessment_id | int     | 對應評量 id                                       | 19            |
+| option_number        | int     | 選項數量                                          | 4             |
+| option_type          | string  | 選項類型 值可為 number(數字),character(字母)      | single        |
+| score                | int     | 此頁分數                                          | 8             |
+| options              | array   | 選項 項目為 string 陣列                           | ["O", "X"]    |
+| question_ids         | array   | 課堂評量頁面中所包含的題目 id, 評量未開始時是空的 | [50,51,52,54] |
+| questions            | objects | 對應的作答狀況(多維陣列) 詳如下表                 | [{}]          |
 
 questions
-| 名稱               | 類型   | 說明                                              | 範例             |
+| 名稱 | 類型 | 說明 | 範例 |
 | :----------------- | :----- | :------------------------------------------------ | :--------------- |
-| id             | int | 問題id                                      | 1          |
-| page_id            | int | 對應頁面內容id                                      | 19          |
-| answer            | string | 作答內容                                      | A          |
-| order            | int | 排序                                      | 1          |
+| id | int | 問題 id | 1 |
+| page_id | int | 對應頁面內容 id | 19 |
+| answer | string | 作答內容 | A |
+| order | int | 排序 | 1 |
 
 可能的選項列表
 
-| 題型               | 類型   | 選項                                              | 作答方式             |
-| :----------------- | :----- | :------------------------------------------------ | :---------------------- | 
-| tf             |  | ["O","X"]                                      | "O"          |
-| single            | number | ["1","2","3"]                                    | "1"          |
-| single            | character | ["A","B","C"]                                      | "A"          |
-| multiple            | number | ["1","2","3"]                                    | "123"          |
-| multiple            | character | ["A","B","C"]                                      | "ABC"          |
-| essay            |  |                                      | "這是一個文字範例"          |
-| handwritten            |  |                                     | "這是一個文字範例"          |
-
-
-
-
+| 題型        | 類型      | 選項          | 作答方式           |
+| :---------- | :-------- | :------------ | :----------------- |
+| tf          |           | ["O","X"]     | "O"                |
+| single      | number    | ["1","2","3"] | "1"                |
+| single      | character | ["A","B","C"] | "A"                |
+| multiple    | number    | ["1","2","3"] | "123"              |
+| multiple    | character | ["A","B","C"] | "ABC"              |
+| essay       |           |               | "這是一個文字範例" |
+| handwritten |           |               | "這是一個文字範例" |
 
 - status 說明參考[課堂評量-MQTT/取得學生個人化狀態說明](#課堂評量-MQTT/取得學生個人化狀態說明) 課堂評量 status 欄位
 
@@ -6793,9 +6895,7 @@ questions
 ```json
 {
   "result": true,
-  "msg": [
-    "Success"
-  ],
+  "msg": ["Success"],
   "data": {
     "course_assessment": {
       "id": 19,
@@ -6818,16 +6918,9 @@ questions
           "created_at": "2024-03-04 09:32:41",
           "updated_at": "2024-03-04 09:32:41",
           "deleted_at": null,
-          "options": [
-            "A",
-            "B",
-            "C",
-            "D"
-          ],
+          "options": ["A", "B", "C", "D"],
           "correct_file_id": 0,
-          "question_ids": [
-            511
-          ],
+          "question_ids": [511],
           "quest_file": {
             "id": 192,
             "uploader_id": 3,
@@ -7003,19 +7096,19 @@ questions
 
 - 只能回答一次, 回答過不可再回答
 
-
 可回答的選項列表
-| 題型               | 類型   | 選項                                              | 作答方式             |
-| :----------------- | :----- | :------------------------------------------------ | :---------------------| 
-| tf             |  | ["O","X"]                                      | "O"          |
-| single            | number | ["1","2","3"]                                    | "1"          |
-| single            | character | ["A","B","C"]                                      | "A"          |
-| multiple            | number | ["1","2","3"]                                    | "123"          |
-| multiple            | character | ["A","B","C"]                                      | "ABC"          |
-| essay            |  |                                      | "這是一個文字範例"          |
-| handwritten            |  |                                     | "這是一個文字範例"          |
+| 題型 | 類型 | 選項 | 作答方式 |
+| :----------------- | :----- | :------------------------------------------------ | :---------------------|
+| tf | | ["O","X"] | "O" |
+| single | number | ["1","2","3"] | "1" |
+| single | character | ["A","B","C"] | "A" |
+| multiple | number | ["1","2","3"] | "123" |
+| multiple | character | ["A","B","C"] | "ABC" |
+| essay | | | "這是一個文字範例" |
+| handwritten | | | "這是一個文字範例" |
 
 文字的範例
+
 ```json
 {
   "50": "ans1",
@@ -7026,6 +7119,7 @@ questions
 ```
 
 單選(是非)的範例
+
 ```json
 {
   "50": "O",
@@ -7042,9 +7136,10 @@ questions
   "52": "3",
   "53": "3"
 }
-
 ```
+
 多選的範例
+
 ```json
 {
   "50": "AB",
@@ -7053,7 +7148,6 @@ questions
   "53": "AD"
 }
 ```
-
 
 #### Response
 
