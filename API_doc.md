@@ -4266,7 +4266,8 @@ qrcode_svg
 
 - Body:
 
-```json (老師)
+- json (老師)
+```
 {
   "result": true,
   "msg": ["Success"],
@@ -4350,12 +4351,31 @@ qrcode_svg
 }
 ```
 
-```json (學生)
+- json (學生)
+```
 {
   "result": true,
-  "msg": ["Success"],
+  "msg": [
+    "Success"
+  ],
   "data": {
-    "is_winner": true
+    "is_winner": false,
+    "winner": {
+      "id": 684,
+      "course_id": 208,
+      "user_id": 0,
+      "nickname": "張小明20240411031326396",
+      "is_visitor": 1,
+      "score": 0,
+      "avatar_file_id": 0,
+      "is_online": 1,
+      "created_at": "2024-04-11 11:13:29",
+      "updated_at": "2024-04-11 11:13:29",
+      "deleted_at": null,
+      "stream_url": null,
+      "comment": "",
+      "avatar_file": null
+    }
   }
 }
 ```
