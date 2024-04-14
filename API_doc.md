@@ -1990,7 +1990,7 @@ qrcode_svg
 
 | 名稱         | 類型    | 說明                       | 範例                                | 是否必須 |
 | :----------- | :------ | :------------------------- | :---------------------------------- | :------- |
-| id           | int     | 課堂串流 ID /或課堂碼 code | 1                                   | O        |
+| id           | int/string  | 課堂串流 ID /或課堂碼 code | 1/yMdlXBrpo9                     | O        |
 | Bearer Token |         | 有登入的學生必須要         |                                     | X        |
 | token        |         | 訪客學生必須要             | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 | force_get    | boolean | 無論有沒有更新都要取得資料 | 1                                   | X        |
@@ -5646,6 +5646,10 @@ qrcode_svg
 ```
 
 ### course_qas/{id}/actions/answer(POST)-學生回答課堂搶答
+
+-- 加分搶答 執行時不帶答案就會得到 搶答成功與否的結果，成功 result=true;
+-- 競賽搶答 執行是必須帶答案(answer)
+
 
 #### Request
 
