@@ -5647,8 +5647,8 @@ qrcode_svg
 
 ### course_qas/{id}/actions/answer(POST)-學生回答課堂搶答
 
--- 加分搶答 執行時不帶答案就會得到 搶答成功與否的結果，成功 result=true;
--- 競賽搶答 執行是必須帶答案(answer)
+- 加分搶答 執行時不帶答案就會得到 搶答成功與否的結果，成功 result=true;
+- 競賽搶答 執行是必須帶答案(answer)
 
 
 #### Request
