@@ -1848,6 +1848,34 @@ qrcode_svg
 }
 ```
 
+#### MQTT
+
+加分的話 status 是 score_plus
+
+```json
+{
+  "course_data": "略",
+  "status": "score_plus",
+  "api": "",
+  "method": "",
+  "course_stu_ids": [對象學生ID],
+  "score":5
+}
+```
+
+減分的話 status 是 score_minus
+
+```json
+{
+  "course_data": "略",
+  "status": "score_minus",
+  "api": "",
+  "method": "",
+  "course_stu_ids": [對象學生ID],
+  "score":-5
+}
+```
+
 ### 課堂串流-MQTT
 
 #### 教師:課堂串流 MQTT
@@ -1860,9 +1888,9 @@ qrcode_svg
 #### 學生:課堂課堂串流學生取得個人化狀態
 
 | 時機說明     | status        | api                        | method | 課堂串流 is_active |
-| :----------- | :------------ | :------------------------- | :----- | :--------------------- |
-| 建立串流     | stream        | `course_streams/{id}`(GET) | get    |                        |   
-| 串流狀態更新 | stream_update | `course_streams/{id}`(GET) | GET   | 1 /0                   |
+| :----------- | :------------ | :------------------------- | :----- | :----------------- |
+| 建立串流     | stream        | `course_streams/{id}`(GET) | get    |                    |
+| 串流狀態更新 | stream_update | `course_streams/{id}`(GET) | GET    | 1 /0               |
 
 ### course_streams/create(POST)-建立課堂串流
 
@@ -1988,24 +2016,22 @@ qrcode_svg
 - Headers:
 - Path-params:
 
-| 名稱         | 類型    | 說明                       | 範例                                | 是否必須 |
-| :----------- | :------ | :------------------------- | :---------------------------------- | :------- |
-| id           | int/string  | 課堂串流 ID /或課堂碼 code | 1/yMdlXBrpo9                     | O        |
-| Bearer Token |         | 有登入的學生必須要         |                                     | X        |
-| token        |         | 訪客學生必須要             | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
-| force_get    | boolean | 無論有沒有更新都要取得資料 | 1                                   | X        |
+| 名稱         | 類型       | 說明                       | 範例                                | 是否必須 |
+| :----------- | :--------- | :------------------------- | :---------------------------------- | :------- |
+| id           | int/string | 課堂串流 ID /或課堂碼 code | 1/yMdlXBrpo9                        | O        |
+| Bearer Token |            | 有登入的學生必須要         |                                     | X        |
+| token        |            | 訪客學生必須要             | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
+| force_get    | boolean    | 無論有沒有更新都要取得資料 | 1                                   | X        |
 
 #### Response
 
-| 名稱       | 類型   | 說明                  | 範例                  |
-| :--------- | :----- | :-------------------- | :-------------------- |
-| id         | int    | 課堂 ID               | 6                     |
-| is_active    | string    | 是否啟用         |"1":啟用 "0":關閉                    |
-| is_drawable | string | 是否可畫畫              | "1":啟用 "0":關閉            |
-| is_speakable | string | 是否有聲音              | "1":啟用 "0":關閉            |
-| stream_type | string | 串流類型             | "broadcast"           |
-
-
+| 名稱         | 類型   | 說明       | 範例              |
+| :----------- | :----- | :--------- | :---------------- |
+| id           | int    | 課堂 ID    | 6                 |
+| is_active    | string | 是否啟用   | "1":啟用 "0":關閉 |
+| is_drawable  | string | 是否可畫畫 | "1":啟用 "0":關閉 |
+| is_speakable | string | 是否有聲音 | "1":啟用 "0":關閉 |
+| stream_type  | string | 串流類型   | "broadcast"       |
 
 -成功
 
@@ -4267,6 +4293,7 @@ qrcode_svg
 - Body:
 
 - json (老師)
+
 ```
 {
   "result": true,
@@ -4352,6 +4379,7 @@ qrcode_svg
 ```
 
 - json (學生)
+
 ```
 {
   "result": true,
@@ -4814,131 +4842,92 @@ qrcode_svg
   "msg": ["Success"],
   "data": [
     {
-      "id": 10,
-      "course_task_id": 7,
-      "course_stu_id": 4,
-      "answer_file_id": null,
-      "length": null,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
-      "deleted_at": null,
-      "answer_file": null
-    },
-    {
-      "id": 11,
-      "course_task_id": 7,
-      "course_stu_id": 5,
-      "answer_file_id": null,
-      "length": null,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
-      "deleted_at": null,
-      "answer_file": null
-    },
-    {
-      "id": 12,
-      "course_task_id": 7,
-      "course_stu_id": 7,
-      "answer_file_id": null,
-      "length": null,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
-      "deleted_at": null,
-      "answer_file": null
-    },
-    {
-      "id": 13,
-      "course_task_id": 7,
-      "course_stu_id": 9,
-      "answer_file_id": null,
-      "length": null,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
-      "deleted_at": null,
-      "answer_file": null
-    },
-    {
-      "id": 14,
-      "course_task_id": 7,
-      "course_stu_id": 10,
-      "answer_file_id": null,
-      "length": null,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
-      "deleted_at": null,
-      "answer_file": null
-    },
-    {
-      "id": 15,
-      "course_task_id": 7,
-      "course_stu_id": 11,
-      "answer_file_id": null,
-      "length": null,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
-      "deleted_at": null,
-      "answer_file": null
-    },
-    {
-      "id": 16,
-      "course_task_id": 7,
-      "course_stu_id": 12,
-      "answer_file_id": 50,
+      "id": 35,
+      "course_task_id": 9,
+      "course_stu_id": 13,
+      "answer_file_id": 61,
       "length": 10,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:55:40",
+      "correct_file_id": 62,
+      "file_type": "audiovisual",
+      "created_at": "2024-02-03 16:57:55",
+      "updated_at": "2024-02-03 17:48:38",
       "deleted_at": null,
       "answer_file": {
-        "id": 50,
-        "uploader_id": 3,
+        "id": 61,
+        "uploader_id": 0,
         "uploader_type": "student",
-        "file_type": "record",
+        "file_type": "audiovisual",
         "course_id": 1,
-        "drive_id": "0z7KK006FhogG2OHnUEA95VhjRf7XGdoA2Y3U7Cm.m4a",
-        "created_at": "2024-02-03 10:55:40",
-        "updated_at": "2024-02-03 10:55:40",
+        "drive_id": "/storage/mBk8iaasTteAYrzrnQFNp5sL0YDB1XsMSpTlNp2u.jpg",
+        "created_at": "2024-02-03 17:45:48",
+        "updated_at": "2024-02-03 17:45:48",
         "deleted_at": null
+      },
+      "course_stu": {
+        "id": 13,
+        "course_id": 1,
+        "user_id": 0,
+        "nickname": "min",
+        "is_visitor": 1,
+        "score": 0,
+        "avatar_file_id": 132,
+        "is_online": 1,
+        "created_at": "2024-01-14 14:31:34",
+        "updated_at": "2024-02-24 12:00:14",
+        "deleted_at": null,
+        "stream_url": null,
+        "comment": "",
+        "avatar_file": {
+          "id": 132,
+          "uploader_id": 0,
+          "uploader_type": "student",
+          "file_type": "image",
+          "course_id": 1,
+          "drive_id": "/storage/NtjJqm055RMSkhZsA5I722tknId4beHEA1XNnGfz.png",
+          "created_at": "2024-02-24 12:00:14",
+          "updated_at": "2024-02-24 12:00:14",
+          "deleted_at": null
+        }
       }
     },
     {
-      "id": 17,
-      "course_task_id": 7,
-      "course_stu_id": 13,
-      "answer_file_id": null,
-      "length": null,
-      "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
-      "deleted_at": null,
-      "answer_file": null
-    },
-    {
-      "id": 18,
-      "course_task_id": 7,
+      "id": 36,
+      "course_task_id": 9,
       "course_stu_id": 15,
       "answer_file_id": null,
       "length": null,
       "correct_file_id": null,
-      "file_type": "record",
-      "created_at": "2024-02-03 10:46:56",
-      "updated_at": "2024-02-03 10:46:56",
+      "file_type": "audiovisual",
+      "created_at": "2024-02-03 16:57:55",
+      "updated_at": "2024-02-03 16:57:55",
       "deleted_at": null,
-      "answer_file": null
+      "answer_file": null,
+      "course_stu": {
+        "id": 15,
+        "course_id": 1,
+        "user_id": 0,
+        "nickname": "心心",
+        "is_visitor": 1,
+        "score": 0,
+        "avatar_file_id": 5,
+        "is_online": 1,
+        "created_at": "2024-01-16 22:36:33",
+        "updated_at": "2024-01-16 22:36:33",
+        "deleted_at": null,
+        "stream_url": null,
+        "comment": "",
+        "avatar_file": {
+          "id": 5,
+          "uploader_id": 2,
+          "uploader_type": "teacher",
+          "file_type": "image",
+          "course_id": 1,
+          "drive_id": "/storage/BJ3pCI1q4AbgWNtpNfQLyU0nKg2rg6Nkd9z3sUM7.png",
+          "created_at": "2024-01-05 16:23:54",
+          "updated_at": "2024-01-05 16:23:54",
+          "deleted_at": null
+        }
+      }
     }
   ]
 }
@@ -4949,15 +4938,53 @@ qrcode_svg
   "result": true,
   "msg": ["Success"],
   "data": {
-    "id": 61,
-    "uploader_id": 0,
-    "uploader_type": "student",
+    "id": 35,
+    "course_task_id": 9,
+    "course_stu_id": 13,
+    "answer_file_id": 61,
+    "length": 10,
+    "correct_file_id": 62,
     "file_type": "audiovisual",
-    "course_id": 1,
-    "drive_id": "mBk8iaasTteAYrzrnQFNp5sL0YDB1XsMSpTlNp2u.jpg",
-    "created_at": "2024-02-03 17:45:48",
-    "updated_at": "2024-02-03 17:45:48",
-    "deleted_at": null
+    "created_at": "2024-02-03 16:57:55",
+    "updated_at": "2024-02-03 17:48:38",
+    "deleted_at": null,
+    "answer_file": {
+      "id": 61,
+      "uploader_id": 0,
+      "uploader_type": "student",
+      "file_type": "audiovisual",
+      "course_id": 1,
+      "drive_id": "/storage/mBk8iaasTteAYrzrnQFNp5sL0YDB1XsMSpTlNp2u.jpg",
+      "created_at": "2024-02-03 17:45:48",
+      "updated_at": "2024-02-03 17:45:48",
+      "deleted_at": null
+    },
+    "course_stu": {
+      "id": 13,
+      "course_id": 1,
+      "user_id": 0,
+      "nickname": "min",
+      "is_visitor": 1,
+      "score": 0,
+      "avatar_file_id": 132,
+      "is_online": 1,
+      "created_at": "2024-01-14 14:31:34",
+      "updated_at": "2024-02-24 12:00:14",
+      "deleted_at": null,
+      "stream_url": null,
+      "comment": "",
+      "avatar_file": {
+        "id": 132,
+        "uploader_id": 0,
+        "uploader_type": "student",
+        "file_type": "image",
+        "course_id": 1,
+        "drive_id": "/storage/NtjJqm055RMSkhZsA5I722tknId4beHEA1XNnGfz.png",
+        "created_at": "2024-02-24 12:00:14",
+        "updated_at": "2024-02-24 12:00:14",
+        "deleted_at": null
+      }
+    }
   }
 }
 ```
