@@ -1,5 +1,26 @@
 # T-Plus 內部 API 文件
 
+## 更新
+
+### 20240423
+
+1. 以下 api 修正為發出 mqtt 會一併更改 course 的 status & status_id
+
+- `course_deliveries/create(POST)-建立課堂派送`
+- `course_assessments/{id}/actions/correct_hand_essay(POST)-老師批閱課堂評量手寫題&文字題`
+- `course_quizzes/{id}/actions/correct(POST)-老師批閱學生快問快答答案`
+- `course_score_logs/create(POST)-幫課堂學生分組加減分`
+- `course_streams/create(POST)-建立課堂串流`
+- `course_streams/{id}(PUT)-更新課堂串流`
+- `course_tasks/{id}/actions/correct(POST)-老師批閱學生任務答案`
+
+2. `course_score_logs/create(POST)-幫課堂學生分組加減分` receiver_id 改成 receiver_ids，type 從 int 改成 array，可一次針對多個對象進行加減分
+
+3. 加入 暫停課堂任務 與 恢復課堂任務 API
+
+- `course_tasks/{id}/actions/stop(POST)-暫停課堂任務`
+- `course_tasks/{id}/actions/restore(POST)-恢復課堂任務`
+
 ## 文件目的
 
 - 本文檔定義網站 API 進出參規範,並提供範例格式.
@@ -182,6 +203,8 @@ qrcode_svg
 - [API]
 - [course_tasks/create(POST)-建立課堂任務](#course_taskscreatepost-建立課堂任務) (完成)
 - [course_tasks/{id}(GET)-取得課堂任務](#course_tasksidget-取得課堂任務) (完成)
+- [course_tasks/{id}/actions/stop(POST)-暫停課堂任務](#course_tasksidactionsstoppost-暫停課堂任務) (完成)
+- [course_tasks/{id}/actions/restore(POST)-恢復課堂任務](#course_tasksidactionsrestorepost-恢復課堂任務) (完成)
 - [course_tasks/{id}/actions/answer(POST)-學生回答課堂任務](#course_tasksidactionsanswerpost-學生回答課堂任務) (完成)
 - [course_tasks/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生任務答案](#course_tasksidactionsget_answercourse_stu_idcourse_stu_idget-老師取得學生任務答案)
 - [course_tasks/{id}/actions/correct(POST)-老師批閱學生任務答案](#course_tasksidactionscorrectpost-老師批閱學生任務答案)
@@ -1799,14 +1822,14 @@ qrcode_svg
 - Headers: Content-Type:multipart/form-data
 - Path-params:
 
-| 名稱          | 類型   | 說明                                | 範例   | 是否必須 |
-| :------------ | :----- | :---------------------------------- | :----- | :------- |
-| receiver_id   | int    | 加減分對象 ID                       | 1      | O        |
-| receiver_type | string | 加減分對象類型(stu/team)            | stu    | O        |
-| item_type     | string | 加減分項目(task/quiz/qa/assessment) | quiz   | O        |
-| score         | int    | 加減分數                            | 3      | O        |
-| comment       | string | 評語                                | 非常好 | X        |
-| Bearer Token  |        | 須為老師                            |        | O        |
+| 名稱          | 類型   | 說明                                | 範例    | 是否必須 |
+| :------------ | :----- | :---------------------------------- | :------ | :------- |
+| receiver_ids  | array  | 加減分對象 ID array                 | [1,2,3] | O        |
+| receiver_type | string | 加減分對象類型(stu/team)            | stu     | O        |
+| item_type     | string | 加減分項目(task/quiz/qa/assessment) | quiz    | O        |
+| score         | int    | 加減分數                            | 3       | O        |
+| comment       | string | 評語                                | 非常好  | X        |
+| Bearer Token  |        | 須為老師                            |         | O        |
 
 #### Response
 
@@ -1816,11 +1839,9 @@ qrcode_svg
 
 ```json
 {
-  "receiver_id": 1,
-  "item_type": "task",
-  "score": 5,
-  "receiver_type": "stu",
-  "comment": "Very good"
+  "result": true,
+  "msg": ["Success"],
+  "data": []
 }
 ```
 
@@ -1833,7 +1854,7 @@ qrcode_svg
 ```json
 {
   "result": false,
-  "msg": ["The course student/team not exists.."]
+  "msg": ["The course student/team not exists."]
 }
 ```
 
@@ -1844,7 +1865,18 @@ qrcode_svg
 ```json
 {
   "result": false,
-  "msg": ["You are not the teacher of the receiver."]
+  "msg": ["You are not the teacher of the receiver:{receiver_id}"]
+}
+```
+
+### 不明原因無法 insert
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["Insert score failed."]
 }
 ```
 
@@ -1858,7 +1890,7 @@ qrcode_svg
   "status": "score_plus",
   "api": "",
   "method": "",
-  "course_stu_ids": [對象學生ID],
+  "course_stu_ids": [{course_stu_ids}],
   "score":5
 }
 ```
@@ -1871,7 +1903,7 @@ qrcode_svg
   "status": "score_minus",
   "api": "",
   "method": "",
-  "course_stu_ids": [對象學生ID],
+  "course_stu_ids": [{course_stu_ids}],
   "score":-5
 }
 ```
@@ -1939,6 +1971,8 @@ qrcode_svg
 }
 ```
 
+課堂 status 會一起變更為 stream，status_id 紀錄該 stream id
+
 #### MQTT
 
 ```json
@@ -1947,7 +1981,7 @@ qrcode_svg
   "status": "stream",
   "api": "course_streams/{id}",
   "method": "get",
-  "course_stu_ids": [對象學生ID]
+    "course_stu_ids": [{course_stu_ids}]
 }
 ```
 
@@ -1995,6 +2029,8 @@ qrcode_svg
 }
 ```
 
+課堂 status 會一起變更為 stream_update，status_id 紀錄該 stream id
+
 #### MQTT
 
 ```json
@@ -2003,7 +2039,7 @@ qrcode_svg
   "status": "stream_update",
   "api": "course_streams/{id}",
   "method": "get",
-  "course_stu_ids": [對象學生ID]
+      "course_stu_ids": [{course_stu_ids}]
 }
 ```
 
@@ -2601,6 +2637,8 @@ qrcode_svg
 }
 ```
 
+課堂 status 會一起變更為 quiz_corrected，status_id 紀錄該 quiz id
+
 #### MQTT
 
 ```json
@@ -2609,7 +2647,7 @@ qrcode_svg
   "status": "quiz_corrected",
   "api": "course_quizzes/{id}/actions/get_correct",
   "method": "get",
-  "course_stu_ids": ["{course_stu_id}"]
+  "course_stu_ids": [{course_stu_ids}]
 }
 ```
 
@@ -2800,6 +2838,8 @@ qrcode_svg
   "msg": ["You do not have permission to access this resource."]
 }
 ```
+
+課堂 status 會一起變更為 delivery，status_id 紀錄該 delivery id
 
 #### MQTT
 
@@ -4589,11 +4629,13 @@ qrcode_svg
 
 #### 教師:課堂任務發送 MQTT
 
-| 時機                                                    | status         | api                                        | method | 課堂任務 is_active |
-| :------------------------------------------------------ | :------------- | :----------------------------------------- | :----- | :----------------- |
-| 老師執行 API `course_tasks/create` 成功後               | task           | `course_tasks/{id}/actions/get_stu_status` | get    | 1                  |
-| 老師執行 API `course_tasks/{id}/actions/close` 成功後   | task_closed    |                                            |        | 0                  |
-| 老師執行 API `course_tasks/{id}/actions/correct` 成功後 | task_corrected | `course_tasks/{id}/actions/get_correct`    | get    | 1                  |
+| 時機                                                    | status         | api                                        | method | 課堂任務 status |
+| :------------------------------------------------------ | :------------- | :----------------------------------------- | :----- | :-------------- |
+| 老師執行 API `course_tasks/create` 成功後               | task           | `course_tasks/{id}/actions/get_stu_status` | get    | running         |
+| 老師執行 API `course_tasks/{id}/actions/stop` 成功後    | task_stopped   |                                            |        | stopped         |
+| 老師執行 API `course_tasks/{id}/actions/restore` 成功後 | task           | `course_tasks/{id}/actions/get_stu_status` | get    | running         |
+| 老師執行 API `course_tasks/{id}/actions/close` 成功後   | task_closed    |                                            |        | closed          |
+| 老師執行 API `course_tasks/{id}/actions/correct` 成功後 | task_corrected | `course_tasks/{id}/actions/get_correct`    | get    | closed          |
 
 #### 學生:課堂任務學生取得個人化狀態
 
@@ -4731,6 +4773,114 @@ qrcode_svg
 {
   "result": false,
   "msg": ["You do not have permission to access this resource."]
+}
+```
+
+### course_tasks/{id}/actions/stop(POST)-暫停課堂任務
+
+#### Request
+
+- Method: **POST**
+- URL: `course_tasks/{id}/actions/stop`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型 | 說明        | 範例 | 是否必須 |
+| :----------- | :--- | :---------- | :--- | :------- |
+| id           | int  | 課堂任務 ID | 1    | O        |
+| Bearer Token |      |             |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": []
+}
+```
+
+-失敗
+
+#### 沒有權限
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "task_stopped",
+  "api": "",
+  "method": "",
+  "course_stu_ids": []
+}
+```
+
+### course_tasks/{id}/actions/restore(POST)-恢復課堂任務
+
+#### Request
+
+- Method: **POST**
+- URL: `course_tasks/{id}/actions/restore`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型 | 說明        | 範例 | 是否必須 |
+| :----------- | :--- | :---------- | :--- | :------- |
+| id           | int  | 課堂任務 ID | 1    | O        |
+| Bearer Token |      |             |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": []
+}
+```
+
+-失敗
+
+#### 沒有權限
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "task",
+  "api": "course_tasks/{id}/actions/get_stu_status",
+  "method": "get",
+  "course_stu_ids": []
 }
 ```
 
@@ -5069,6 +5219,8 @@ qrcode_svg
 }
 ```
 
+課堂 status 會一起變更為 task_corrected 紀錄該 task id
+
 #### MQTT
 
 ```json
@@ -5077,7 +5229,7 @@ qrcode_svg
   "status": "task_corrected",
   "api": "course_tasks/{id}/actions/get_correct",
   "method": "get",
-  "parameter": "{course_stu_id}"
+  "course_stu_ids": [{course_stu_ids}]
 }
 ```
 
@@ -5676,7 +5828,6 @@ qrcode_svg
 
 - 加分搶答 執行時不帶答案就會得到 搶答成功與否的結果，成功 result=true;
 - 競賽搶答 執行是必須帶答案(answer)
-
 
 #### Request
 
@@ -6595,14 +6746,15 @@ qrcode_svg
 
 #### 教師:課堂評量發送 MQTT
 
-| 時機                                                                 | status                | api                                          | method | 課堂評量 status |
-| :------------------------------------------------------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
-| 老師執行 API `course_assessments/{id}/actions/run` 成功後            | assessment_initial    | `course_assessments/{id}`                    | get    | initial         |
-| 老師執行 API `course_assessments/{id}/actions/stop` 成功後           | assessment_stopped    |                                              |        | stopped         |
-| 老師執行 API `course_assessments/{id}/actions/collect` 成功後        | assessment_collected  |                                              |        | collected       |
-| 老師執行 API `course_assessments/{id}/actions/restart` 成功後        | assessment_initial    | `course_assessments/{id}`                    | post   | initial         |
-| 老師執行 API `course_assessments/{id}/actions/correct` 成功後        | assessment_correcting |                                              |        | correcting      |
-| 老師執行 API `course_assessments/{id}/actions/publish_answer` 成功後 | assessment_corrected  | `course_assessments/{id}/actions/get_result` | get    | corrected       |
+| 時機                                                                     | status                | api                                          | method | 課堂評量 status |
+| :----------------------------------------------------------------------- | :-------------------- | :------------------------------------------- | :----- | :-------------- |
+| 老師執行 API `course_assessments/{id}/actions/run` 成功後                | assessment_initial    | `course_assessments/{id}`                    | get    | initial         |
+| 老師執行 API `course_assessments/{id}/actions/stop` 成功後               | assessment_stopped    |                                              |        | stopped         |
+| 老師執行 API `course_assessments/{id}/actions/collect` 成功後            | assessment_collected  |                                              |        | collected       |
+| 老師執行 API `course_assessments/{id}/actions/restart` 成功後            | assessment_initial    | `course_assessments/{id}`                    | post   | initial         |
+| 老師執行 API `course_assessments/{id}/actions/correct` 成功後            | assessment_correcting |                                              |        | correcting      |
+| 老師執行 API `course_assessments/{id}/actions/publish_answer` 成功後     | assessment_corrected  | `course_assessments/{id}/actions/get_result` | get    | corrected       |
+| 老師執行 API `course_assessments/{id}/actions/correct_hand_essay` 成功後 | assessment_corrected  | `course_assessments/{id}/actions/get_result` | get    | corrected       |
 
 #### 學生:課堂評量學生取得個人化狀態
 
@@ -7548,6 +7700,8 @@ correct_file => "answer.png"
 }
 ```
 
+課堂 status 會一起變更為 assessment_corrected，status_id 紀錄該 course_assessment id
+
 #### MQTT
 
 ```json
@@ -7556,7 +7710,7 @@ correct_file => "answer.png"
   "status": "assessment_corrected",
   "api": "course_assessments/{id}/actions/get_correct",
   "method": "get",
-  "parameter": "{course_stu_id}"
+  "course_stu_ids": [{course_stu_ids}]
 }
 ```
 
