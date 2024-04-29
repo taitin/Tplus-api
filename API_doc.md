@@ -21,6 +21,14 @@
 - `course_tasks/{id}/actions/stop(POST)-暫停課堂任務`
 - `course_tasks/{id}/actions/restore(POST)-恢復課堂任務`
 
+### 20240429
+
+1. 加入取得學生個人資訊的 API
+
+- `course_stus/get_self_info(GET)-取得課堂學生個人資訊`
+
+2. 修正 `courses/{id}/top10(GET)-取得課堂榮譽榜` 學生發送時的 bug
+
 ## 文件目的
 
 - 本文檔定義網站 API 進出參規範,並提供範例格式.
@@ -148,6 +156,7 @@ qrcode_svg
 - [course_stus/create(POST)-建立課堂學生](#course_stuscreatepost-建立課堂學生) (完成)
 - [course_stus/update(POST)-更新課堂學生](#course_stusupdatepost-更新課堂學生) (完成)
 - [course_stus/get_avatars(POST)-取得課堂學生大頭貼](#course_stusget_avatarspost-取得課堂學生大頭貼) (完成)
+- [course_stus/get_self_info(GET)-取得課堂學生個人資訊](#course_stusget_self_infoget-取得課堂學生個人資訊) (完成)
 - [course_score_logs/create(POST)-幫課堂學生分組加減分](#course_score_logscreatepost-幫課堂學生分組加減分) (未完成分組)
 
 ### 課堂串流相關
@@ -1737,6 +1746,72 @@ qrcode_svg
 {
   "result": false,
   "msg": ["nickname:The nickname is already used."]
+}
+```
+
+### course_stus/get_self_info(GET)-取得課堂學生個人資訊
+
+#### Request
+
+- Method: **GET**
+- URL: `course_stus/get_self_info`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明               | 範例 | 是否必須 |
+| :----------- | :--- | :----------------- | :--- | :------- |
+| Bearer Token |      | 有登入的學生必須要 |      | X        |
+| token        |      | 訪客學生必須要     |      | X        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "id": 20,
+    "course_id": 1,
+    "user_id": 5,
+    "nickname": "Alex",
+    "is_visitor": 0,
+    "score": 20,
+    "avatar_file_id": 131,
+    "is_online": 1,
+    "created_at": "2024-02-24 11:52:53",
+    "updated_at": "2024-04-29 19:06:16",
+    "deleted_at": null,
+    "stream_url": null,
+    "comment": "",
+    "avatar_file": {
+      "id": 131,
+      "uploader_id": 5,
+      "uploader_type": "student",
+      "file_type": "image",
+      "course_id": 1,
+      "drive_id": "/storage/PZMFixNRAytUfUqoc0pmyAgH1PDcAbQUG0kv8XTF.png",
+      "created_at": "2024-02-24 11:58:33",
+      "updated_at": "2024-02-24 11:58:33",
+      "deleted_at": null
+    }
+  }
+}
+```
+
+-失敗
+
+#### 不是學生
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You are not a student."]
 }
 ```
 
@@ -4639,12 +4714,13 @@ qrcode_svg
 
 #### 學生:課堂任務學生取得個人化狀態
 
-| 時機說明             | status         | api                                     | method | 課堂任務 is_active |
-| :------------------- | :------------- | :-------------------------------------- | :----- | :----------------- |
-| 任務未開始/已結束    | task_closed    |                                         |        | 0                  |
-| 學生還沒回答         | task_answering | `course_tasks/{id}/actions/answer `     | post   | 1                  |
-| 學生已回答           | task_answered  |                                         |        | 1                  |
-| 任務已被老師批改完成 | task_corrected | `course_tasks/{id}/actions/get_correct` | get    | 1                  |
+| 時機說明             | status         | api                                     | method | 課堂任務 status |
+| :------------------- | :------------- | :-------------------------------------- | :----- | :-------------- |
+| 任務未開始/已結束    | task_closed    |                                         |        | closed          |
+| 學生還沒回答         | task_answering | `course_tasks/{id}/actions/answer `     | post   | running         |
+| 學生已回答           | task_answered  |                                         |        | running         |
+| 任務已被老師批改完成 | task_corrected | `course_tasks/{id}/actions/get_correct` | get    | running         |
+| 任務已被老師暫停     | task_stopped   |                                         |        | stopped         |
 
 ### course_tasks/create(POST)-建立課堂任務
 
@@ -4722,12 +4798,12 @@ qrcode_svg
 
 - param:
 
-| 名稱           | 類型    | 說明         | 範例 |
-| :------------- | :------ | :----------- | :--- |
-| correct_answer | string  | 正確答案     | 1    |
-| is_active      | boolean | 課堂搶答狀態 | 1    |
+| 名稱           | 類型   | 說明         | 範例    |
+| :------------- | :----- | :----------- | :------ |
+| correct_answer | string | 正確答案     | 1       |
+| status         | string | 課堂任務狀態 | running |
 
-- is_active 說明參考[課堂任務-MQTT/取得學生個人化狀態說明](#課堂搶答-MQTT/取得學生個人化狀態說明) 課堂搶答 is_active 欄位
+- status 說明參考[課堂任務-MQTT/取得學生個人化狀態說明](#課堂任務-MQTT/取得學生個人化狀態說明) 課堂任務 status 欄位
 
 -成功
 
@@ -4742,7 +4818,7 @@ qrcode_svg
       "id": 7,
       "course_id": 1,
       "task_type": "record",
-      "is_active": 1,
+      "status": "running",
       "created_at": "2024-02-03 10:46:56",
       "updated_at": "2024-02-03 10:46:56",
       "deleted_at": null,
