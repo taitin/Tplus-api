@@ -29,6 +29,12 @@
 
 2. 修正 `courses/{id}/top10(GET)-取得課堂榮譽榜` 學生發送時的 bug
 
+
+### 20240429
+
+1. `加入 "stream_closed" 狀態，用來顯示串流關閉`
+
+
 ## 文件目的
 
 - 本文檔定義網站 API 進出參規範,並提供範例格式.
@@ -1991,6 +1997,7 @@ qrcode_svg
 | :--------------------------------------------- | :------------ | :------------------------- | :----- | :----------------- |
 | 老師執行 API `course_streams/create` 成功後    | stream        | `course_streams/{id}`(GET) | get    | 1                  |
 | 老師執行 API `course_streams/{id}`(PUT) 成功後 | stream_update | `course_streams/{id}`(GET) | get    | 1 /0               |
+|  老師執行 API `course_streams/{id}`(PUT) 成功後 設定 is_active=0     | stream_closed | `course_streams/{id}`(GET) | GET    | 0               |
 
 #### 學生:課堂課堂串流學生取得個人化狀態
 
@@ -1998,6 +2005,8 @@ qrcode_svg
 | :----------- | :------------ | :------------------------- | :----- | :----------------- |
 | 建立串流     | stream        | `course_streams/{id}`(GET) | get    |                    |
 | 串流狀態更新 | stream_update | `course_streams/{id}`(GET) | GET    | 1 /0               |
+| 串流關閉    | stream_closed | `course_streams/{id}`(GET) | GET    | 0               |
+
 
 ### course_streams/create(POST)-建立課堂串流
 
