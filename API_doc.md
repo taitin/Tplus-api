@@ -687,6 +687,20 @@ qrcode_svg
     "id": 8
   }
 }
+
+```
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status":"course_closed",
+  "api":"courses\/389",
+  "method":"get",
+  "course_stu_ids":[]
+
+}
 ```
 
 -失敗
