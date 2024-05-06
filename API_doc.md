@@ -689,18 +689,6 @@ qrcode_svg
 }
 ```
 
-#### MQTT
-- Body:
-```json
-{
-  "course_data": "略",
-  "status":"course_closed",
-  "api":"courses\/389",
-  "method":"get",
-  "course_stu_ids":[]
-
-}
-```
 
 -失敗
 
@@ -818,6 +806,18 @@ qrcode_svg
 }
 ```
 
+#### MQTT
+- Body:
+```json
+{
+  "course_data": "略",
+  "status":"course_closed",
+  "api":"courses\/389",
+  "method":"get",
+  "course_stu_ids":[]
+
+}
+```
 -失敗
 
 #### 沒有權限(不是老師)
