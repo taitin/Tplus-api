@@ -35,6 +35,12 @@
 1. `加入 "stream_closed" 狀態，用來顯示串流關閉`
 
 
+### 20240506
+
+1. `加入 "course_closed" 狀態，用來顯示課堂關閉`
+2. `加入 course/{id}(PUT) API 用來關閉課堂`
+
+
 ## 文件目的
 
 - 本文檔定義網站 API 進出參規範,並提供範例格式.
@@ -143,6 +149,7 @@ qrcode_svg
 
 - [courses/create(POST)-建立課堂](#coursescreatepost-建立課堂) (完成)
 - [courses/{id}(GET)-取得課堂資料](#coursesidget-取得課堂資料) (完成)
+- [courses/{id}(PUT)-關閉課堂](#coursesidput-關閉課堂) (完成)
 
 - [courses/{id}/online_course_stus(GET)-取得課堂在線所有學生](#coursesidonline_course_stusget-取得課堂在線所有學生) (完成)
 - [courses/{id}/last_course_stus(GET)-取得上次課堂學生資料](#coursesidlast_course_stusget-取得上次課堂學生資料) (完成)
@@ -753,6 +760,67 @@ qrcode_svg
 
 - Status: 404 Not Found
 
+### courses/{id}(PUT)-關閉課堂
+
+#### Request
+
+- Method: **PUT**
+- URL: `courses/{id}`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱 | 類型 | 說明                   | 範例 | 是否必須 |
+| :--- | :--- | :--------------------- | :--- | :------- |
+| id   | int  | 課堂 ID/或課堂碼(code) | 1    | O        |
+| Bearer Token |        |      |          | O        |
+| is_open| bool |課堂開啟狀態      | FALSE          | O        |
+
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": [
+    "Success"
+  ],
+  "data": {
+    "id": 389,
+    "user_id": 3,
+    "class_name": "一年三班",
+    "subject": "英文",
+    "code": "zQkxto51YW",
+    "is_open": false,
+    "status": "course_closed",
+    "created_at": "2024-05-06 22:39:30",
+    "updated_at": "2024-05-06 22:52:32",
+    "deleted_at": null,
+    "status_id": 0,
+    "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M8 0L8 1L9 1L9 2L8 2L8 5L11 5L11 4L12 4L12 3L13 3L13 0L12 0L12 3L11 3L11 2L10 2L10 0ZM9 2L9 4L11 4L11 3L10 3L10 2ZM8 6L8 7L9 7L9 8L8 8L8 10L9 10L9 12L6 12L6 11L7 11L7 10L6 10L6 11L5 11L5 12L4 12L4 11L3 11L3 13L5 13L5 12L6 12L6 13L8 13L8 14L9 14L9 15L10 15L10 16L9 16L9 17L8 17L8 21L9 21L9 20L10 20L10 21L14 21L14 20L15 20L15 21L19 21L19 20L15 20L15 18L13 18L13 19L12 19L12 18L10 18L10 16L11 16L11 17L12 17L12 16L13 16L13 17L17 17L17 16L18 16L18 19L19 19L19 18L20 18L20 17L19 17L19 14L20 14L20 13L21 13L21 10L20 10L20 9L21 9L21 8L20 8L20 9L19 9L19 8L16 8L16 10L17 10L17 9L18 9L18 10L19 10L19 12L20 12L20 13L15 13L15 14L16 14L16 16L14 16L14 15L11 15L11 14L9 14L9 13L12 13L12 12L13 12L13 13L14 13L14 12L13 12L13 11L15 11L15 12L18 12L18 11L15 11L15 10L13 10L13 9L14 9L14 8L13 8L13 9L12 9L12 12L10 12L10 11L11 11L11 6L10 6L10 7L9 7L9 6ZM12 6L12 7L13 7L13 6ZM0 8L0 10L1 10L1 11L0 11L0 12L1 12L1 11L2 11L2 9L4 9L4 10L5 10L5 9L4 9L4 8ZM6 8L6 9L7 9L7 8ZM9 8L9 9L10 9L10 8ZM20 15L20 16L21 16L21 15ZM9 18L9 19L10 19L10 18ZM13 19L13 20L14 20L14 19ZM20 19L20 20L21 20L21 19ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n"
+  }
+}
+```
+
+-失敗
+
+#### 沒有權限(不是老師)
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+
+
 ### courses/{id}/online_course_stus(GET)-取得課堂在線所有學生
 
 #### Request
@@ -1015,7 +1083,8 @@ qrcode_svg
           "created_at": "2023-12-30 11:32:58",
           "updated_at": "2023-12-30 11:32:58",
           "deleted_at": null
-        }
+        },
+        "rank":1
       },
       {
         "id": 5,
@@ -1041,7 +1110,10 @@ qrcode_svg
           "created_at": "2023-12-30 11:32:58",
           "updated_at": "2023-12-30 11:32:58",
           "deleted_at": null
-        }
+        },
+        "rank":2
+
+
       },
       {
         "id": 4,
@@ -1067,7 +1139,8 @@ qrcode_svg
           "created_at": "2023-12-30 11:32:58",
           "updated_at": "2023-12-30 11:32:58",
           "deleted_at": null
-        }
+        },
+        "rank":3
       },
       {
         "id": 7,
@@ -1083,7 +1156,8 @@ qrcode_svg
         "deleted_at": null,
         "stream_url": null,
         "comment": "",
-        "avatar_file": null
+        "avatar_file": null,
+         "rank":4
       },
       {
         "id": 9,
@@ -1099,7 +1173,8 @@ qrcode_svg
         "deleted_at": null,
         "stream_url": null,
         "comment": "",
-        "avatar_file": null
+        "avatar_file": null,
+         "rank":4
       },
       {
         "id": 10,
@@ -1115,7 +1190,8 @@ qrcode_svg
         "deleted_at": null,
         "stream_url": null,
         "comment": "",
-        "avatar_file": null
+        "avatar_file": null,
+         "rank":4
       },
       {
         "id": 11,
@@ -1131,7 +1207,8 @@ qrcode_svg
         "deleted_at": null,
         "stream_url": null,
         "comment": "",
-        "avatar_file": null
+        "avatar_file": null,
+         "rank":4
       },
       {
         "id": 12,
@@ -1147,7 +1224,8 @@ qrcode_svg
         "deleted_at": null,
         "stream_url": null,
         "comment": "",
-        "avatar_file": null
+        "avatar_file": null,
+         "rank":4
       },
       {
         "id": 13,
@@ -1163,7 +1241,8 @@ qrcode_svg
         "deleted_at": null,
         "stream_url": null,
         "comment": "",
-        "avatar_file": null
+        "avatar_file": null,
+         "rank":4
       },
       {
         "id": 15,
@@ -1179,7 +1258,9 @@ qrcode_svg
         "deleted_at": null,
         "stream_url": null,
         "comment": "",
-        "avatar_file": null
+        "avatar_file": null,
+         "rank":4
+
       }
     ]
   }
