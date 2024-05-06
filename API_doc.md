@@ -687,11 +687,11 @@ qrcode_svg
     "id": 8
   }
 }
-
 ```
 
 #### MQTT
 
+-
 ```json
 {
   "course_data": "略",
