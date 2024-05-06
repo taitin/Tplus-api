@@ -690,8 +690,7 @@ qrcode_svg
 ```
 
 #### MQTT
-
--
+- Body:
 ```json
 {
   "course_data": "略",
