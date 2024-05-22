@@ -29,16 +29,23 @@
 
 2. 修正 `courses/{id}/top10(GET)-取得課堂榮譽榜` 學生發送時的 bug
 
-
 ### 20240429
 
 1. `加入 "stream_closed" 狀態，用來顯示串流關閉`
-
 
 ### 20240506
 
 1. `加入 "course_closed" 狀態，用來顯示課堂關閉`
 2. `加入 course/{id}(PUT) API 用來關閉課堂`
+
+### 20240516
+
+1. 加入 in_team(分組內)到抽籤 `course_draw_lots/create(POST)-建立課堂抽籤`
+2. 加入 in_team(分組內)到搶答 
+`course_qas/create(POST)-建立課堂搶答` 多了in_team(分組內學生)，team_id等輸入參數選項
+`course_qas/{id}(GET)-取得課堂搶答` 多了participants為該搶答參與對象
+`course_qas/{id}/actions/answer(POST)-學生回答課堂搶答` 非參與對象無法搶答
+`course_qas/{id}/actions/get_stu_status(GET)-取得學生個人課堂搶答狀態` 非參與對象會得到qa_not_participant狀態
 
 
 ## 文件目的
@@ -689,6 +696,18 @@ qrcode_svg
 }
 ```
 
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status":"course_closed",
+  "api":"courses\/389",
+  "method":"get",
+  "course_stu_ids":[]
+
+}
+```
 
 -失敗
 
@@ -770,12 +789,11 @@ qrcode_svg
 - Headers: Content-Type:multipart/form-data
 - Path-params:
 
-| 名稱 | 類型 | 說明                   | 範例 | 是否必須 |
-| :--- | :--- | :--------------------- | :--- | :------- |
-| id   | int  | 課堂 ID/或課堂碼(code) | 1    | O        |
-| Bearer Token |        |      |          | O        |
-| is_open| bool |課堂開啟狀態      | FALSE          | O        |
-
+| 名稱         | 類型 | 說明                   | 範例  | 是否必須 |
+| :----------- | :--- | :--------------------- | :---- | :------- |
+| id           | int  | 課堂 ID/或課堂碼(code) | 1     | O        |
+| Bearer Token |      |                        |       | O        |
+| is_open      | bool | 課堂開啟狀態           | FALSE | O        |
 
 #### Response
 
@@ -786,9 +804,7 @@ qrcode_svg
 ```json
 {
   "result": true,
-  "msg": [
-    "Success"
-  ],
+  "msg": ["Success"],
   "data": {
     "id": 389,
     "user_id": 3,
@@ -831,8 +847,6 @@ qrcode_svg
   "msg": ["You do not have permission to access this resource."]
 }
 ```
-
-
 
 ### courses/{id}/online_course_stus(GET)-取得課堂在線所有學生
 
@@ -1097,7 +1111,7 @@ qrcode_svg
           "updated_at": "2023-12-30 11:32:58",
           "deleted_at": null
         },
-        "rank":1
+        "rank": 1
       },
       {
         "id": 5,
@@ -1124,9 +1138,7 @@ qrcode_svg
           "updated_at": "2023-12-30 11:32:58",
           "deleted_at": null
         },
-        "rank":2
-
-
+        "rank": 2
       },
       {
         "id": 4,
@@ -1153,7 +1165,7 @@ qrcode_svg
           "updated_at": "2023-12-30 11:32:58",
           "deleted_at": null
         },
-        "rank":3
+        "rank": 3
       },
       {
         "id": 7,
@@ -1170,7 +1182,7 @@ qrcode_svg
         "stream_url": null,
         "comment": "",
         "avatar_file": null,
-         "rank":4
+        "rank": 4
       },
       {
         "id": 9,
@@ -1187,7 +1199,7 @@ qrcode_svg
         "stream_url": null,
         "comment": "",
         "avatar_file": null,
-         "rank":4
+        "rank": 4
       },
       {
         "id": 10,
@@ -1204,7 +1216,7 @@ qrcode_svg
         "stream_url": null,
         "comment": "",
         "avatar_file": null,
-         "rank":4
+        "rank": 4
       },
       {
         "id": 11,
@@ -1221,7 +1233,7 @@ qrcode_svg
         "stream_url": null,
         "comment": "",
         "avatar_file": null,
-         "rank":4
+        "rank": 4
       },
       {
         "id": 12,
@@ -1238,7 +1250,7 @@ qrcode_svg
         "stream_url": null,
         "comment": "",
         "avatar_file": null,
-         "rank":4
+        "rank": 4
       },
       {
         "id": 13,
@@ -1255,7 +1267,7 @@ qrcode_svg
         "stream_url": null,
         "comment": "",
         "avatar_file": null,
-         "rank":4
+        "rank": 4
       },
       {
         "id": 15,
@@ -1272,8 +1284,7 @@ qrcode_svg
         "stream_url": null,
         "comment": "",
         "avatar_file": null,
-         "rank":4
-
+        "rank": 4
       }
     ]
   }
@@ -2087,11 +2098,11 @@ qrcode_svg
 
 #### 教師:課堂串流 MQTT
 
-| 時機                                           | status        | api                        | method | 課堂串流 is_active |
-| :--------------------------------------------- | :------------ | :------------------------- | :----- | :----------------- |
-| 老師執行 API `course_streams/create` 成功後    | stream        | `course_streams/{id}`(GET) | get    | 1                  |
-| 老師執行 API `course_streams/{id}`(PUT) 成功後 | stream_update | `course_streams/{id}`(GET) | get    | 1 /0               |
-|  老師執行 API `course_streams/{id}`(PUT) 成功後 設定 is_active=0     | stream_closed | `course_streams/{id}`(GET) | GET    | 0               |
+| 時機                                                            | status        | api                        | method | 課堂串流 is_active |
+| :-------------------------------------------------------------- | :------------ | :------------------------- | :----- | :----------------- |
+| 老師執行 API `course_streams/create` 成功後                     | stream        | `course_streams/{id}`(GET) | get    | 1                  |
+| 老師執行 API `course_streams/{id}`(PUT) 成功後                  | stream_update | `course_streams/{id}`(GET) | get    | 1 /0               |
+| 老師執行 API `course_streams/{id}`(PUT) 成功後 設定 is_active=0 | stream_closed | `course_streams/{id}`(GET) | GET    | 0                  |
 
 #### 學生:課堂課堂串流學生取得個人化狀態
 
@@ -2099,8 +2110,7 @@ qrcode_svg
 | :----------- | :------------ | :------------------------- | :----- | :----------------- |
 | 建立串流     | stream        | `course_streams/{id}`(GET) | get    |                    |
 | 串流狀態更新 | stream_update | `course_streams/{id}`(GET) | GET    | 1 /0               |
-| 串流關閉    | stream_closed | `course_streams/{id}`(GET) | GET    | 0               |
-
+| 串流關閉     | stream_closed | `course_streams/{id}`(GET) | GET    | 0                  |
 
 ### course_streams/create(POST)-建立課堂串流
 
@@ -4324,11 +4334,12 @@ qrcode_svg
 - Headers: Content-Type:multipart/form-data
 - Path-params:
 
-| 名稱         | 類型   | 說明                        | 範例 | 是否必須 |
-| :----------- | :----- | :-------------------------- | :--- | :------- |
-| course_id    | int    | 課堂 ID                     | 1    | O        |
-| draw_type    | string | 值可為 stu(學生),team(分組) | stu  | O        |
-| Bearer Token |        | 要為老師身分才可建立        |      | O        |
+| 名稱         | 類型   | 說明                                      | 範例 | 是否必須                  |
+| :----------- | :----- | :---------------------------------------- | :--- | :------------------------ |
+| course_id    | int    | 課堂 ID                                   | 1    | O                         |
+| draw_type    | string | 值可為 stu(學生),team(分組),in_team(組內) | stu  | O                         |
+| team_id      | int    | 組內抽籤時要抽籤的分組的 id               | 1    | X(draw_type 是組內時必要) |
+| Bearer Token |        | 要為老師身分才可建立                      |      | O                         |
 
 #### Response
 
@@ -4336,7 +4347,7 @@ qrcode_svg
 
 - Body:
 
-```json (stu)
+```json (stu / in_team)
 {
   "result": true,
   "msg": ["Success"],
@@ -5690,6 +5701,7 @@ qrcode_svg
 | 搶答被中止                              | qa_stopped          |                                      |        | stopped         |
 | 搶答時間到                              | qa_time_up          |                                      |        | time_up         |
 | 搶答已完成                              | qa_complete         | `course_qas/{id}/actions/get_result` | get    | complete        |
+| 非該搶答參與對象                        | qa_not_participant  |                                      |        | 沒有特定        |
 
 ### course_qas/create(POST)-建立課堂搶答
 
@@ -5700,13 +5712,14 @@ qrcode_svg
 - Headers: Content-Type:multipart/form-data
 - Path-params:
 
-| 名稱         | 類型   | 說明                                                   | 範例  | 是否必須 |
-| :----------- | :----- | :----------------------------------------------------- | :---- | :------- |
-| course_id    | int    | 課堂 ID                                                | 1     | O        |
-| qa_type      | string | 值可為 score(加分搶答),competition(競賽搶答)           | score | O        |
-| time_period  | int    | 搶答時間(秒數), qa_type 為 competition(競賽搶答)才需要 | 120   | X        |
-| target_type  | string | 搶答對象類型(stu/team)                                 | stu   | O        |
-| Bearer Token |        | 要為老師身分才可建立                                   |       | O        |
+| 名稱         | 類型   | 說明                                                                                      | 範例  | 是否必須                     |
+| :----------- | :----- | :---------------------------------------------------------------------------------------- | :---- | :--------------------------- |
+| course_id    | int    | 課堂 ID                                                                                   | 1     | O                            |
+| qa_type      | string | 值可為 score(加分搶答),competition(競賽搶答) 只有 target_type 為 stu 可以進行 competition | score | O                            |
+| time_period  | int    | 搶答時間(秒數), qa_type 為 competition(競賽搶答)才需要                                    | 120   | X                            |
+| target_type  | string | 搶答對象類型 stu(全班學生),in_team(分組內學生)                                            | stu   | O                            |
+| team_id      | int    | 分組內搶答的分組 ID                                                                       | 1     | X (target_type 是組內時必要) |
+| Bearer Token |        | 要為老師身分才可建立                                                                      |       | O                            |
 
 - 狀態說明
   課堂搶答執行此 API 成功後狀態會更新為 closed
@@ -5772,10 +5785,11 @@ qrcode_svg
 
 - param:
 
-| 名稱           | 類型   | 說明         | 範例    |
-| :------------- | :----- | :----------- | :------ |
-| correct_answer | string | 正確答案     | 1       |
-| status         | string | 課堂搶答狀態 | running |
+| 名稱           | 類型   | 說明                    | 範例     |
+| :------------- | :----- | :---------------------- | :------- |
+| participants   | array  | 有參與搶答的 course_stu | 參考下方 |
+| correct_answer | string | 正確答案                | 1        |
+| status         | string | 課堂搶答狀態            | running  |
 
 - status 說明參考[課堂搶答-MQTT/取得學生個人化狀態說明](#課堂搶答-MQTT/取得學生個人化狀態說明) 課堂搶答 status 欄位
 
@@ -5788,28 +5802,160 @@ qrcode_svg
   "result": true,
   "msg": ["Success"],
   "data": {
-    "id": 2,
-    "course_id": 1,
-    "correct_answer": null,
-    "qa_type": "score",
-    "time_period": null,
-    "created_at": "2024-02-04 13:01:16",
-    "updated_at": "2024-02-04 13:01:16",
-    "deleted_at": null,
-    "status": "closed",
-    "course": {
-      "id": 1,
-      "user_id": 2,
-      "class_name": "一年一班",
-      "subject": "數學",
-      "code": "yMdlXBrpo9",
-      "is_open": 1,
-      "status": "qa",
-      "created_at": "2023-12-28 11:15:04",
-      "updated_at": "2024-02-04 13:01:52",
+    "course_qa": {
+      "id": 18,
+      "course_id": 1,
+      "correct_answer": null,
+      "qa_type": "score",
+      "time_period": null,
+      "created_at": "2024-05-16 17:41:19",
+      "updated_at": "2024-05-16 17:41:19",
       "deleted_at": null,
-      "status_id": 3,
-      "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M8 0L8 1L9 1L9 2L8 2L8 5L11 5L11 4L12 4L12 3L13 3L13 0L12 0L12 3L11 3L11 2L10 2L10 0ZM9 2L9 4L11 4L11 3L10 3L10 2ZM8 6L8 7L9 7L9 8L8 8L8 9L9 9L9 10L6 10L6 9L7 9L7 8L6 8L6 9L4 9L4 8L0 8L0 9L1 9L1 10L0 10L0 11L3 11L3 12L2 12L2 13L8 13L8 14L9 14L9 16L10 16L10 17L8 17L8 21L9 21L9 19L10 19L10 17L12 17L12 16L13 16L13 19L12 19L12 18L11 18L11 21L14 21L14 20L15 20L15 19L14 19L14 18L15 18L15 17L14 17L14 16L13 16L13 15L11 15L11 13L12 13L12 12L13 12L13 9L14 9L14 8L13 8L13 9L12 9L12 12L10 12L10 14L9 14L9 12L8 12L8 11L9 11L9 10L10 10L10 9L11 9L11 6L10 6L10 7L9 7L9 6ZM12 6L12 7L13 7L13 6ZM9 8L9 9L10 9L10 8ZM16 8L16 10L14 10L14 11L16 11L16 10L18 10L18 9L19 9L19 8ZM20 8L20 9L21 9L21 8ZM2 9L2 10L3 10L3 11L4 11L4 9ZM19 10L19 11L21 11L21 10ZM6 11L6 12L7 12L7 11ZM17 11L17 12L18 12L18 11ZM0 12L0 13L1 13L1 12ZM14 12L14 13L13 13L13 14L14 14L14 15L15 15L15 16L17 16L17 17L16 17L16 18L18 18L18 19L19 19L19 18L20 18L20 17L19 17L19 15L17 15L17 13L16 13L16 12ZM20 12L20 13L19 13L19 14L20 14L20 13L21 13L21 12ZM14 13L14 14L15 14L15 13ZM20 15L20 16L21 16L21 15ZM13 19L13 20L14 20L14 19ZM20 19L20 20L21 20L21 19ZM17 20L17 21L18 21L18 20ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n"
+      "status": "closed",
+      "last_success_target_id": null,
+      "target_type": "in_team",
+      "participants": [
+        {
+          "id": 4,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小火",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 1,
+          "is_online": 1,
+          "created_at": "2023-12-30 11:39:56",
+          "updated_at": "2024-02-23 11:47:16",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 1,
+            "uploader_id": 0,
+            "uploader_type": "student",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+            "created_at": "2023-12-30 11:32:58",
+            "updated_at": "2023-12-30 11:32:58",
+            "deleted_at": null
+          }
+        },
+        {
+          "id": 5,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小土",
+          "is_visitor": 1,
+          "score": -15,
+          "avatar_file_id": 1,
+          "is_online": 1,
+          "created_at": "2023-12-30 13:06:05",
+          "updated_at": "2024-04-29 18:07:48",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 1,
+            "uploader_id": 0,
+            "uploader_type": "student",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/GOMQXKw0NRF5CAq3HBOk7fx1cntuk1sxrirZDoCV.png",
+            "created_at": "2023-12-30 11:32:58",
+            "updated_at": "2023-12-30 11:32:58",
+            "deleted_at": null
+          }
+        },
+        {
+          "id": 18,
+          "course_id": 1,
+          "user_id": 3,
+          "nickname": "王晶晶3",
+          "is_visitor": 0,
+          "score": 0,
+          "avatar_file_id": 0,
+          "is_online": 1,
+          "created_at": "2024-02-23 12:36:28",
+          "updated_at": "2024-02-23 12:36:28",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": null
+        },
+        {
+          "id": 19,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小名",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 0,
+          "is_online": 1,
+          "created_at": "2024-02-23 12:39:25",
+          "updated_at": "2024-02-23 12:39:25",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": null
+        },
+        {
+          "id": 20,
+          "course_id": 1,
+          "user_id": 5,
+          "nickname": "Alex",
+          "is_visitor": 0,
+          "score": 20,
+          "avatar_file_id": 131,
+          "is_online": 1,
+          "created_at": "2024-02-24 11:52:53",
+          "updated_at": "2024-04-29 19:06:16",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": {
+            "id": 131,
+            "uploader_id": 5,
+            "uploader_type": "student",
+            "file_type": "image",
+            "course_id": 1,
+            "drive_id": "/storage/PZMFixNRAytUfUqoc0pmyAgH1PDcAbQUG0kv8XTF.png",
+            "created_at": "2024-02-24 11:58:33",
+            "updated_at": "2024-02-24 11:58:33",
+            "deleted_at": null
+          }
+        },
+        {
+          "id": 22,
+          "course_id": 1,
+          "user_id": 0,
+          "nickname": "小名3",
+          "is_visitor": 1,
+          "score": 0,
+          "avatar_file_id": 0,
+          "is_online": 1,
+          "created_at": "2024-03-03 15:28:50",
+          "updated_at": "2024-03-03 15:28:50",
+          "deleted_at": null,
+          "stream_url": null,
+          "comment": "",
+          "avatar_file": null
+        }
+      ],
+      "course": {
+        "id": 1,
+        "user_id": 2,
+        "class_name": "一年一班",
+        "subject": "數學",
+        "code": "yMdlXBrpo9",
+        "is_open": 1,
+        "status": "qa",
+        "created_at": "2023-12-28 11:15:04",
+        "updated_at": "2024-05-16 17:41:19",
+        "deleted_at": null,
+        "status_id": 18,
+        "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M8 0L8 1L9 1L9 2L8 2L8 5L11 5L11 4L12 4L12 3L13 3L13 0L12 0L12 3L11 3L11 2L10 2L10 0ZM9 2L9 4L11 4L11 3L10 3L10 2ZM8 6L8 7L9 7L9 8L8 8L8 9L9 9L9 10L6 10L6 9L7 9L7 8L6 8L6 9L4 9L4 8L0 8L0 9L1 9L1 10L0 10L0 11L3 11L3 12L2 12L2 13L8 13L8 14L9 14L9 16L10 16L10 17L8 17L8 21L9 21L9 19L10 19L10 17L12 17L12 16L13 16L13 19L12 19L12 18L11 18L11 21L14 21L14 20L15 20L15 19L14 19L14 18L15 18L15 17L14 17L14 16L13 16L13 15L11 15L11 13L12 13L12 12L13 12L13 9L14 9L14 8L13 8L13 9L12 9L12 12L10 12L10 14L9 14L9 12L8 12L8 11L9 11L9 10L10 10L10 9L11 9L11 6L10 6L10 7L9 7L9 6ZM12 6L12 7L13 7L13 6ZM9 8L9 9L10 9L10 8ZM16 8L16 10L14 10L14 11L16 11L16 10L18 10L18 9L19 9L19 8ZM20 8L20 9L21 9L21 8ZM2 9L2 10L3 10L3 11L4 11L4 9ZM19 10L19 11L21 11L21 10ZM6 11L6 12L7 12L7 11ZM17 11L17 12L18 12L18 11ZM0 12L0 13L1 13L1 12ZM14 12L14 13L13 13L13 14L14 14L14 15L15 15L15 16L17 16L17 17L16 17L16 18L18 18L18 19L19 19L19 18L20 18L20 17L19 17L19 15L17 15L17 13L16 13L16 12ZM20 12L20 13L19 13L19 14L20 14L20 13L21 13L21 12ZM14 13L14 14L15 14L15 13ZM20 15L20 16L21 16L21 15ZM13 19L13 20L14 20L14 19ZM20 19L20 20L21 20L21 19ZM17 20L17 21L18 21L18 20ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n"
+      }
     }
   }
 }
@@ -5881,7 +6027,7 @@ qrcode_svg
   "status": "qa_answering",
   "api": "course_qas/{id}/actions/answer",
   "method": "post",
-  "course_stu_ids": []
+  "course_stu_ids": [1, 2, 3]
 }
 ```
 
@@ -5940,7 +6086,7 @@ qrcode_svg
   "status": "qa_stopped",
   "api": "",
   "method": "",
-  "course_stu_ids": []
+  "course_stu_ids": [1, 2, 3]
 }
 ```
 
@@ -5999,7 +6145,7 @@ qrcode_svg
   "status": "qa_time_up",
   "api": "",
   "method": "",
-  "course_stu_ids": []
+  "course_stu_ids": [1, 2, 3]
 }
 ```
 
@@ -6077,6 +6223,15 @@ qrcode_svg
 {
   "result": false,
   "msg": ["The Qa is not in running status."]
+}
+```
+
+#### 不是參與對象(非分組內)
+
+```json
+{
+  "result": false,
+  "msg": ["You are not the participant of the QA."]
 }
 ```
 
