@@ -41,12 +41,15 @@
 ### 20240516
 
 1. 加入 in_team(分組內)到抽籤 `course_draw_lots/create(POST)-建立課堂抽籤`
-2. 加入 in_team(分組內)到搶答 
-`course_qas/create(POST)-建立課堂搶答` 多了in_team(分組內學生)，team_id等輸入參數選項
-`course_qas/{id}(GET)-取得課堂搶答` 多了participants為該搶答參與對象
-`course_qas/{id}/actions/answer(POST)-學生回答課堂搶答` 非參與對象無法搶答
-`course_qas/{id}/actions/get_stu_status(GET)-取得學生個人課堂搶答狀態` 非參與對象會得到qa_not_participant狀態
+2. 加入 in_team(分組內)到搶答
+   `course_qas/create(POST)-建立課堂搶答` 多了 in_team(分組內學生)，team_id 等輸入參數選項
+   `course_qas/{id}(GET)-取得課堂搶答` 多了 participants 為該搶答參與對象
+   `course_qas/{id}/actions/answer(POST)-學生回答課堂搶答` 非參與對象無法搶答
+   `course_qas/{id}/actions/get_stu_status(GET)-取得學生個人課堂搶答狀態` 非參與對象會得到 qa_not_participant 狀態
 
+### 20240525
+
+1. 加入踢出課堂學生 API `course_stus/{id}/actions/kick(POST)-踢出課堂學生`
 
 ## 文件目的
 
@@ -178,6 +181,7 @@ qrcode_svg
 - [course_stus/get_avatars(POST)-取得課堂學生大頭貼](#course_stusget_avatarspost-取得課堂學生大頭貼) (完成)
 - [course_stus/get_self_info(GET)-取得課堂學生個人資訊](#course_stusget_self_infoget-取得課堂學生個人資訊) (完成)
 - [course_score_logs/create(POST)-幫課堂學生分組加減分](#course_score_logscreatepost-幫課堂學生分組加減分) (未完成分組)
+- [course_stus/{id}/actions/kick(POST)-踢出課堂學生](#course_stusidactionskickpost-踢出課堂學生) (完成)
 
 ### 課堂串流相關
 
@@ -701,11 +705,10 @@ qrcode_svg
 ```json
 {
   "course_data": "略",
-  "status":"course_closed",
-  "api":"courses\/389",
-  "method":"get",
-  "course_stu_ids":[]
-
+  "status": "course_closed",
+  "api": "courses/389",
+  "method": "get",
+  "course_stu_ids": []
 }
 ```
 
@@ -823,17 +826,19 @@ qrcode_svg
 ```
 
 #### MQTT
+
 - Body:
+
 ```json
 {
   "course_data": "略",
-  "status":"course_closed",
-  "api":"courses\/389",
-  "method":"get",
-  "course_stu_ids":[]
-
+  "status": "course_closed",
+  "api": "courses/389",
+  "method": "get",
+  "course_stu_ids": []
 }
 ```
+
 -失敗
 
 #### 沒有權限(不是老師)
@@ -2033,7 +2038,7 @@ qrcode_svg
 
 -失敗
 
-### 加分對象不存在
+#### 加分對象不存在
 
 - Body:
 
@@ -2044,7 +2049,7 @@ qrcode_svg
 }
 ```
 
-### 不是該加分對象的老師
+#### 不是該加分對象的老師
 
 - Body:
 
@@ -2055,7 +2060,7 @@ qrcode_svg
 }
 ```
 
-### 不明原因無法 insert
+#### 不明原因無法 insert
 
 - Body:
 
@@ -2091,6 +2096,71 @@ qrcode_svg
   "method": "",
   "course_stu_ids": [{course_stu_ids}],
   "score":-5
+}
+```
+
+### course_stus/{id}/actions/kick(POST)-踢出課堂學生
+
+#### Request
+
+- Method: **POST**
+- URL: `course_stus/{id}/actions/kick`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型 | 說明           | 範例 | 是否必須 |
+| :----------- | :--- | :------------- | :--- | :------- |
+| id           | int  | 課堂學生 ID    | 1    | O        |
+| Bearer Token |      | 須為該堂課老師 |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": []
+}
+```
+
+-失敗
+
+#### 踢出學生不存在
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["CourseStu with id 25 not found."]
+}
+```
+
+#### 不是該課堂的老師
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "course_stu_kicked",
+  "api": "",
+  "method": "",
+  "course_stu_ids": [{course_stu_id}],
+  "score":5
 }
 ```
 
