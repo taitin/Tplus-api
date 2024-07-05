@@ -2,6 +2,15 @@
 
 ## 更新
 
+### 20240620
+
+1. 新增查詢條件到 `course_assessments/show_tpps(GET)-取得題庫課堂評量`
+2. 新增 `teacher_courses(GET)-取得老師所有課堂`
+3. 新增 `course/{id}/course_assessments(GET)-取得課堂所有評量`
+4. 修改 `course_stus/update/{id?}(POST)-更新課堂學生` 讓老師也可以修改學生 nickname & avatar_file
+5. 修改 `courses/create(POST)-建立課堂` 加入參數 mqtt_ip & rtmp_ip
+6. 新增 `course_stus/get_cloud_files(GET)-學生取得雲端檔案`
+
 ### 20240423
 
 1. 以下 api 修正為發出 mqtt 會一併更改 course 的 status & status_id
@@ -173,13 +182,15 @@ qrcode_svg
 - [teacher_comments(GET)-取得所有評語](#teacher_commentsget-取得所有評語) (完成)
 - [teacher_comments/create(POST)-建立評語](#teacher_commentscreatepost-建立評語) (完成)
 - [course_stus/{id}/actions/comment(PUT)-更新學生評語](#course_stusidactionscommentput-更新學生評語) (完成)
+- [teacher_courses(GET)-取得老師所有課堂](#teacher_coursesget-取得老師所有課堂) (完成)
 
 ### 課堂學生相關
 
 - [course_stus/create(POST)-建立課堂學生](#course_stuscreatepost-建立課堂學生) (完成)
-- [course_stus/update(POST)-更新課堂學生](#course_stusupdatepost-更新課堂學生) (完成)
+- [course_stus/update/{id?}(POST)-更新課堂學生](#course_stusupdateidpost-更新課堂學生) (完成)
 - [course_stus/get_avatars(POST)-取得課堂學生大頭貼](#course_stusget_avatarspost-取得課堂學生大頭貼) (完成)
 - [course_stus/get_self_info(GET)-取得課堂學生個人資訊](#course_stusget_self_infoget-取得課堂學生個人資訊) (完成)
+- [course_stus/get_cloud_files(GET)-學生取得雲端檔案](#course_stusget_cloud_filesget-學生取得雲端檔案) (完成)
 - [course_score_logs/create(POST)-幫課堂學生分組加減分](#course_score_logscreatepost-幫課堂學生分組加減分) (未完成分組)
 - [course_stus/{id}/actions/kick(POST)-踢出課堂學生](#course_stusidactionskickpost-踢出課堂學生) (完成)
 
@@ -282,6 +293,7 @@ qrcode_svg
 - [course_assessments/{id}/actions/get_statistics(GET)-取得課堂評量答題統計](#course_assessmentsidactionsget_statisticsget-取得課堂評量答題統計) (完成)
 - [course_assessments/{id}/actions/get_result(GET)-取得學生個人課堂評量結果](#course_assessmentsidactionsget_resultget-取得學生個人課堂評量結果) #待確認 PDF 來源
 - [course_assessments/{id}/actions/get_stu_status(GET)-取得學生個人課堂評量狀態](#course_assessmentsidactionsget_stu_statusget-取得學生個人課堂評量狀態) (完成)
+- [course/{id}/course_assessments(GET)-取得課堂所有評量](#courseidcourse_assessmentsget-取得課堂所有評量) (完成)
 
 - [course_assessments/{id}/actions/export(POST)-匯出課堂評量](#course_assessmentsidactionsexportpost-匯出課堂評量) (完成)
 - [course_assessments/{id}/actions/import(POST)-匯入課堂評量](#course_assessmentsidactionsimportpost-匯入課堂評量) (完成)
@@ -670,11 +682,13 @@ qrcode_svg
 - Headers: Content-Type:multipart/form-data
 - Path-params:
 
-| 名稱         | 類型   | 說明 | 範例     | 是否必須 |
-| :----------- | :----- | :--- | :------- | :------- |
-| class_name   | string | 班級 | 一年三班 | O        |
-| subject      | string | 科目 | 英文     | O        |
-| Bearer Token |        |      |          | O        |
+| 名稱         | 類型   | 說明    | 範例     | 是否必須 |
+| :----------- | :----- | :------ | :------- | :------- |
+| class_name   | string | 班級    | 一年三班 | O        |
+| subject      | string | 科目    | 英文     | O        |
+| mqtt_ip      | string | MQTT IP | ABC123   | X        |
+| rtmp_ip      | string | RTMP IP | ABC123   | X        |
+| Bearer Token |        |         |          | O        |
 
 #### Response
 
@@ -688,14 +702,16 @@ qrcode_svg
   "msg": ["Success"],
   "data": {
     "class_name": "一年三班",
-    "subject": "英文",
+    "subject": "數學",
+    "mqtt_ip": "TEST_MQTT_IP",
+    "rtmp_ip": "TEST_RTMP_IP",
     "user_id": 2,
-    "code": "zIKvUMuB7T",
+    "code": "6WiLe19Hpe",
     "is_open": false,
-    "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M10 0L10 1L11 1L11 0ZM12 0L12 2L13 2L13 0ZM8 2L8 3L9 3L9 2ZM10 2L10 3L11 3L11 2ZM12 3L12 4L11 4L11 5L10 5L10 4L9 4L9 6L8 6L8 8L4 8L4 9L3 9L3 8L0 8L0 11L2 11L2 12L0 12L0 13L2 13L2 12L3 12L3 13L8 13L8 17L9 17L9 18L8 18L8 21L10 21L10 20L11 20L11 21L12 21L12 20L14 20L14 21L21 21L21 20L20 20L20 19L21 19L21 18L20 18L20 17L19 17L19 18L20 18L20 19L19 19L19 20L14 20L14 19L17 19L17 18L16 18L16 16L12 16L12 17L11 17L11 16L10 16L10 14L11 14L11 13L12 13L12 12L13 12L13 13L14 13L14 11L12 11L12 9L13 9L13 10L14 10L14 9L15 9L15 11L19 11L19 12L18 12L18 13L17 13L17 12L15 12L15 13L16 13L16 14L15 14L15 15L18 15L18 14L19 14L19 16L21 16L21 13L20 13L20 14L19 14L19 12L21 12L21 10L20 10L20 9L19 9L19 8L18 8L18 9L17 9L17 10L16 10L16 9L15 9L15 8L12 8L12 9L11 9L11 6L12 6L12 7L13 7L13 6L12 6L12 5L13 5L13 3ZM9 6L9 10L8 10L8 9L6 9L6 10L5 10L5 9L4 9L4 10L2 10L2 9L1 9L1 10L2 10L2 11L4 11L4 12L8 12L8 11L9 11L9 10L10 10L10 12L11 12L11 9L10 9L10 6ZM4 10L4 11L5 11L5 10ZM6 10L6 11L8 11L8 10ZM9 13L9 14L10 14L10 13ZM12 14L12 15L14 15L14 14ZM17 16L17 17L18 17L18 16ZM10 17L10 18L11 18L11 17ZM12 17L12 19L14 19L14 18L15 18L15 17ZM9 19L9 20L10 20L10 19ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n",
-    "updated_at": "2024-01-15 10:29:20",
-    "created_at": "2024-01-15 10:29:20",
-    "id": 8
+    "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M8 0L8 1L9 1L9 2L8 2L8 5L11 5L11 4L12 4L12 3L13 3L13 0L12 0L12 3L11 3L11 2L10 2L10 0ZM9 2L9 4L11 4L11 3L10 3L10 2ZM8 6L8 7L9 7L9 8L8 8L8 9L7 9L7 8L6 8L6 9L7 9L7 10L6 10L6 11L5 11L5 13L7 13L7 12L8 12L8 11L9 11L9 10L8 10L8 9L9 9L9 8L10 8L10 10L11 10L11 6L10 6L10 7L9 7L9 6ZM12 6L12 7L13 7L13 6ZM0 8L0 10L1 10L1 12L0 12L0 13L1 13L1 12L2 12L2 13L3 13L3 12L4 12L4 11L2 11L2 9L3 9L3 10L5 10L5 9L4 9L4 8ZM13 8L13 9L12 9L12 12L11 12L11 11L10 11L10 12L9 12L9 13L8 13L8 14L9 14L9 15L10 15L10 18L11 18L11 21L14 21L14 20L15 20L15 21L17 21L17 20L16 20L16 17L15 17L15 19L14 19L14 18L13 18L13 19L12 19L12 18L11 18L11 17L12 17L12 16L14 16L14 14L16 14L16 15L17 15L17 18L18 18L18 19L19 19L19 18L20 18L20 17L18 17L18 16L19 16L19 15L20 15L20 16L21 16L21 15L20 15L20 12L21 12L21 10L20 10L20 9L21 9L21 8L20 8L20 9L19 9L19 8L16 8L16 9L14 9L14 8ZM13 9L13 12L12 12L12 13L11 13L11 12L10 12L10 14L11 14L11 15L13 15L13 14L14 14L14 13L13 13L13 12L15 12L15 11L14 11L14 9ZM16 9L16 11L18 11L18 12L17 12L17 13L19 13L19 11L18 11L18 10L17 10L17 9ZM7 10L7 11L6 11L6 12L7 12L7 11L8 11L8 10ZM18 14L18 15L19 15L19 14ZM8 17L8 21L10 21L10 20L9 20L9 17ZM13 19L13 20L14 20L14 19ZM20 19L20 20L21 20L21 19ZM18 20L18 21L19 21L19 20ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n",
+    "updated_at": "2024-06-21 12:26:11",
+    "created_at": "2024-06-21 12:26:11",
+    "id": 18
   }
 }
 ```
@@ -1712,6 +1728,64 @@ qrcode_svg
 }
 ```
 
+### teacher_courses(GET)-取得老師所有課堂
+
+#### Request
+
+- Method: **GET**
+- URL: `teacher_courses`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明         | 範例 | 是否必須 |
+| :----------- | :--- | :----------- | :--- | :------- |
+| Bearer Token |      | 只有老師可用 |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": [
+    {
+      "id": 1,
+      "comment": "表現優良",
+      "user_id": 2,
+      "created_at": "2024-01-20 11:16:24",
+      "updated_at": "2024-01-20 11:16:24",
+      "deleted_at": null
+    },
+    {
+      "id": 2,
+      "comment": "表現優異",
+      "user_id": 2,
+      "created_at": "2024-01-20 11:22:23",
+      "updated_at": "2024-01-20 11:22:23",
+      "deleted_at": null
+    }
+  ]
+}
+```
+
+-失敗
+
+#### 沒有權限(不是老師)
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
 ### course_stus/create(POST)-建立課堂學生
 
 #### Request
@@ -1822,7 +1896,7 @@ qrcode_svg
 }
 ```
 
-### course_stus/update(POST)-更新課堂學生
+### course_stus/update/{id?}(POST)-更新課堂學生
 
 #### Request
 
@@ -1831,12 +1905,13 @@ qrcode_svg
 - Headers: Content-Type:multipart/form-data
 - Path-params:
 
-| 名稱         | 類型   | 說明               | 範例   | 是否必須 |
-| :----------- | :----- | :----------------- | :----- | :------- |
-| nickname     | string | 姓名               | 王小明 | X        |
-| avatar_file  | file   | 照片檔案           |        | X        |
-| Bearer Token |        | 有登入的學生必須要 |        | X        |
-| token        |        | 訪客學生必須要     |        | X        |
+| 名稱         | 類型   | 說明                    | 範例   | 是否必須 |
+| :----------- | :----- | :---------------------- | :----- | :------- |
+| id           | int    | 學生課堂 ID(老師才要給) | 1      | X        |
+| nickname     | string | 姓名                    | 王小明 | X        |
+| avatar_file  | file   | 照片檔案                |        | X        |
+| Bearer Token |        | 有登入的學生必須要/老師 |        | X        |
+| token        |        | 訪客學生必須要          |        | X        |
 
 #### Response
 
@@ -1914,6 +1989,64 @@ qrcode_svg
       "updated_at": "2024-02-24 11:58:33",
       "deleted_at": null
     }
+  }
+}
+```
+
+-失敗
+
+#### 不是學生
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You are not a student."]
+}
+```
+
+### course_stus/get_cloud_files(GET)-學生取得雲端檔案
+
+#### Request
+
+- Method: **GET**
+- URL: `course_stus/get_cloud_files`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明               | 範例 | 是否必須 |
+| :----------- | :--- | :----------------- | :--- | :------- |
+| Bearer Token |      | 有登入的學生必須要 |      | X        |
+| token        |      | 訪客學生必須要     |      | X        |
+
+- return-params:
+
+| 名稱       | 類型  | 說明                           | 範例     |
+| :--------- | :---- | :----------------------------- | :------- |
+| push       | array | 課堂推播檔案位置               | 參考下方 |
+| quiz       | array | 課堂快問快答批改後相關檔案位置 | 參考下方 |
+| task       | array | 課堂任務批改後相關檔案位置     | 參考下方 |
+| assessment | array | 課堂評量批改後結果 pdf 位置    | 參考下方 |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "push": ["/storage/iJCRTsjoZPOPINSoGgHUCxQ0X7zZGjnrGgVKx27O.png"],
+    "quiz": [
+      "/storage/EZMfc3UivglWTagPebLeQswrTslOoz56G6q25GTu.jpg",
+      "/storage/Rq9Vbeg3uIlL1Be8vpalMHvIQJon7kgZKSHdAQiN.png"
+    ],
+    "task": ["/storage/tpvF224tIQwsk2lpvb0jyNPnwcTcPP2P3okvHH9t.png"],
+    "assessment": ["/storage/assessment_27_stu_12_correct.pdf"]
   }
 }
 ```
@@ -8642,6 +8775,55 @@ correct_file => "answer.png"
 }
 ```
 
+### course/{id}/course_assessments(GET)-取得課堂所有評量
+
+#### Request
+
+- Method: **GET**
+- URL: `course/{id}/course_assessments`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明         | 範例 | 是否必須 |
+| :----------- | :--- | :----------- | :--- | :------- |
+| id           | int  | 課堂評量 ID  | 1    | O        |
+| Bearer Token |      | 要為老師身分 |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": [
+    {
+      "id": 12,
+      "course_id": 3,
+      "created_at": "2024-02-27 16:47:37",
+      "updated_at": "2024-02-27 16:47:37",
+      "deleted_at": null,
+      "status": "closed",
+      "quest_type": "single"
+    }
+  ]
+}
+```
+
+-失敗
+
+#### 沒有權限
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
 ### course_assessments/{id}/actions/export(POST)-匯出課堂評量
 
 #### Request
@@ -8781,9 +8963,13 @@ correct_file => "answer.png"
 - Headers:
 - Path-params:
 
-| 名稱         | 類型 | 說明         | 範例 | 是否必須 |
-| :----------- | :--- | :----------- | :--- | :------- |
-| Bearer Token |      | 要為老師身分 |      | O        |
+| 名稱           | 類型   | 說明                                                                                             | 範例       | 是否必須                           |
+| :------------- | :----- | :----------------------------------------------------------------------------------------------- | :--------- | :--------------------------------- |
+| subject        | string | 查詢課堂的科目                                                                                   | 英文       | X                                  |
+| quest_type     | string | 查詢題目類型 值可為 single(單選題),multiple(複選題),tf(是非題),essay(文字題),handwritten(手寫題) | tf         | X                                  |
+| duration_start | string | 查詢期間開始日期                                                                                 | 2024/06/20 | X (但和 duration_end 要同時給予)   |
+| duration_end   | string | 查詢期間結束日期                                                                                 | 2024/06/20 | X (但和 duration_start 要同時給予) |
+| Bearer Token   |        | 要為老師身分                                                                                     |            | O                                  |
 
 #### Response
 
@@ -9039,6 +9225,47 @@ correct_file => "answer.png"
       ]
     }
   ]
+}
+```
+
+-失敗
+
+#### 沒有權限(不是老師)
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+### course_assessments/show_tpp_subjects(POST)-取得題庫課堂評量科目
+
+#### Request
+
+- Method: **GET**
+- URL: `course_assessments/show_tpp_subjects`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型 | 說明         | 範例 | 是否必須 |
+| :----------- | :--- | :----------- | :--- | :------- |
+| Bearer Token |      | 要為老師身分 |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": ["數學"]
 }
 ```
 
