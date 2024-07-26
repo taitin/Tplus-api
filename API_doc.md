@@ -6,7 +6,7 @@
 
 1. 新增查詢條件到 `course_assessments/show_tpps(GET)-取得題庫課堂評量`
 2. 新增 `courses/all(GET)-取得老師所有課堂`
-3. 新增 `course/{id}/course_assessments(GET)-取得課堂所有評量`
+3. 新增 `courses/{id}/course_assessments(GET)-取得課堂所有評量`
 4. 修改 `course_stus/update/{id?}(POST)-更新課堂學生` 讓老師也可以修改學生 nickname & avatar_file
 5. 修改 `courses/create(POST)-建立課堂` 加入參數 mqtt_ip & rtmp_ip
 6. 新增 `course_stus/get_cloud_files(GET)-學生取得雲端檔案`
@@ -293,7 +293,7 @@ qrcode_svg
 - [course_assessments/{id}/actions/get_statistics(GET)-取得課堂評量答題統計](#course_assessmentsidactionsget_statisticsget-取得課堂評量答題統計) (完成)
 - [course_assessments/{id}/actions/get_result(GET)-取得學生個人課堂評量結果](#course_assessmentsidactionsget_resultget-取得學生個人課堂評量結果) #待確認 PDF 來源
 - [course_assessments/{id}/actions/get_stu_status(GET)-取得學生個人課堂評量狀態](#course_assessmentsidactionsget_stu_statusget-取得學生個人課堂評量狀態) (完成)
-- [course/{id}/course_assessments(GET)-取得課堂所有評量](#courseidcourse_assessmentsget-取得課堂所有評量) (完成)
+- [courses/{id}/course_assessments(GET)-取得課堂所有評量](#coursesidcourse_assessmentsget-取得課堂所有評量) (完成)
 
 - [course_assessments/{id}/actions/export(POST)-匯出課堂評量](#course_assessmentsidactionsexportpost-匯出課堂評量) (完成)
 - [course_assessments/{id}/actions/import(POST)-匯入課堂評量](#course_assessmentsidactionsimportpost-匯入課堂評量) (完成)
@@ -19707,12 +19707,12 @@ correct_file => "answer.png"
 }
 ```
 
-### course/{id}/course_assessments(GET)-取得課堂所有評量
+### courses/{id}/course_assessments(GET)-取得課堂所有評量
 
 #### Request
 
 - Method: **GET**
-- URL: `course/{id}/course_assessments`
+- URL: `courses/{id}/course_assessments`
 - Headers:
 - Path-params:
 
