@@ -2,6 +2,11 @@
 
 ## 更新
 
+### 20240726
+
+1. 新增 `course_quizzes/{id}/video_upload(POST)-更新課堂快問快答影片`
+2. 新增 `course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料` 回傳quiz_video_file 快問快答影片
+
 ### 20240620
 
 1. 新增查詢條件到 `course_assessments/show_tpps(GET)-取得題庫課堂評量`
@@ -210,6 +215,7 @@ qrcode_svg
 - [API]
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
 - [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidPOST-更新課堂快問快答) (完成)
+- [course_quizzes/{id}/video_upload(POST)-更新課堂快問快答影片](#course_quizzesidvideo_uploadPOST-更新課堂快問快答影片) (完成)
 - [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
 - [course_quizzes/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生快問快答答案](#course_quizzesidactionsget_answercourse_stu_idcourse_stu_idget-老師取得學生快問快答答案)
@@ -13570,6 +13576,50 @@ qrcode_svg
 }
 ```
 
+### course_quizzes/{id}/video_upload(POST)-更新課堂快問快答影片
+
+#### Request
+
+- Method: **POST**
+- URL: `course_quizzes/{id}/video_upload`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型    | 說明                 | 範例 | 是否必須 |
+| :----------- | :------ | :------------------- | :--- | :------- |
+| video_file    | video file  | 快問快答影片     |      | O        |
+| Bearer Token |         | 要為老師身分才可建立 |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": []
+}
+```
+
+-失敗
+
+#### 沒有權限(不是老師)
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+
+
 ### course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料
 
 #### Request
@@ -13616,6 +13666,17 @@ qrcode_svg
         "drive_id": "9UcWx1bMRcqie0YJ8McHuoPZfPCWTh4Ni1CwXmom.png",
         "created_at": "2024-01-06 18:28:38",
         "updated_at": "2024-01-06 18:28:38",
+        "deleted_at": null
+      },
+       "quiz_video_file": {
+        "id": 2548,
+        "uploader_id": 3,
+        "uploader_type": "teacher",
+        "file_type": "video",
+        "course_id": 26,
+        "drive_id": "https://t-plus.timworkshop.com/storage/4splKq1aKaS13sTbutKWQuHogJ1veg4tqhGpvoOJ.mp4",
+        "created_at": "2024-07-26 19:36:56",
+        "updated_at": "2024-07-26 19:36:56",
         "deleted_at": null
       },
       "course": {
