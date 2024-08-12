@@ -2,6 +2,12 @@
 
 ## 更新
 
+### 20240812
+
+1. 新增 `course_teams/{id}/upload_white_board(POST)-更新分組白板內容`
+2. 新增 `courses/{id}/course_teams(GET)-取得所有課堂分組` 回傳white_board_file 分組白板內容
+
+
 ### 20240726
 
 1. 新增 `course_quizzes/{id}/video_upload(POST)-更新課堂快問快答影片`
@@ -239,6 +245,8 @@ qrcode_svg
 - [courses/{id}/course_teams/random_create(POST)-建立隨機課堂分組](#coursesidcourse_teamsrandom_createpost-建立隨機課堂分組) (完成)
 - [courses/{id}/course_teams(GET)-取得所有課堂分組](#coursesidcourse_teamsget-取得所有課堂分組) (完成)
 - [course_teams/my(GET)-學生取得自己課堂分組](#course_teamsmyget-學生取得自己課堂分組) (完成)
+- [course_teams/{id}/upload_white_board(POST)-更新分組白板內容](#course_teamsidupload_white_boardpost-更新分組白板內容) (完成)
+
 
 ### 抽籤相關
 
@@ -15201,7 +15209,18 @@ qrcode_svg
             "comment": ""
           }
         }
-      ]
+      ],
+        "white_board_file": {
+        "id": 2986,
+        "uploader_id": 1714,
+        "uploader_type": "course_stu",
+        "file_type": "image",
+        "course_id": 26,
+        "drive_id": "https://t-plus.timworkshop.com/storage/H5def7dnIPCxTqPRjSTSiaa0GIOOIDrjdbyxDcgJ.png",
+        "created_at": "2024-08-12 01:08:24",
+        "updated_at": "2024-08-12 01:08:24",
+        "deleted_at": null
+      }
     },
     {
       "id": 2,
@@ -15285,7 +15304,8 @@ qrcode_svg
             "comment": ""
           }
         }
-      ]
+      ],
+        "white_board_file":null
     }
   ]
 }
@@ -15520,6 +15540,51 @@ qrcode_svg
 {
   "result": false,
   "msg": ["You are not belong to any team now."]
+}
+```
+
+
+### course_teams/{id}/upload_white_board(POST)-更新分組白板內容
+
+#### Request
+
+- Method: **POST**
+- URL: `course_teams/{id}/upload_white_board`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型    | 說明                 | 範例 | 是否必須 |
+| :----------- | :------ | :------------------- | :--- | :------- |
+| white_board    | img file  | 白板截圖     |      | O        |
+| Bearer Token |      | 有登入的學生或老師必須要 |                                     | X        |
+| token        |      | 訪客學生必須要     | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
+
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": []
+}
+```
+
+-失敗
+
+#### 沒有權限
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
 }
 ```
 
@@ -15930,6 +15995,7 @@ qrcode_svg
           }
         }
       ],
+      "white_board_file": null,
       "created_at": "2024-03-18 21:14:03",
       "updated_at": "2024-03-18 21:14:03",
       "deleted_at": null
@@ -15993,6 +16059,17 @@ qrcode_svg
           }
         }
       ],
+       "white_board_file": {
+        "id": 2986,
+        "uploader_id": 1714,
+        "uploader_type": "course_stu",
+        "file_type": "image",
+        "course_id": 26,
+        "drive_id": "https://t-plus.timworkshop.com/storage/H5def7dnIPCxTqPRjSTSiaa0GIOOIDrjdbyxDcgJ.png",
+        "created_at": "2024-08-12 01:08:24",
+        "updated_at": "2024-08-12 01:08:24",
+        "deleted_at": null
+      },
       "created_at": "2024-03-18 21:15:10",
       "updated_at": "2024-03-18 21:15:10",
       "deleted_at": null
@@ -16011,6 +16088,11 @@ qrcode_svg
   "msg": ["You do not have permission to access this resource."]
 }
 ```
+
+
+
+
+
 
 ### 課堂任務-MQTT/取得學生個人化狀態說明
 
