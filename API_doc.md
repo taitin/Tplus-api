@@ -2,6 +2,12 @@
 
 ## 更新
 
+### 20240813
+
+1. 新增 `get_open_login_token(GET)-取得OPENID登入token跟網址`
+2. 新增 `check_open_login(POST)-確認是否使用openID登入成功` 
+
+
 ### 20240812
 
 1. 新增 `course_teams/{id}/upload_white_board(POST)-更新分組白板內容`
@@ -167,9 +173,18 @@ qrcode_svg
 - [login_open_id(POST)-OpenID 登入](#loginopenidpost-OpenID登入)
 - [logout(POST)-登出](#logoutpost-登出) (完成)
 
+- [get_open_login_token(GET)-取得OPENID登入token](#get_open_login_tokenget-取得openid登入token跟網址) (完成)
+- [check_open_login(POST)-確認是否使用openID登入成功](#check_open_loginpost-確認是否使用openid登入成功) (完成)
+
+- [logout(POST)-登出](#logoutpost-登出) (完成)
+
 - [users/create(POST)-建立個人資料](#userscreatepost-建立個人資料) (完成)
 - [users/{id}(GET)-取得個人資料](#usersidget-取得個人資料) (完成)
 - [users/{id}(PUT)-更新個人資料](#usersidput-更新個人資料) (完成)
+
+
+
+
 
 ### 班級/課程相關
 
@@ -462,6 +477,82 @@ qrcode_svg
   "msg": ["The user is not logged in."]
 }
 ```
+### get_open_login_token(GET)-取得OPENID登入token跟網址
+
+#### Request
+
+- Method: **GET**
+- URL: `get_open_login_token`
+- Headers: Content-Type:multipart/form-data
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": [
+    "Success"
+  ],
+  "data": {
+    "open_token": "5b01887d9acbae8cb777e3b44438bb7c",
+    "url": "https://t-plus.timworkshop.com/sim_openid/5b01887d9acbae8cb777e3b44438bb7c"
+  }
+}
+
+請應用端將 open_token記下，作為確認是否登入的訊息
+並讓使用者 跳出瀏覽器 擷取 url
+
+```
+
+### check_open_login(POST)-確認是否使用openID登入成功
+
+#### Request
+
+- Method: **POST**
+- URL: `check_open_login`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型 | 說明 | 範例 | 是否必須 |
+| :----------- | :--- | :--- | :--- | :------- |
+| open_token  |      | 使用前述提供open_token 確認登入狀況     |      | O        |
+
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvbG9naW4iLCJpYXQiOjE3MDM4NTA5NzYsImV4cCI6MTcwMzg1NDU3NiwibmJmIjoxNzAzODUwOTc2LCJqdGkiOiJpVWN2Zk00dnNORTlMZlNiIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.t_O6ulJ4A9RSh35UTFYdlni4bKrno2u2AWjA1dMnMpY",
+    "token_type": "bearer",
+    "expires_in": 3600,
+    "id": 2
+  }
+}
+```
+
+-失敗
+
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["User is already logged in."]
+}
+```
+
+
+
 
 ### users/create(POST)-建立個人資料
 
