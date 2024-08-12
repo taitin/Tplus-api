@@ -13741,11 +13741,11 @@ qrcode_svg
 
 #### Response
 
-stu_mirror
+course_mirror
 | 名稱         | 類型   | 說明       | 範例              |
 | :----------- | :----- | :--------- | :---------------- |
 | id           | int    | 課堂鏡像 ID    | 6                 |
-| image_file    |    | 圖片物件   | |
+| course_mirror_stus.image_file   |    | 圖片物件   | |
  |
 
 -成功
@@ -13761,23 +13761,57 @@ stu_mirror
     "Success"
   ],
   "data": {
-    "stu_mirror": {
-      "id": 14,
-      "course_mirror_id": 1,
-      "course_stu_id": 1715,
-      "image": 3012,
-      "created_at": "2024-08-12 12:57:52",
-      "updated_at": "2024-08-12 13:29:42",
-      "image_file": {
-        "id": 3012,
-        "uploader_id": 1715,
-        "uploader_type": "course_mirror",
-        "file_type": "image",
-        "course_id": 26,
-        "drive_id": "https://t-plus.timworkshop.com/storage/4fEcp7z1QthY38KS1A57GZi4btcnLxWNvVrfPNfL.png",
-        "created_at": "2024-08-12 13:29:42",
-        "updated_at": "2024-08-12 13:29:42",
-        "deleted_at": null
+    "course_mirror": {
+      "id": 1,
+      "course_id": 26,
+      "is_active": 1,
+      "created_at": "2024-08-12 12:28:58",
+      "updated_at": "2024-08-12 13:31:26",
+      "course_mirror_stus": [
+        {
+          "id": 13,
+          "course_mirror_id": 1,
+          "course_stu_id": 1714,
+          "image": null,
+          "created_at": "2024-08-12 12:57:52",
+          "updated_at": "2024-08-12 12:57:52",
+          "image_file": null
+        },
+        {
+          "id": 14,
+          "course_mirror_id": 1,
+          "course_stu_id": 1715,
+          "image": 3014,
+          "created_at": "2024-08-12 12:57:52",
+          "updated_at": "2024-08-12 13:31:29",
+          "image_file": {
+            "id": 3014,
+            "uploader_id": 1715,
+            "uploader_type": "course_mirror",
+            "file_type": "image",
+            "course_id": 26,
+            "drive_id": "https://t-plus.timworkshop.com/storage/Bm7Up9VRZnghcAYLTcOG85LbPJ4rW0TYgsShzbVu.png",
+            "created_at": "2024-08-12 13:31:29",
+            "updated_at": "2024-08-12 13:31:29",
+            "deleted_at": null
+          }
+        }
+      ],
+      "course": {
+        "id": 26,
+        "user_id": 1,
+        "class_name": "一年一班_1",
+        "subject": "程式設計",
+        "code": "C9J3cIo9Gp",
+        "is_open": 1,
+        "status": "mirror_close",
+        "created_at": "2024-02-17 10:35:28",
+        "updated_at": "2024-08-12 13:17:03",
+        "deleted_at": null,
+        "status_id": 1,
+        "qrcode_svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#ffffff\"/><g transform=\"scale(4.762)\"><g transform=\"translate(0,0)\"><path fill-rule=\"evenodd\" d=\"M8 0L8 1L9 1L9 2L8 2L8 5L11 5L11 4L12 4L12 3L13 3L13 0L12 0L12 3L11 3L11 2L10 2L10 0ZM9 2L9 4L11 4L11 3L10 3L10 2ZM8 6L8 7L9 7L9 8L8 8L8 11L7 11L7 10L6 10L6 11L7 11L7 12L5 12L5 13L7 13L7 12L8 12L8 14L9 14L9 13L10 13L10 14L11 14L11 13L12 13L12 12L13 12L13 11L15 11L15 12L16 12L16 14L15 14L15 13L13 13L13 14L14 14L14 15L10 15L10 16L9 16L9 17L8 17L8 21L10 21L10 20L11 20L11 21L14 21L14 20L16 20L16 21L17 21L17 19L18 19L18 18L17 18L17 16L16 16L16 18L17 18L17 19L14 19L14 20L13 20L13 19L12 19L12 18L11 18L11 19L10 19L10 17L12 17L12 16L13 16L13 18L14 18L14 15L17 15L17 14L18 14L18 17L19 17L19 18L20 18L20 17L19 17L19 12L18 12L18 11L17 11L17 12L16 12L16 11L15 11L15 9L14 9L14 8L13 8L13 9L12 9L12 12L11 12L11 10L10 10L10 11L9 11L9 8L10 8L10 9L11 9L11 6L10 6L10 7L9 7L9 6ZM12 6L12 7L13 7L13 6ZM0 8L0 11L1 11L1 9L2 9L2 10L3 10L3 11L2 11L2 13L3 13L3 11L5 11L5 10L3 10L3 9L4 9L4 8ZM6 8L6 9L7 9L7 8ZM16 8L16 10L17 10L17 9L19 9L19 10L20 10L20 12L21 12L21 8L20 8L20 9L19 9L19 8ZM13 9L13 10L14 10L14 9ZM8 11L8 12L9 12L9 11ZM0 12L0 13L1 13L1 12ZM17 12L17 13L18 13L18 12ZM20 13L20 14L21 14L21 13ZM20 15L20 16L21 16L21 15ZM20 19L20 20L21 20L21 19ZM18 20L18 21L19 21L19 20ZM0 0L0 7L7 7L7 0ZM1 1L1 6L6 6L6 1ZM2 2L2 5L5 5L5 2ZM14 0L14 7L21 7L21 0ZM15 1L15 6L20 6L20 1ZM16 2L16 5L19 5L19 2ZM0 14L0 21L7 21L7 14ZM1 15L1 20L6 20L6 15ZM2 16L2 19L5 19L5 16Z\" fill=\"#000000\"/></g></g></svg>\n",
+        "mqtt_ip": "timworkshop.com",
+        "rtmp_ip": "timworkshop.com"
       }
     }
   }
