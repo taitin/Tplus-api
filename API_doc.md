@@ -13,7 +13,7 @@
 
 ### 20240813-2
 
-1. 新增 `course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片`
+1. 新增 `course_quizzes/{id}/get_video?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片`
 2. 更新 `更新課堂快問快答影片 僅限學生` 
 
 
@@ -263,7 +263,7 @@ qrcode_svg
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
 - [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidPOST-更新課堂快問快答) (完成)
 - [course_quizzes/{id}/video_upload(POST)-更新課堂快問快答影片](#course_quizzesidvideo_uploadPOST-更新課堂快問快答影片) (完成)
-- [course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片](#course_quizzesidcourse_stu_idcourse_stu_idcourse_stu_idget-取得學生課堂快問快答影片) (完成)
+- [course_quizzes/{id}/get_video?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片](#course_quizzesidget_videocourse_stu_idcourse_stu_idget-取得學生課堂快問快答影片) (完成)
 
 - [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
@@ -14053,12 +14053,12 @@ course_mirror
 }
 ```
 
-### course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片
+### course_quizzes/{id}/get_video?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片
 
 #### Request
 
 - Method: **GET**
-- URL: `course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}`
+- URL: `course_quizzes/{id}/get_video?course_stu_id={course_stu_id}`
 - Headers:
 - Path-params:
 
