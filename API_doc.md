@@ -2,6 +2,15 @@
 
 ## 更新
 
+### 20240813-3
+
+1. `course_mirrors/create(POST)-建立課堂鏡像(#course_mirrorscreatepost-建立課堂鏡像)`
+2. `course_mirrors/{id}(POST)-上傳鏡像影像(#course_mirrorsidpost-上傳鏡像影像)`
+3. `course_mirrors/{id}(GET)-取得課堂鏡像資料(#course_mirrorsidget-取得課堂鏡像資料)`
+4. `course_mirrors/{id}(DELETE)-關閉課堂鏡像(#course_mirrorsidelete-關閉課堂鏡像)`
+
+
+
 ### 20240813-2
 
 1. 新增 `course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片`
@@ -231,9 +240,20 @@ qrcode_svg
 - [MQTT]
 - [課堂串流-MQTT](#課堂串流-MQTT) (完成)
 - [API]
-- [course_streams/create(POST)-建立課堂串流](#course_streamscreatepost-建立課堂串流) (完成)
+- [course_streams/create(POST)-建立課堂鏡像](#course_streamscreatepost-建立課堂串流) (完成)
 - [course_streams/{id}(PUT)-更新課堂串流](#course_streamsidput-更新課堂串流) (完成)
-- [course_streams/{id}?token={token}&force_get={force_get}(GET)-取得課堂串流資料](#course_streamsid?token=token&force_get=force_getget-取得課堂串流資料) (完成)
+- [course_mirrors/{id}?token={token}&force_get={force_get}(GET)-取得課堂串流資料](#course_streamsid?token=token&force_get=force_getget-取得課堂串流資料) (完成)
+
+### 課堂鏡像相關
+
+- [MQTT]
+- [課堂鏡像-MQTT](#課堂鏡像-MQTT) (完成)
+- [API]
+- [course_mirrors/create(POST)-建立課堂鏡像](#course_mirrorscreatepost-建立課堂鏡像) (完成)
+- [course_mirrors/{id}(POST)-上傳鏡像影像](#course_mirrorsidpost-上傳鏡像影像) (完成)
+- [course_mirrors/{id}(GET)-取得課堂鏡像資料](#course_mirrorsidget-取得課堂鏡像資料) (完成)
+- [course_mirrors/{id}(DELETE)-關閉課堂鏡像](#course_mirrorsidelete-關閉課堂鏡像) (完成)
+
 
 ### 快問快答相關
 
@@ -13563,6 +13583,278 @@ qrcode_svg
   "msg": ["Course stream is not active."]
 }
 ```
+
+
+### 課堂鏡像-MQTT
+
+#### 教師:課堂鏡像 MQTT
+
+| 時機                                                            | status        | api                        | method | 課堂串流 is_active |
+| :-------------------------------------------------------------- | :------------ | :------------------------- | :----- | :----------------- |
+| 老師執行 API `course_mirrors/create` 成功後                     | mirror_opened   | `course_streams/{id}`(GET) | post    | 1                  |
+| 老師執行 API `course_streams/{id}`(DELETE) 成功後 設定 is_active=0 | mirror_closed |      | GET    | 0                  |
+
+#### 學生:課堂課堂串流學生取得個人化狀態
+
+| 時機說明     | status        | api                        | method | 課堂串流 is_active |
+| :----------- | :------------ | :------------------------- | :----- | :----------------- |
+| 建立鏡像     | mirror_opened        | `course_mirrors/{id}`(POST) | POST    |                    |
+| 鏡像關閉     | mirror_closed | `course_streams/{id}`(GET) | GET    | 0                  |
+
+### course_mirrors/create(POST)-建立課堂鏡像
+
+#### Request
+
+- Method: **POST**
+- URL: `course_mirrors/create`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型   | 說明                                             | 範例      | 是否必須 |
+| :----------- | :----- | :----------------------------------------------- | :-------- | :------- |
+| course_id    | int    | 課堂 ID                                          | 1         | O        |
+| students     | array  | 對象學生 ID                                      | [1, 2, 3] | O        |
+| Bearer Token |        | 要為老師身分才可建立                             |           | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": ["Success"],
+  "data": {
+    "id": 10,
+  }
+}
+```
+
+-失敗
+
+#### 沒有權限(不是老師)
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+課堂 status 會一起變更為 mirror_opened，status_id 紀錄該 mirror_id
+
+#### MQTT
+
+```json
+{
+  "course_data": "略",
+  "status": "mirror_opened",
+  "api": "course_mirrors/{id}",
+  "method": "post",
+    "course_stu_ids": [{course_stu_ids}]
+}
+```
+
+### course_mirrors/{id}(POST)-上傳鏡像影像
+
+#### Request
+
+- Method: **PUT**
+- URL: `course_mirrors/{id}`
+- Headers: Content-Type:multipart/form-data
+- Path-params:
+
+| 名稱         | 類型    | 說明                 | 範例 | 是否必須 |
+| :----------- | :------ | :------------------- | :--- | :------- |
+| Bearer Token |            | 有登入的學生必須要         |                                     | X        |
+| token        |            | 訪客學生必須要             | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
+| image_file    | image file  | 鏡像畫片(圖片)     |      | O        |
+
+#### Response
+
+-成功
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": [
+    "Success"
+  ],
+  "data": {
+    "stu_mirror": {
+      "id": 14,
+      "course_mirror_id": 1,
+      "course_stu_id": 1715,
+      "image": 3011,
+      "created_at": "2024-08-12 12:57:52",
+      "updated_at": "2024-08-12 13:16:52",
+      "image_file": {
+        "id": 3011,
+        "uploader_id": 1715,
+        "uploader_type": "course_mirror",
+        "file_type": "image",
+        "course_id": 26,
+        "drive_id": "https://t-plus.timworkshop.com/storage/dLoMXIl9194zxRJ3wSHbupjl28l4tdKIdRKLwgH6.png",
+        "created_at": "2024-08-12 13:16:52",
+        "updated_at": "2024-08-12 13:16:52",
+        "deleted_at": null
+      }
+    }
+  }
+}
+```
+
+-失敗
+
+#### 沒有權限
+
+- Status: 403 Forbidden
+- Body:
+
+```json
+{
+  "result": false,
+  "msg": ["You do not have permission to access this resource."]
+}
+```
+
+### course_mirrors/{id}(GET)-取得課堂鏡像資料
+
+#### Request
+
+- Method: **GET**
+- URL: `course_mirrors/{id}`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型       | 說明                       | 範例                                | 是否必須 |
+| :----------- | :--------- | :------------------------- | :---------------------------------- | :------- |
+| id           | int | 課堂鏡像 ID  | 1                     | O        |
+| Bearer Token |            |老師必須要         |                                     | O        |
+
+#### Response
+
+stu_mirror
+| 名稱         | 類型   | 說明       | 範例              |
+| :----------- | :----- | :--------- | :---------------- |
+| id           | int    | 課堂鏡像 ID    | 6                 |
+| image_file    |    | 圖片物件   | |
+ |
+
+-成功
+
+#### 老師
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": [
+    "Success"
+  ],
+  "data": {
+    "stu_mirror": {
+      "id": 14,
+      "course_mirror_id": 1,
+      "course_stu_id": 1715,
+      "image": 3012,
+      "created_at": "2024-08-12 12:57:52",
+      "updated_at": "2024-08-12 13:29:42",
+      "image_file": {
+        "id": 3012,
+        "uploader_id": 1715,
+        "uploader_type": "course_mirror",
+        "file_type": "image",
+        "course_id": 26,
+        "drive_id": "https://t-plus.timworkshop.com/storage/4fEcp7z1QthY38KS1A57GZi4btcnLxWNvVrfPNfL.png",
+        "created_at": "2024-08-12 13:29:42",
+        "updated_at": "2024-08-12 13:29:42",
+        "deleted_at": null
+      }
+    }
+  }
+}
+```
+
+-失敗
+
+#### 課堂串流不存在
+
+- Status: 404 Not Found
+- Body
+  {
+  "result": false,
+  "msg": [
+  "CourseMirror with id 22 not found."
+  ]
+  }
+
+#### 課堂串流已關閉
+
+- Body
+
+```json
+{
+  "result": false,
+  "msg": ["Course mirror is not active"]
+}
+```
+
+
+### course_mirrors/{id}(DELETE)-關閉課堂鏡像
+
+#### Request
+
+- Method: **DELETE**
+- URL: `course_mirrors/{id}`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型       | 說明                       | 範例                                | 是否必須 |
+| :----------- | :--------- | :------------------------- | :---------------------------------- | :------- |
+| id           | int | 課堂鏡像 ID  | 1                     | O        |
+| Bearer Token |            |老師必須要         |                                     | O        |
+                         
+
+#### Response
+-成功
+
+#### 老師
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": [
+    "Success"
+  ],
+  "data": []
+}
+```
+
+-失敗
+
+#### 課堂串流不存在
+
+- Status: 404 Not Found
+- Body
+  {
+  "result": false,
+  "msg": [
+  "CourseMirror with id 22 not found."
+  ]
+  }
+
+
 
 ### 課堂快問快答-MQTT/取得學生個人化狀態說明
 
