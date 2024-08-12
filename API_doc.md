@@ -2,6 +2,12 @@
 
 ## 更新
 
+### 20240813-2
+
+1. 新增 `course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片`
+2. 更新 `更新課堂快問快答影片 僅限學生` 
+
+
 ### 20240813
 
 1. 新增 `get_open_login_token(GET)-取得OPENID登入token跟網址`
@@ -237,6 +243,8 @@ qrcode_svg
 - [course_quizzes/create(POST)-建立課堂快問快答](#course_quizzescreatepost-建立課堂快問快答) (完成)
 - [course_quizzes/{id}(POST)-更新課堂快問快答](#course_quizzesidPOST-更新課堂快問快答) (完成)
 - [course_quizzes/{id}/video_upload(POST)-更新課堂快問快答影片](#course_quizzesidvideo_uploadPOST-更新課堂快問快答影片) (完成)
+- [course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片](#course_quizzesidcourse_stu_idcourse_stu_idcourse_stu_idget-取得學生課堂快問快答影片) (完成)
+
 - [course_quizzes/{id}?token={token}&force_get={force_get}(GET)-取得課堂快問快答資料](#course_quizzesidtokentokenforce_getforce_getget-取得課堂快問快答資料) (完成)
 - [course_quizzes/{id}/actions/answer(POST)-學生回答快問快答](#course_quizzesidactionsanswerpost-學生回答快問快答) (完成)
 - [course_quizzes/{id}/actions/get_answer?course_stu_id={course_stu_id}(GET)-老師取得學生快問快答答案](#course_quizzesidactionsget_answercourse_stu_idcourse_stu_idget-老師取得學生快問快答答案)
@@ -13687,7 +13695,7 @@ qrcode_svg
 | 名稱         | 類型    | 說明                 | 範例 | 是否必須 |
 | :----------- | :------ | :------------------- | :--- | :------- |
 | video_file    | video file  | 快問快答影片     |      | O        |
-| Bearer Token |      | 有登入的學生或老師必須要 |                                     | X        |
+| Bearer Token |      | 有登入的學生必須要 |                                     | X        |
 | token        |      | 訪客學生必須要     | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
 
@@ -13707,7 +13715,7 @@ qrcode_svg
 
 -失敗
 
-#### 沒有權限(不是老師)
+#### 沒有權限
 
 - Status: 403 Forbidden
 - Body:
@@ -13718,6 +13726,83 @@ qrcode_svg
   "msg": ["You do not have permission to access this resource."]
 }
 ```
+
+### course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}(GET)-取得學生課堂快問快答影片
+
+#### Request
+
+- Method: **GET**
+- URL: `course_quizzes/{id}/course_stu_id?course_stu_id={course_stu_id}`
+- Headers:
+- Path-params:
+
+| 名稱         | 類型    | 說明                        | 範例 | 是否必須 |
+| :----------- | :------ | :-------------------------- | :--- | :------- |
+| id           | int     | 課堂快問快答 ID             | 1    | O        |
+| Bearer Token |         | 有登入的老師必須須要     |      | O        |
+| course_stu_id | int | 課堂學生ID  | 1    | O        |
+
+#### Response
+
+-成功
+
+### 有資料
+
+- Body:
+
+```json
+{
+  "result": true,
+  "msg": [
+    "Success"
+  ],
+  "data": {
+    "course_stu_quiz": {
+      "id": 24419,
+      "course_quiz_id": 1,
+      "course_stu_id": 1715,
+      "answer_file_id": null,
+      "correct_file_id": null,
+      "answer_file_type": "",
+      "created_at": null,
+      "updated_at": "2024-08-12 11:13:52",
+      "deleted_at": null,
+      "last_seen_at": null,
+      "quiz_video_file_id": "2992",
+      "quiz_video_file": {
+        "id": 2992,
+        "uploader_id": 1715,
+        "uploader_type": "course_stu",
+        "file_type": "video",
+        "course_id": 26,
+        "drive_id": "https://t-plus.timworkshop.com/storage/AMBsXq34tcbEz0VEAKi6vOu7ijfjLdFGKxzpal9G.mp4",
+        "created_at": "2024-08-12 11:13:52",
+        "updated_at": "2024-08-12 11:13:52",
+        "deleted_at": null
+      }
+    },
+    "course_stu_id": "1715",
+    "input": {
+      "course_stu_id": "1715"
+    }
+  }
+}
+```
+
+-失敗
+
+### 課堂快問快答不存在
+
+- Status: 404 Not Found
+- Body
+
+```json
+{
+  "result": false,
+  "msg": ["CourseQuiz with id 13 not found."]
+}
+```
+
 
 
 
