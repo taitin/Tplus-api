@@ -2,6 +2,12 @@
 
 ## 更新
 
+### 20240818
+
+1. 更新 `course_teams/{id}/upload_white_board(POST)-更新分組白板內容` 可上傳white_board_review
+2. 更新 `courses/{id}/course_teams(GET)-取得所有課堂分組` 回傳white_board_review_file 分組白板內容
+
+
 ### 20240813-3
 
 1. `course_mirrors/create(POST)-建立課堂鏡像(#course_mirrorscreatepost-建立課堂鏡像)`
@@ -15073,6 +15079,12 @@ course_mirror
 
 #### Response
 
+| 名稱         | 類型 | 說明                 |  |  |
+| :----------- | :--- | :------------------- | :--- | :------- |
+| white_board    | file_object  | 學生白板內容            |   |        |
+| white_board_review  | file_object  | 老師批閱結果         |   |      |
+
+
 -成功
 
 - Body:
@@ -15080,499 +15092,173 @@ course_mirror
 ```json
 {
   "result": true,
-  "msg": ["Success"],
+  "msg": [
+    "Success"
+  ],
   "data": [
     {
-      "id": 68,
+      "id": 220,
       "name": "A",
       "score": 0,
-      "course_id": 1,
+      "course_id": 1064,
       "whiteboard_url": "url",
-      "created_at": "2024-03-09 13:16:23",
-      "updated_at": "2024-03-09 13:16:23",
+      "created_at": "2024-08-09 16:13:50",
+      "updated_at": "2024-08-09 16:13:50",
       "deleted_at": null,
+      "white_board": null,
+      "white_board_review": null,
       "course_stu_teams": [
         {
-          "id": 163,
-          "course_stu_id": 16,
-          "course_team_id": 68,
+          "id": 3665,
+          "course_stu_id": 1722,
+          "course_team_id": 220,
           "is_leader": 1,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
+          "created_at": "2024-08-09 16:13:50",
+          "updated_at": "2024-08-09 16:13:50",
           "deleted_at": null,
           "course_stu": {
-            "id": 16,
-            "course_id": 1,
-            "user_id": 3,
-            "nickname": "王晶晶3",
-            "is_visitor": 0,
-            "score": 0,
-            "avatar_file_id": 0,
-            "is_online": 1,
-            "created_at": "2024-02-23 12:35:27",
-            "updated_at": "2024-02-23 12:35:27",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 164,
-          "course_stu_id": 24,
-          "course_team_id": 68,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 24,
-            "course_id": 1,
+            "id": 1722,
+            "course_id": 1064,
             "user_id": 0,
-            "nickname": "小名5",
+            "nickname": "生生世世",
             "is_visitor": 1,
-            "score": 0,
+            "score": 47,
             "avatar_file_id": 0,
             "is_online": 1,
-            "created_at": "2024-03-03 15:30:53",
-            "updated_at": "2024-03-03 15:30:53",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 165,
-          "course_stu_id": 17,
-          "course_team_id": 68,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 17,
-            "course_id": 1,
-            "user_id": 3,
-            "nickname": "王晶晶",
-            "is_visitor": 0,
-            "score": 0,
-            "avatar_file_id": 0,
-            "is_online": 1,
-            "created_at": "2024-02-23 12:36:13",
-            "updated_at": "2024-02-23 12:36:13",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 166,
-          "course_stu_id": 23,
-          "course_team_id": 68,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 23,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "小名4",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 0,
-            "is_online": 1,
-            "created_at": "2024-03-03 15:30:21",
-            "updated_at": "2024-03-03 15:30:21",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 167,
-          "course_stu_id": 7,
-          "course_team_id": 68,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 7,
-            "course_id": 1,
-            "user_id": 3,
-            "nickname": "晶晶",
-            "is_visitor": 0,
-            "score": 0,
-            "avatar_file_id": 1,
-            "is_online": 1,
-            "created_at": "2024-01-03 17:23:21",
-            "updated_at": "2024-01-03 17:23:21",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 168,
-          "course_stu_id": 25,
-          "course_team_id": 68,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 25,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "小名12",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 0,
-            "is_online": 1,
-            "created_at": "2024-03-03 15:32:02",
-            "updated_at": "2024-03-03 15:32:02",
+            "created_at": "2024-08-09 15:57:34",
+            "updated_at": "2024-08-09 15:57:34",
             "deleted_at": null,
             "stream_url": null,
             "comment": ""
           }
         }
-      ]
+      ],
+      "white_board_file": null,
+      "white_board_review_file": null
     },
     {
-      "id": 69,
+      "id": 221,
       "name": "B",
-      "score": 0,
-      "course_id": 1,
+      "score": "1",
+      "course_id": 1064,
       "whiteboard_url": "url",
-      "created_at": "2024-03-09 13:16:23",
-      "updated_at": "2024-03-09 13:16:23",
+      "created_at": "2024-08-09 16:13:50",
+      "updated_at": "2024-08-09 16:13:50",
       "deleted_at": null,
+      "white_board": null,
+      "white_board_review": null,
       "course_stu_teams": [
         {
-          "id": 169,
-          "course_stu_id": 18,
-          "course_team_id": 69,
+          "id": 3666,
+          "course_stu_id": 1724,
+          "course_team_id": 221,
           "is_leader": 1,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
+          "created_at": "2024-08-09 16:13:50",
+          "updated_at": "2024-08-09 16:13:50",
           "deleted_at": null,
           "course_stu": {
-            "id": 18,
-            "course_id": 1,
-            "user_id": 3,
-            "nickname": "王晶晶3",
-            "is_visitor": 0,
-            "score": 0,
-            "avatar_file_id": 0,
-            "is_online": 1,
-            "created_at": "2024-02-23 12:36:28",
-            "updated_at": "2024-02-23 12:36:28",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 170,
-          "course_stu_id": 4,
-          "course_team_id": 69,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 4,
-            "course_id": 1,
+            "id": 1724,
+            "course_id": 1064,
             "user_id": 0,
-            "nickname": "小火",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 1,
-            "is_online": 1,
-            "created_at": "2023-12-30 11:39:56",
-            "updated_at": "2024-02-23 11:47:16",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 171,
-          "course_stu_id": 19,
-          "course_team_id": 69,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 19,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "小名",
+            "nickname": "水資源ㄕ",
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
             "is_online": 1,
-            "created_at": "2024-02-23 12:39:25",
-            "updated_at": "2024-02-23 12:39:25",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 172,
-          "course_stu_id": 22,
-          "course_team_id": 69,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 22,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "小名3",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 0,
-            "is_online": 1,
-            "created_at": "2024-03-03 15:28:50",
-            "updated_at": "2024-03-03 15:28:50",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 173,
-          "course_stu_id": 20,
-          "course_team_id": 69,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 20,
-            "course_id": 1,
-            "user_id": 5,
-            "nickname": "Alex",
-            "is_visitor": 0,
-            "score": 0,
-            "avatar_file_id": 131,
-            "is_online": 1,
-            "created_at": "2024-02-24 11:52:53",
-            "updated_at": "2024-02-24 11:58:33",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 174,
-          "course_stu_id": 5,
-          "course_team_id": 69,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 5,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "小土",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 1,
-            "is_online": 1,
-            "created_at": "2023-12-30 13:06:05",
-            "updated_at": "2024-02-23 11:47:16",
+            "created_at": "2024-08-09 16:11:40",
+            "updated_at": "2024-08-09 16:11:40",
             "deleted_at": null,
             "stream_url": null,
             "comment": ""
           }
         }
-      ]
+      ],
+      "white_board_file": null,
+      "white_board_review_file": null
     },
     {
-      "id": 70,
+      "id": 222,
       "name": "C",
-      "score": 0,
-      "course_id": 1,
+      "score": "-1",
+      "course_id": 1064,
       "whiteboard_url": "url",
-      "created_at": "2024-03-09 13:16:23",
-      "updated_at": "2024-03-09 13:16:23",
+      "created_at": "2024-08-09 16:13:50",
+      "updated_at": "2024-08-18 15:29:07",
       "deleted_at": null,
+      "white_board": 3731,
+      "white_board_review": 3730,
       "course_stu_teams": [
         {
-          "id": 175,
-          "course_stu_id": 21,
-          "course_team_id": 70,
+          "id": 3667,
+          "course_stu_id": 1723,
+          "course_team_id": 222,
           "is_leader": 1,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
+          "created_at": "2024-08-09 16:13:50",
+          "updated_at": "2024-08-09 16:13:50",
           "deleted_at": null,
           "course_stu": {
-            "id": 21,
-            "course_id": 1,
+            "id": 1723,
+            "course_id": 1064,
             "user_id": 0,
-            "nickname": "小名2",
+            "nickname": "秘密魯武器",
+            "is_visitor": 1,
+            "score": 14,
+            "avatar_file_id": 3115,
+            "is_online": 1,
+            "created_at": "2024-08-09 15:58:21",
+            "updated_at": "2024-08-09 15:58:21",
+            "deleted_at": null,
+            "stream_url": null,
+            "comment": ""
+          }
+        },
+        {
+          "id": 3668,
+          "course_stu_id": 1725,
+          "course_team_id": 222,
+          "is_leader": 0,
+          "created_at": "2024-08-09 16:13:51",
+          "updated_at": "2024-08-09 16:13:51",
+          "deleted_at": null,
+          "course_stu": {
+            "id": 1725,
+            "course_id": 1064,
+            "user_id": 0,
+            "nickname": "王八蛋",
             "is_visitor": 1,
             "score": 0,
             "avatar_file_id": 0,
             "is_online": 1,
-            "created_at": "2024-03-03 15:23:13",
-            "updated_at": "2024-03-03 15:23:13",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 176,
-          "course_stu_id": 11,
-          "course_team_id": 70,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 11,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "心心",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 3,
-            "is_online": 1,
-            "created_at": "2024-01-14 13:40:45",
-            "updated_at": "2024-01-14 13:40:45",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 177,
-          "course_stu_id": 13,
-          "course_team_id": 70,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 13,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "min",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 132,
-            "is_online": 1,
-            "created_at": "2024-01-14 14:31:34",
-            "updated_at": "2024-02-24 12:00:14",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 178,
-          "course_stu_id": 12,
-          "course_team_id": 70,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 12,
-            "course_id": 1,
-            "user_id": 3,
-            "nickname": "小明",
-            "is_visitor": 0,
-            "score": 0,
-            "avatar_file_id": 32,
-            "is_online": 1,
-            "created_at": "2024-01-14 13:46:10",
-            "updated_at": "2024-01-14 13:46:10",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 179,
-          "course_stu_id": 10,
-          "course_team_id": 70,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 10,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "心心",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 4,
-            "is_online": 1,
-            "created_at": "2024-01-13 17:25:22",
-            "updated_at": "2024-01-13 17:25:22",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 180,
-          "course_stu_id": 15,
-          "course_team_id": 70,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 15,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "心心",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 5,
-            "is_online": 1,
-            "created_at": "2024-01-16 22:36:33",
-            "updated_at": "2024-01-16 22:36:33",
-            "deleted_at": null,
-            "stream_url": null,
-            "comment": ""
-          }
-        },
-        {
-          "id": 181,
-          "course_stu_id": 9,
-          "course_team_id": 70,
-          "is_leader": 0,
-          "created_at": "2024-03-09 13:16:23",
-          "updated_at": "2024-03-09 13:16:23",
-          "deleted_at": null,
-          "course_stu": {
-            "id": 9,
-            "course_id": 1,
-            "user_id": 0,
-            "nickname": "甜甜",
-            "is_visitor": 1,
-            "score": 0,
-            "avatar_file_id": 2,
-            "is_online": 1,
-            "created_at": "2024-01-04 12:00:57",
-            "updated_at": "2024-01-04 12:00:57",
+            "created_at": "2024-08-09 16:12:26",
+            "updated_at": "2024-08-09 16:12:26",
             "deleted_at": null,
             "stream_url": null,
             "comment": ""
           }
         }
-      ]
+      ],
+      "white_board_file": {
+        "id": 3731,
+        "uploader_id": 3,
+        "uploader_type": "teacher",
+        "file_type": "video",
+        "course_id": 1064,
+        "drive_id": "https://nefitor-cloud.s3.ap-northeast-1.amazonaws.com/tplus/DbH65FACsZYO0aEK5QM03xvHS7oaavfJiYLAcsHh.png",
+        "created_at": "2024-08-18 15:29:07",
+        "updated_at": "2024-08-18 15:29:07",
+        "deleted_at": null
+      },
+      "white_board_review_file": {
+        "id": 3730,
+        "uploader_id": 3,
+        "uploader_type": "teacher",
+        "file_type": "video",
+        "course_id": 1064,
+        "drive_id": "https://nefitor-cloud.s3.ap-northeast-1.amazonaws.com/tplus/9OLMusNzxusDJOyVGlMBAIa8vcB1BFa88pkmkwMy.png",
+        "created_at": "2024-08-18 15:28:33",
+        "updated_at": "2024-08-18 15:28:33",
+        "deleted_at": null
+      }
     }
   ]
 }
@@ -16057,7 +15743,8 @@ course_mirror
 
 | 名稱         | 類型    | 說明                 | 範例 | 是否必須 |
 | :----------- | :------ | :------------------- | :--- | :------- |
-| white_board    | img file  | 白板截圖     |      | O        |
+| white_board    | img file  | 白板截圖     |      | O    與   white_board_review 二者1必須    |
+| white_board_review    | img file  | 老師批閱截圖     |      | O    white_board 二者1必須       |
 | Bearer Token |      | 有登入的學生或老師必須要 |                                     | X        |
 | token        |      | 訪客學生必須要     | 10-d401f35993b3f038d24c552b9b3c3a53 | X        |
 
